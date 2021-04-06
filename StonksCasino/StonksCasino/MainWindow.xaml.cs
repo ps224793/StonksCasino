@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using StonksCasino.Views.main;
 
 namespace StonksCasino
 {
@@ -23,6 +24,14 @@ namespace StonksCasino
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Library_Click(object sender, RoutedEventArgs e)
+        {
+            LibraryWindow library = new LibraryWindow();
+            this.Hide();
+            library.ShowDialog();
+            this.Show();
         }
     }
 }
