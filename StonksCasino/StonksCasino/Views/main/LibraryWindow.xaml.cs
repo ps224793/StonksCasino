@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using StonksCasino.classes.Main;
-
+using StonksCasino.Views.Roulette;
 namespace StonksCasino.Views.main
 {
     /// <summary>
@@ -34,6 +34,14 @@ namespace StonksCasino.Views.main
             string Name = dataTable.Rows[0]["Gebruikersnaam"].ToString();
             int Tokens = (int)dataTable.Rows[0]["Token"];
             User = new User(Name, Tokens);
+        }
+
+        private void Roullete_click(object sender, RoutedEventArgs e)
+        {
+            RouletteWindow roulette = new RouletteWindow();
+            this.Hide();
+            roulette.ShowDialog();
+            this.Show();
         }
     }
 }

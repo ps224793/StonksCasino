@@ -63,6 +63,9 @@
     <Compile Include="Views\main\LibraryWindow.xaml.cs">
       <DependentUpon>LibraryWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Roulette\RouletteWindow.xaml.cs">
+      <DependentUpon>RouletteWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -80,6 +83,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\main\LibraryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Roulette\RouletteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,7 +117,37 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Img\Roulette\min.png" />
+    <Resource Include="Img\Roulette\plus.png" />
+    <Resource Include="Img\Roulette\Roulette-0.png" />
+    <Resource Include="Img\Roulette\Roulette-1.png" />
+    <Resource Include="Img\Roulette\Roulette-10.png" />
+    <Resource Include="Img\Roulette\Roulette-11.png" />
+    <Resource Include="Img\Roulette\Roulette-12.png" />
+    <Resource Include="Img\Roulette\Roulette-14.png" />
+    <Resource Include="Img\Roulette\Roulette-16.png" />
+    <Resource Include="Img\Roulette\Roulette-18.png" />
+    <Resource Include="Img\Roulette\Roulette-20.png" />
+    <Resource Include="Img\Roulette\Roulette-22.png" />
+    <Resource Include="Img\Roulette\Roulette-23.png" />
+    <Resource Include="Img\Roulette\Roulette-24.png" />
+    <Resource Include="Img\Roulette\Roulette-26.png" />
+    <Resource Include="Img\Roulette\Roulette-28.png" />
+    <Resource Include="Img\Roulette\Roulette-29.png" />
+    <Resource Include="Img\Roulette\Roulette-3.png" />
+    <Resource Include="Img\Roulette\Roulette-30.png" />
+    <Resource Include="Img\Roulette\Roulette-31.png" />
+    <Resource Include="Img\Roulette\Roulette-33.png" />
+    <Resource Include="Img\Roulette\Roulette-35.png" />
+    <Resource Include="Img\Roulette\Roulette-5.png" />
+    <Resource Include="Img\Roulette\Roulette-7.png" />
+    <Resource Include="Img\Roulette\Roulette-8.png" />
+    <Resource Include="Img\Roulette\Roulette-9.png" />
+    <Resource Include="Img\Roulette\Roulette.png" />
+    <Resource Include="Img\Roulette\roulettetafel.PNG" />
+    <Resource Include="Img\Roulette\Token.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Img\Main\Account.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
