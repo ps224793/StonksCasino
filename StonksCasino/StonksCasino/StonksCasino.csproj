@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\Main\Database.cs" />
+    <Compile Include="classes\Main\User.cs" />
     <Compile Include="Views\main\LibraryWindow.xaml.cs">
       <DependentUpon>LibraryWindow.xaml</DependentUpon>
     </Compile>
