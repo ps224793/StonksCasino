@@ -16,7 +16,6 @@
                 <Button x:Name="btnBibliotheek" Content="Bibliotheek" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
                 <Button x:Name="btnWinkel" Content="Winkel" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
                 <Button x:Name="BtnGeldStorten" Content="Geld storten" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
-
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Image Source="/Img/Main/Account.png" Margin="5,0" Height="40"></Image>
@@ -26,6 +25,78 @@
                 <TextBlock Text="{Binding User.MyTokens, Mode=OneWay}" Padding="10" Foreground="White" FontSize="20" VerticalAlignment="Center" />
 
             </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.Background>
+                <ImageBrush ImageSource="/Img/Main/background.png" />
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition> 
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">0</TextBlock>
+                    <Border Height="2" Background="Black"></Border>
+                    <TextBlock Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">0</TextBlock>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Width="40" Height="30" Grid.Column="1">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Fill="Black"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Width="75" Height="35" Grid.Row="1" Background="White" Content="Tokens" FontSize="16"></Button>
+                <Button Width="60" Height="35" Grid.Row="3" Background="White" Content="Deal" FontSize="10"></Button>
+                <Button Width="60" Height="35" Grid.Row="4" Background="White" Content="Hit" FontSize="10"></Button>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Width="60" Height="35" Padding="10" Background="White" Content="Splitten" FontSize="10"></Button>
+                <Button Width="60" Height="35" Padding="10" Grid.Row="1" Background="White" Content="Dubbel" FontSize="10"></Button>
+                <Button Width="60" Height="35" Padding="10" Grid.Row="2" Background="White" Content="Stand" FontSize="10"></Button>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
