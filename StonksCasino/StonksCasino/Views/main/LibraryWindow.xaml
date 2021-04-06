@@ -28,7 +28,10 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
-            <Button Height="30" Width="60" Content="Roulette" Click="Roullete_click" />
+            <StackPanel>
+                <Button Height="30" Width="60" Content="Roulette" Click="Roullete_click" />
+                <Button Height="30" Width="60" Content="BlackJack" Click="Blackjack_click"></Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

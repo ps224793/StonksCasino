@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using StonksCasino.classes.Main;
 using StonksCasino.Views.Roulette;
+using StonksCasino.Views.blackjack;
 namespace StonksCasino.Views.main
 {
     /// <summary>
@@ -39,6 +40,14 @@ namespace StonksCasino.Views.main
         private void Roullete_click(object sender, RoutedEventArgs e)
         {
             RouletteWindow roulette = new RouletteWindow();
+            this.Hide();
+            roulette.ShowDialog();
+            this.Show();
+        }
+
+        private void Blackjack_click(object sender, RoutedEventArgs e)
+        {
+            BlackjackWindow roulette = new BlackjackWindow();
             this.Hide();
             roulette.ShowDialog();
             this.Show();
