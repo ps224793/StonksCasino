@@ -57,6 +57,9 @@
     </ApplicationDefinition>
     <Compile Include="classes\Main\Database.cs" />
     <Compile Include="classes\Main\User.cs" />
+    <Compile Include="Views\blackjack\BlackjackWindow.xaml.cs">
+      <DependentUpon>BlackjackWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\main\LibraryWindow.xaml.cs">
       <DependentUpon>LibraryWindow.xaml</DependentUpon>
     </Compile>
@@ -72,6 +75,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\blackjack\BlackjackWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\main\LibraryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
