@@ -162,5 +162,61 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\Cards\10Clubs.png" />
+    <Resource Include="Img\Cards\10Diamonds.png" />
+    <Resource Include="Img\Cards\10Hearts.png" />
+    <Resource Include="Img\Cards\10Spades.png" />
+    <Resource Include="Img\Cards\2Clubs.png" />
+    <Resource Include="Img\Cards\2Diamonds.png" />
+    <Resource Include="Img\Cards\2Hearts.png" />
+    <Resource Include="Img\Cards\2Spades.png" />
+    <Resource Include="Img\Cards\3Clubs.png" />
+    <Resource Include="Img\Cards\3Diamonds.png" />
+    <Resource Include="Img\Cards\3Hearts.png" />
+    <Resource Include="Img\Cards\3Spades.png" />
+    <Resource Include="Img\Cards\4Clubs.png" />
+    <Resource Include="Img\Cards\4Diamonds.png" />
+    <Resource Include="Img\Cards\4Hearts.png" />
+    <Resource Include="Img\Cards\4Spades.png" />
+    <Resource Include="Img\Cards\5Clubs.png" />
+    <Resource Include="Img\Cards\5Diamonds.png" />
+    <Resource Include="Img\Cards\5Hearts.png" />
+    <Resource Include="Img\Cards\5Spades.png" />
+    <Resource Include="Img\Cards\6Clubs.png" />
+    <Resource Include="Img\Cards\6Diamonds.png" />
+    <Resource Include="Img\Cards\6Hearts.png" />
+    <Resource Include="Img\Cards\6Spades.png" />
+    <Resource Include="Img\Cards\7Clubs.png" />
+    <Resource Include="Img\Cards\7Diamonds.png" />
+    <Resource Include="Img\Cards\7Hearts.png" />
+    <Resource Include="Img\Cards\7Spades.png" />
+    <Resource Include="Img\Cards\8Clubs.png" />
+    <Resource Include="Img\Cards\8Diamonds.png" />
+    <Resource Include="Img\Cards\8Hearts.png" />
+    <Resource Include="Img\Cards\8Spades.png" />
+    <Resource Include="Img\Cards\9Clubs.png" />
+    <Resource Include="Img\Cards\9Diamonds.png" />
+    <Resource Include="Img\Cards\9Hearts.png" />
+    <Resource Include="Img\Cards\9Spades.png" />
+    <Resource Include="Img\Cards\AClubs.png" />
+    <Resource Include="Img\Cards\ADiamonds.png" />
+    <Resource Include="Img\Cards\AHearts.png" />
+    <Resource Include="Img\Cards\ASpades.png" />
+    <Resource Include="Img\Cards\BackBlue.png" />
+    <Resource Include="Img\Cards\BackRed.png" />
+    <Resource Include="Img\Cards\JClubs.png" />
+    <Resource Include="Img\Cards\JDiamonds.png" />
+    <Resource Include="Img\Cards\JHearts.png" />
+    <Resource Include="Img\Cards\JSpades.png" />
+    <Resource Include="Img\Cards\KClubs.png" />
+    <Resource Include="Img\Cards\KDiamonds.png" />
+    <Resource Include="Img\Cards\KHearts.png" />
+    <Resource Include="Img\Cards\KSpades.png" />
+    <Resource Include="Img\Cards\QClubs.png" />
+    <Resource Include="Img\Cards\QDiamonds.png" />
+    <Resource Include="Img\Cards\QHearts.png" />
+    <Resource Include="Img\Cards\QSpades.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
