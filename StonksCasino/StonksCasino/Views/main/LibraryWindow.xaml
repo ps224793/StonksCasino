@@ -27,5 +27,8 @@
 
             </StackPanel>
         </Grid>
+        <Grid Grid.Row="2">
+            <Button Height="30" Width="60" Content="Roulette" Click="Roullete_click" />
+        </Grid>
     </Grid>
 </Window>
