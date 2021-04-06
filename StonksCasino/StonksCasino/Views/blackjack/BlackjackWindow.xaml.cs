@@ -13,17 +13,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using StonksCasino.classes.Main;
-using StonksCasino.Views.Roulette;
-using StonksCasino.Views.blackjack;
-namespace StonksCasino.Views.main
+
+namespace StonksCasino.Views.blackjack
 {
     /// <summary>
-    /// Interaction logic for LibraryWindow.xaml
+    /// Interaction logic for BlackjackWindow.xaml
     /// </summary>
-    public partial class LibraryWindow : Window
+    public partial class BlackjackWindow : Window
     {
         public User User { get; set; }
-        public LibraryWindow()
+        public BlackjackWindow()
         {
             Account();
             DataContext = this;
@@ -36,21 +35,6 @@ namespace StonksCasino.Views.main
             int Tokens = (int)dataTable.Rows[0]["Token"];
             User = new User(Name, Tokens);
         }
-
-        private void Roullete_click(object sender, RoutedEventArgs e)
-        {
-            RouletteWindow roulette = new RouletteWindow();
-            this.Hide();
-            roulette.ShowDialog();
-            this.Show();
-        }
-
-        private void Blackjack_click(object sender, RoutedEventArgs e)
-        {
-            BlackjackWindow roulette = new BlackjackWindow();
-            this.Hide();
-            roulette.ShowDialog();
-            this.Show();
-        }
-    }
+    
+}
 }

@@ -1,11 +1,11 @@
-﻿<Window x:Class="StonksCasino.Views.main.LibraryWindow"
+﻿<Window x:Class="StonksCasino.Views.blackjack.BlackjackWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:StonksCasino.Views.main"
+        xmlns:local="clr-namespace:StonksCasino.Views.blackjack"
         mc:Ignorable="d"
-        Title="LibraryWindow" Height="450" Width="800"   WindowState="Maximized">
+        Title="BlackjackWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -25,12 +25,6 @@
                 <Image Source="/Img/Main/Token.png" Height="40"></Image>
                 <TextBlock Text="{Binding User.MyTokens, Mode=OneWay}" Padding="10" Foreground="White" FontSize="20" VerticalAlignment="Center" />
 
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="2">
-            <StackPanel>
-                <Button Height="30" Width="60" Content="Roulette" Click="Roullete_click" />
-                <Button Height="30" Width="60" Content="BlackJack" Click="Blackjack_click"></Button>
             </StackPanel>
         </Grid>
     </Grid>
