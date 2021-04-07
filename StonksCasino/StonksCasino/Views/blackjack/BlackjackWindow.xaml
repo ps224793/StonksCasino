@@ -86,8 +86,8 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Button Width="75" Height="35" Grid.Row="1" Background="White" Content="Tokens" FontSize="16"></Button>
-                <Button Width="60" Height="35" Grid.Row="3" Background="White" Content="Deal" FontSize="10"></Button>
+                <TextBox Text="{Binding MyToken.MyAantal, Mode=TwoWay}" TextAlignment="Center" VerticalContentAlignment="Center" Width="75" Height="35" Grid.Row="1" Background="White" FontSize="16"></TextBox>
+                <Button Click="Melding_Click" Width="60" Height="35" Grid.Row="3" Background="White" Content="Deal" FontSize="10"></Button>
                 <Button Width="60" Height="35" Grid.Row="4" Background="White" Content="Hit" FontSize="10"></Button>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="1">
