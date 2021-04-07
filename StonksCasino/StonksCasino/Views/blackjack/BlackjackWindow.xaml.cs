@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using StonksCasino.classes.blackjack;
 using StonksCasino.classes.Main;
 
 namespace StonksCasino.Views.blackjack
@@ -35,6 +36,19 @@ namespace StonksCasino.Views.blackjack
             int Tokens = (int)dataTable.Rows[0]["Token"];
             User = new User(Name, Tokens);
         }
-    
-}
+
+        private Token _token = new Token();
+
+        public Token MyToken
+        {
+            get { return _token; }
+            set { _token = value; }
+        }
+
+
+        private void Melding_Click(object sender, RoutedEventArgs e)
+        {
+            MyToken.GeefMelding();
+        }
+    }
 }
