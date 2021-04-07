@@ -55,15 +55,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\Main\Card.cs" />
     <Compile Include="classes\Main\Database.cs" />
     <Compile Include="classes\Main\User.cs" />
     <Compile Include="classes\Roulette\Bet.cs" />
     <Compile Include="classes\Roulette\Bettingtable.cs" />
+    <Compile Include="enums\card\CardBackColor.cs" />
+    <Compile Include="enums\card\CardType.cs" />
+    <Compile Include="enums\card\CardValue.cs" />
     <Compile Include="Views\blackjack\BlackjackWindow.xaml.cs">
       <DependentUpon>BlackjackWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\main\LibraryWindow.xaml.cs">
       <DependentUpon>LibraryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\poker\PokerWindow.xaml.cs">
+      <DependentUpon>PokerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Roulette\RouletteWindow.xaml.cs">
       <DependentUpon>RouletteWindow.xaml</DependentUpon>
@@ -85,6 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\main\LibraryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\poker\PokerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,60 +159,64 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Img\Cards\10Clubs.png" />
-    <Resource Include="Img\Cards\10Diamonds.png" />
-    <Resource Include="Img\Cards\10Hearts.png" />
-    <Resource Include="Img\Cards\10Spades.png" />
-    <Resource Include="Img\Cards\2Clubs.png" />
-    <Resource Include="Img\Cards\2Diamonds.png" />
-    <Resource Include="Img\Cards\2Hearts.png" />
-    <Resource Include="Img\Cards\2Spades.png" />
-    <Resource Include="Img\Cards\3Clubs.png" />
-    <Resource Include="Img\Cards\3Diamonds.png" />
-    <Resource Include="Img\Cards\3Hearts.png" />
-    <Resource Include="Img\Cards\3Spades.png" />
-    <Resource Include="Img\Cards\4Clubs.png" />
-    <Resource Include="Img\Cards\4Diamonds.png" />
-    <Resource Include="Img\Cards\4Hearts.png" />
-    <Resource Include="Img\Cards\4Spades.png" />
-    <Resource Include="Img\Cards\5Clubs.png" />
-    <Resource Include="Img\Cards\5Diamonds.png" />
-    <Resource Include="Img\Cards\5Hearts.png" />
-    <Resource Include="Img\Cards\5Spades.png" />
-    <Resource Include="Img\Cards\6Clubs.png" />
-    <Resource Include="Img\Cards\6Diamonds.png" />
-    <Resource Include="Img\Cards\6Hearts.png" />
-    <Resource Include="Img\Cards\6Spades.png" />
-    <Resource Include="Img\Cards\7Clubs.png" />
-    <Resource Include="Img\Cards\7Diamonds.png" />
-    <Resource Include="Img\Cards\7Hearts.png" />
-    <Resource Include="Img\Cards\7Spades.png" />
-    <Resource Include="Img\Cards\8Clubs.png" />
-    <Resource Include="Img\Cards\8Diamonds.png" />
-    <Resource Include="Img\Cards\8Hearts.png" />
-    <Resource Include="Img\Cards\8Spades.png" />
-    <Resource Include="Img\Cards\9Clubs.png" />
-    <Resource Include="Img\Cards\9Diamonds.png" />
-    <Resource Include="Img\Cards\9Hearts.png" />
-    <Resource Include="Img\Cards\9Spades.png" />
-    <Resource Include="Img\Cards\AClubs.png" />
-    <Resource Include="Img\Cards\ADiamonds.png" />
-    <Resource Include="Img\Cards\AHearts.png" />
-    <Resource Include="Img\Cards\ASpades.png" />
+    <Folder Include="classes\poker\" />
+    <Folder Include="enums\poker\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\Cards\AceClubs.png" />
+    <Resource Include="Img\Cards\AceDiamonds.png" />
+    <Resource Include="Img\Cards\AceHearts.png" />
+    <Resource Include="Img\Cards\AceSpades.png" />
     <Resource Include="Img\Cards\BackBlue.png" />
     <Resource Include="Img\Cards\BackRed.png" />
-    <Resource Include="Img\Cards\JClubs.png" />
-    <Resource Include="Img\Cards\JDiamonds.png" />
-    <Resource Include="Img\Cards\JHearts.png" />
-    <Resource Include="Img\Cards\JSpades.png" />
-    <Resource Include="Img\Cards\KClubs.png" />
-    <Resource Include="Img\Cards\KDiamonds.png" />
-    <Resource Include="Img\Cards\KHearts.png" />
-    <Resource Include="Img\Cards\KSpades.png" />
-    <Resource Include="Img\Cards\QClubs.png" />
-    <Resource Include="Img\Cards\QDiamonds.png" />
-    <Resource Include="Img\Cards\QHearts.png" />
-    <Resource Include="Img\Cards\QSpades.png" />
+    <Resource Include="Img\Cards\EightClubs.png" />
+    <Resource Include="Img\Cards\EightDiamonds.png" />
+    <Resource Include="Img\Cards\EightHearts.png" />
+    <Resource Include="Img\Cards\EightSpades.png" />
+    <Resource Include="Img\Cards\FiveClubs.png" />
+    <Resource Include="Img\Cards\FiveDiamonds.png" />
+    <Resource Include="Img\Cards\FiveHearts.png" />
+    <Resource Include="Img\Cards\FiveSpades.png" />
+    <Resource Include="Img\Cards\FourClubs.png" />
+    <Resource Include="Img\Cards\FourDiamonds.png" />
+    <Resource Include="Img\Cards\FourHearts.png" />
+    <Resource Include="Img\Cards\FourSpades.png" />
+    <Resource Include="Img\Cards\JackClubs.png" />
+    <Resource Include="Img\Cards\JackDiamonds.png" />
+    <Resource Include="Img\Cards\JackHearts.png" />
+    <Resource Include="Img\Cards\JackSpades.png" />
+    <Resource Include="Img\Cards\KingClubs.png" />
+    <Resource Include="Img\Cards\KingDiamonds.png" />
+    <Resource Include="Img\Cards\KingHearts.png" />
+    <Resource Include="Img\Cards\KingSpades.png" />
+    <Resource Include="Img\Cards\NineClubs.png" />
+    <Resource Include="Img\Cards\NineDiamonds.png" />
+    <Resource Include="Img\Cards\NineHearts.png" />
+    <Resource Include="Img\Cards\NineSpades.png" />
+    <Resource Include="Img\Cards\QueenClubs.png" />
+    <Resource Include="Img\Cards\QueenDiamonds.png" />
+    <Resource Include="Img\Cards\QueenHearts.png" />
+    <Resource Include="Img\Cards\QueenSpades.png" />
+    <Resource Include="Img\Cards\SevenClubs.png" />
+    <Resource Include="Img\Cards\SevenDiamonds.png" />
+    <Resource Include="Img\Cards\SevenHearts.png" />
+    <Resource Include="Img\Cards\SevenSpades.png" />
+    <Resource Include="Img\Cards\SixClubs.png" />
+    <Resource Include="Img\Cards\SixDiamonds.png" />
+    <Resource Include="Img\Cards\SixHearts.png" />
+    <Resource Include="Img\Cards\SixSpades.png" />
+    <Resource Include="Img\Cards\TenClubs.png" />
+    <Resource Include="Img\Cards\TenDiamonds.png" />
+    <Resource Include="Img\Cards\TenHearts.png" />
+    <Resource Include="Img\Cards\TenSpades.png" />
+    <Resource Include="Img\Cards\ThreeClubs.png" />
+    <Resource Include="Img\Cards\ThreeDiamonds.png" />
+    <Resource Include="Img\Cards\ThreeHearts.png" />
+    <Resource Include="Img\Cards\ThreeSpades.png" />
+    <Resource Include="Img\Cards\TwoClubs.png" />
+    <Resource Include="Img\Cards\TwoDiamonds.png" />
+    <Resource Include="Img\Cards\TwoHearts.png" />
+    <Resource Include="Img\Cards\TwoSpades.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Img\Roulette\roulettetafel1.png" />

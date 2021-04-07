@@ -10,27 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using StonksCasino.Views.main;
 
-namespace StonksCasino
+namespace StonksCasino.Views.poker
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for PokerWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PokerWindow : Window
     {
-        public MainWindow()
+        public PokerWindow()
         {
             InitializeComponent();
-        }
-
-        private void Library_Click(object sender, RoutedEventArgs e)
-        {
-            LibraryWindow library = new LibraryWindow();
-            this.Close();
-            library.ShowDialog();
         }
     }
 }
