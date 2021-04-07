@@ -63,5 +63,11 @@ namespace StonksCasino.classes.Main
 			}
 		}
 
+		public Card(CardType cardType, CardValue cardValue, CardBackColor cardBackColor)
+		{
+			Type = cardType;
+			Value = cardValue;
+			BackColor = cardBackColor;
+		}
 	}
 }
