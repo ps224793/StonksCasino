@@ -50,7 +50,7 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="/Img/Cards/BackBlue.png" Height="100"></Image>
+                    <Image Source="/Img/Cards/BackBlue.png" Height="100" Margin="0,0,10,0"></Image>
                     <Image Source="/Img/Cards/BackBlue.png" Height="100"></Image>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
@@ -59,7 +59,7 @@
                     <TextBlock Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">0</TextBlock>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="/Img/Cards/BackRed.png" Height="100"></Image>
+                    <Image Source="/Img/Cards/BackRed.png" Height="100" Margin="0,0,10,0"></Image>
                     <Image Source="/Img/Cards/BackRed.png" Height="100"></Image>
                 </StackPanel>
             </Grid>
