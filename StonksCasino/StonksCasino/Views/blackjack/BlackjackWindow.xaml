@@ -61,7 +61,7 @@
                 <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
                     <TextBlock x:Name="tbBot" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="0"></TextBlock>
                     <Border Height="2" Background="Black"></Border>
-                    <TextBlock x:Name="tbPlayer" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="0"></TextBlock>
+                    <TextBlock Text="{Binding MySplitten.MyPlayerSplit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="tbPlayer" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"></TextBlock>
                 </StackPanel>
                 <ListView Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
                     <StackPanel Orientation="Horizontal">
@@ -96,7 +96,7 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <TextBox Text="{Binding MyToken.MyAantal, Mode=TwoWay}" TextAlignment="Center" VerticalContentAlignment="Center" Width="75" Height="35" Grid.Row="1" Background="White" FontSize="16"></TextBox>
+                <TextBox Text="{Binding MyToken.MyAantal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" VerticalContentAlignment="Center" Width="75" Height="35" Grid.Row="1" Background="White" FontSize="16"></TextBox>
                 <Button Click="Melding_Click" Width="60" Height="35" Grid.Row="3" Background="White" Content="Deal" FontSize="10"></Button>
                 <Button Width="60" Height="35" Grid.Row="4" Background="White" Content="Hit" FontSize="10"></Button>
             </Grid>
@@ -112,8 +112,8 @@
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Button Width="60" Height="35" Padding="10" Background="White" Content="Splitten" FontSize="10"></Button>
-                <Button Width="60" Height="35" Padding="10" Grid.Row="1" Background="White" Content="Dubbel" FontSize="10"></Button>
+                <Button Click="Splitten_Click" Width="60" Height="35" Padding="10" Background="White" Content="Splitten" FontSize="10"></Button>
+                <Button Click="Dubbelen_Click" Width="60" Height="35" Padding="10" Grid.Row="1" Background="White" Content="Dubbel" FontSize="10"></Button>
                 <Button Click="Stand_Click" Width="60" Height="35" Padding="10" Grid.Row="2" Background="White" Content="Stand" FontSize="10"></Button>
             </Grid>
         </Grid>

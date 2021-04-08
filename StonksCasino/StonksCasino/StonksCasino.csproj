@@ -55,7 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\blackjack\Dubbel.cs" />
     <Compile Include="classes\blackjack\PropertyChange.cs" />
+    <Compile Include="classes\blackjack\Splitten.cs" />
     <Compile Include="classes\blackjack\Token.cs" />
     <Compile Include="classes\Main\Card.cs" />
     <Compile Include="classes\Main\Database.cs" />

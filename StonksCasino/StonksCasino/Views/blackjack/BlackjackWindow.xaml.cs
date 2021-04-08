@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,18 +39,42 @@ namespace StonksCasino.Views.blackjack
             User = new User(Name, Tokens);
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         private Token _token = new Token();
 
         public Token MyToken
         {
             get { return _token; }
-            set { _token = value; }
+            set { _token = value; OnPropertyChanged(); }
         }
 
+        private Splitten _splitten = new Splitten();
+
+        public Splitten MySplitten
+        {
+            get { return _splitten; }
+            set { _splitten = value; OnPropertyChanged(); }
+        }
 
         private void Melding_Click(object sender, RoutedEventArgs e)
         {
             MyToken.GeefMelding();
+        }
+
+        private void Dubbelen_Click(object sender, RoutedEventArgs e)
+        {
+            MyToken.Dubbelen();
+        }
+
+        private void Splitten_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitten.Splitte();
         }
 
         private void Stand_Click(object sender, RoutedEventArgs e)
