@@ -50,5 +50,40 @@ namespace StonksCasino.Views.blackjack
         {
             MyToken.GeefMelding();
         }
+
+        private void Stand_Click(object sender, RoutedEventArgs e)
+        {
+            int Player = int.Parse(tbPlayer.Text);
+            int Bot = int.Parse(tbBot.Text);
+
+            if(Player == 21 || Bot > 21 && Player <= 21)
+            {
+                MessageBox.Show("Je hebt gewonnen!");
+            }
+            else if(Player > Bot && Player <= 21)
+            {
+                MessageBox.Show("Je hebt gewonnen!");
+            }
+            else if(Bot == 21 || Player > 21 && Bot <= 21)
+            {
+                MessageBox.Show("Je hebt verloren!");
+            }
+            else if(Bot > Player && Bot <= 21)
+            {
+                MessageBox.Show("Je hebt verloren!");
+            }
+            else if(Bot == Player)
+            {
+                MessageBox.Show("Het is gelijkspel!");
+            }
+            else if(Bot > 21 && Player > 21)
+            {
+                MessageBox.Show("Allebij verloren!");
+            }
+            else
+            {
+                MessageBox.Show("Fout!!!!");
+            }
+        }
     }
 }
