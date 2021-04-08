@@ -49,19 +49,29 @@
                     <ColumnDefinition Width="5*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="/Img/Cards/BackBlue.png" Height="100" Margin="0,0,10,0"></Image>
-                    <Image Source="/Img/Cards/BackBlue.png" Height="100"></Image>
-                </StackPanel>
+                <ListView Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="100" Width="75" Margin="0,0,10,0"></Image>
+                        <Image Source="/Img/Cards/BackBlue.png" Height="100" Margin="0,0,10,0"></Image>
+                        <Image Source="/Img/Cards/BackBlue.png" Height="100" Margin="0,0,10,0"></Image>
+                        <Image Height="100" Width="75" Margin="0,0,10,0"></Image>
+                        <Image Height="100" Width="75"></Image>
+                    </StackPanel>
+                </ListView>
                 <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">0</TextBlock>
+                    <TextBlock x:Name="tbBot" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="0"></TextBlock>
                     <Border Height="2" Background="Black"></Border>
-                    <TextBlock Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">0</TextBlock>
+                    <TextBlock x:Name="tbPlayer" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="0"></TextBlock>
                 </StackPanel>
-                <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="/Img/Cards/BackRed.png" Height="100" Margin="0,0,10,0"></Image>
-                    <Image Source="/Img/Cards/BackRed.png" Height="100"></Image>
-                </StackPanel>
+                <ListView Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="100" Width="75" Margin="0,0,10,0"></Image>
+                        <Image Height="100" Width="75" Margin="0,0,10,0"></Image>
+                        <Image Source="/Img/Cards/BackRed.png" Height="100" Margin="0,0,10,0"></Image>
+                        <Image Source="/Img/Cards/BackRed.png" Height="100" Margin="0,0,10,0"></Image>
+                        <Image Height="100" Width="75"></Image>
+                    </StackPanel>
+                </ListView>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
@@ -104,7 +114,7 @@
                 </Grid.RowDefinitions>
                 <Button Width="60" Height="35" Padding="10" Background="White" Content="Splitten" FontSize="10"></Button>
                 <Button Width="60" Height="35" Padding="10" Grid.Row="1" Background="White" Content="Dubbel" FontSize="10"></Button>
-                <Button Width="60" Height="35" Padding="10" Grid.Row="2" Background="White" Content="Stand" FontSize="10"></Button>
+                <Button Click="Stand_Click" Width="60" Height="35" Padding="10" Grid.Row="2" Background="White" Content="Stand" FontSize="10"></Button>
             </Grid>
         </Grid>
     </Grid>
