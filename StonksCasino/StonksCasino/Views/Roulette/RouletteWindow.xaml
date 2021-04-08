@@ -71,7 +71,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button x:Name="BtnStatistics" Background="ForestGreen" Foreground="White" BorderBrush="LightGreen" Width="100" Height="80">Statestieken</Button>
+                    <Button ToolTip="test" x:Name="BtnStatistics" Background="ForestGreen" Foreground="White" BorderBrush="LightGreen" Width="100" Height="80">Statestieken</Button>
                     <Button x:Name="BtnPlay" Background="ForestGreen" Margin="10,0,0,0" Foreground="White" BorderBrush="LightGreen" Width="100" Height="80" Click="BtnPlay_Click" >Speel!</Button>
                 </StackPanel>
                 <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center"/>
@@ -416,8 +416,8 @@
                     <Button Tag="{Binding MyBettingTable.Bets[0]}" MouseRightButtonUp="Button_MouseRightButtonUp"  Grid.Column="5" Grid.Row="23" Grid.RowSpan="9" Grid.ColumnSpan="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
                     
                     <!--button 1/2-->
-                    <Image Opacity="{Binding MyBettingTable.Bets[1].Opacity }" Source="{Binding MyBettingTable.Bets[1].ImageUrl}" Grid.Column="5" Grid.Row="19" Grid.ColumnSpan="5" Grid.RowSpan="5"/>
-                    <TextBlock Text="{Binding MyBettingTable.Bets[1].AmountLabel}" Foreground="White"  Grid.Column="5" Grid.Row="19" Grid.ColumnSpan="5" Grid.RowSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Image Opacity="{Binding MyBettingTable.Bets[1].Opacity }" Source="{Binding MyBettingTable.Bets[1].ImageUrl}" Grid.Column="5" Grid.Row="17" Grid.ColumnSpan="5" Grid.RowSpan="9"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[1].AmountLabel}" Foreground="White"  Grid.Column="5" Grid.Row="17" Grid.ColumnSpan="5" Grid.RowSpan="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Button Tag="{Binding MyBettingTable.Bets[1]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="5" Grid.Row="20" Grid.RowSpan="3" Grid.ColumnSpan="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
                    
                     <!--button 2-->
@@ -426,14 +426,89 @@
                     <Button Tag="{Binding MyBettingTable.Bets[2]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="5" Grid.Row="12" Grid.RowSpan="8" Grid.ColumnSpan="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
 
                     <!--button 2/3-->
-                    <Image Opacity="{Binding MyBettingTable.Bets[3].Opacity }" Source="{Binding MyBettingTable.Bets[3].ImageUrl}" Grid.Column="5" Grid.Row="8" Grid.ColumnSpan="5" Grid.RowSpan="5"/>
-                    <TextBlock Text="{Binding MyBettingTable.Bets[3].AmountLabel}" Foreground="White"  Grid.Column="5" Grid.Row="8" Grid.ColumnSpan="5" Grid.RowSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Image Opacity="{Binding MyBettingTable.Bets[3].Opacity }" Source="{Binding MyBettingTable.Bets[3].ImageUrl}" Grid.Column="5" Grid.Row="6" Grid.ColumnSpan="5" Grid.RowSpan="9"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[3].AmountLabel}" Foreground="White"   Grid.Column="5" Grid.Row="6" Grid.ColumnSpan="5" Grid.RowSpan="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Button Tag="{Binding MyBettingTable.Bets[3]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="5" Grid.Row="9" Grid.RowSpan="3" Grid.ColumnSpan="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
                     
                     <!--button 3-->
                     <Image Opacity="{Binding MyBettingTable.Bets[4].Opacity }" Source="{Binding MyBettingTable.Bets[4].ImageUrl}" Grid.Column="5" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
                     <TextBlock Text="{Binding MyBettingTable.Bets[4].AmountLabel}" Foreground="White"  Grid.Column="5" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Button Tag="{Binding MyBettingTable.Bets[4]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="5" Grid.Row="0" Grid.RowSpan="9" Grid.ColumnSpan="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 1/4-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[5].Opacity }" Source="{Binding MyBettingTable.Bets[5].ImageUrl}" Grid.Column="8" Grid.Row="22" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[5].AmountLabel}" Foreground="White" Grid.Column="8" Grid.Row="22" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[5]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="9" Grid.Row="23" Grid.ColumnSpan="3" Grid.RowSpan="9" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 1/2/4/5-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[6].Opacity }" Source="{Binding MyBettingTable.Bets[6].ImageUrl}" Grid.Column="8" Grid.Row="17" Grid.ColumnSpan="5" Grid.RowSpan="9"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[6].AmountLabel}" Foreground="White" Grid.Column="8" Grid.Row="17" Grid.ColumnSpan="5" Grid.RowSpan="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[6]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="9" Grid.Row="20" Grid.ColumnSpan="3" Grid.RowSpan="3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 2/5-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[7].Opacity }" Source="{Binding MyBettingTable.Bets[7].ImageUrl}" Grid.Column="8" Grid.Row="11" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[7].AmountLabel}" Foreground="White"  Grid.Column="8" Grid.Row="11" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[7]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="9" Grid.Row="12" Grid.ColumnSpan="3" Grid.RowSpan="8" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 1/2/4/5-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[8].Opacity }" Source="{Binding MyBettingTable.Bets[8].ImageUrl}" Grid.Column="8" Grid.Row="6" Grid.ColumnSpan="5" Grid.RowSpan="9"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[8].AmountLabel}" Foreground="White" Grid.Column="8" Grid.Row="6" Grid.ColumnSpan="5" Grid.RowSpan="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[8]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="9" Grid.Row="9" Grid.ColumnSpan="3" Grid.RowSpan="3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 3/6-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[9].Opacity }" Source="{Binding MyBettingTable.Bets[9].ImageUrl}" Grid.Column="8" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[9].AmountLabel}" Foreground="White" Grid.Column="8" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[9]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="9" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="9" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 4-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[10].Opacity }" Source="{Binding MyBettingTable.Bets[10].ImageUrl}" Grid.Column="11" Grid.Row="22" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[10].AmountLabel}" Foreground="White"  Grid.Column="11" Grid.Row="22" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[10]}" MouseRightButtonUp="Button_MouseRightButtonUp"  Grid.Column="12" Grid.Row="23" Grid.RowSpan="9" Grid.ColumnSpan="3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 4/5-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[11].Opacity }" Source="{Binding MyBettingTable.Bets[11].ImageUrl}" Grid.Column="11" Grid.Row="17" Grid.ColumnSpan="5" Grid.RowSpan="9"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[11].AmountLabel}" Foreground="White"  Grid.Column="11" Grid.Row="17" Grid.ColumnSpan="5" Grid.RowSpan="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[11]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="12" Grid.Row="20" Grid.RowSpan="3" Grid.ColumnSpan="3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 5-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[12].Opacity }" Source="{Binding MyBettingTable.Bets[12].ImageUrl}" Grid.Column="11" Grid.Row="11" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[12].AmountLabel}" Foreground="White"  Grid.Column="11" Grid.Row="11" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[12]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="12" Grid.Row="12" Grid.RowSpan="8" Grid.ColumnSpan="3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 5/6-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[13].Opacity }" Source="{Binding MyBettingTable.Bets[13].ImageUrl}" Grid.Column="11" Grid.Row="6" Grid.ColumnSpan="5" Grid.RowSpan="9"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[13].AmountLabel}" Foreground="White"   Grid.Column="11" Grid.Row="6" Grid.ColumnSpan="5" Grid.RowSpan="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[13]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="12" Grid.Row="9" Grid.RowSpan="3" Grid.ColumnSpan="3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 6-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[14].Opacity }" Source="{Binding MyBettingTable.Bets[14].ImageUrl}" Grid.Column="11" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[14].AmountLabel}" Foreground="White"  Grid.Column="11" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[14]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="12" Grid.Row="0" Grid.RowSpan="9" Grid.ColumnSpan="3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 4/7-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[15].Opacity }" Source="{Binding MyBettingTable.Bets[15].ImageUrl}" Grid.Column="14" Grid.Row="22" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[15].AmountLabel}" Foreground="White" Grid.Column="14" Grid.Row="22" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[15]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="15" Grid.Row="23" Grid.ColumnSpan="3" Grid.RowSpan="9" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 4/5/7/8-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[16].Opacity }" Source="{Binding MyBettingTable.Bets[16].ImageUrl}" Grid.Column="14" Grid.Row="17" Grid.ColumnSpan="5" Grid.RowSpan="9"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[16].AmountLabel}" Foreground="White" Grid.Column="14" Grid.Row="17" Grid.ColumnSpan="5" Grid.RowSpan="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[16]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="15" Grid.Row="20" Grid.ColumnSpan="3" Grid.RowSpan="3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 5/8-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[17].Opacity }" Source="{Binding MyBettingTable.Bets[17].ImageUrl}" Grid.Column="14" Grid.Row="11" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[17].AmountLabel}" Foreground="White"  Grid.Column="14" Grid.Row="11" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[17]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="15" Grid.Row="12" Grid.ColumnSpan="3" Grid.RowSpan="8" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 5/6/8/9-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[18].Opacity }" Source="{Binding MyBettingTable.Bets[18].ImageUrl}" Grid.Column="14" Grid.Row="6" Grid.ColumnSpan="5" Grid.RowSpan="9"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[18].AmountLabel}" Foreground="White" Grid.Column="14" Grid.Row="6" Grid.ColumnSpan="5" Grid.RowSpan="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[18]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="15" Grid.Row="9" Grid.ColumnSpan="3" Grid.RowSpan="3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
+                    <!--button 6/9-->
+                    <Image  Opacity="{Binding MyBettingTable.Bets[19].Opacity }" Source="{Binding MyBettingTable.Bets[19].ImageUrl}" Grid.Column="14" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[19].AmountLabel}" Foreground="White" Grid.Column="14" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[19]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="15" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="9" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
 
 
                 </Grid>
@@ -446,7 +521,7 @@
                     <Image Height="30" Source="/Img/Roulette/min.png"/>
                 </StackPanel>
                 <TextBox Grid.Row="3" Grid.RowSpan="2" BorderBrush="Transparent" Height="40" Background="Transparent" Text="1" Foreground="White" FontSize="20" TextAlignment="Center" VerticalContentAlignment="Center" Width="40"/>
-
+             
             </Grid>
 
 
