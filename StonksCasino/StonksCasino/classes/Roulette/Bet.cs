@@ -17,7 +17,7 @@ namespace StonksCasino.classes.Roulette
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private string _imageUrl;
+        private string _imageUrl = "/Img/Roulette/transparant.png";
 
         public string ImageUrl
         {
@@ -107,7 +107,7 @@ namespace StonksCasino.classes.Roulette
         {
             if (Set != true)
             {
-                ImageUrl = "";
+                ImageUrl = "/Img/Roulette/transparant.png";
               
             }
           
@@ -117,7 +117,7 @@ namespace StonksCasino.classes.Roulette
         {
             if (Set == true)
             {
-                ImageUrl = "";
+                ImageUrl = "/Img/Roulette/transparant.png";
                 AmountLabel = "";
                 Set = false;
 
