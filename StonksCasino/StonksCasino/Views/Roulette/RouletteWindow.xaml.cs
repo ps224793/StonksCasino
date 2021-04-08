@@ -50,6 +50,14 @@ namespace StonksCasino.Views.Roulette
             get { return _angle; }
             set { _angle = value; }
         }
+
+        private double _angle2 = 0;
+
+        public double Angle2
+        {
+            get { return _angle2; }
+            set { _angle2 = value; }
+        }
         public User User { get; set; }
         public RouletteWindow()
         {
@@ -68,6 +76,9 @@ namespace StonksCasino.Views.Roulette
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
+
+            int[] _score = new int[] { 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 20 };
+            Angle = 0;
             Storyboard storyboard = new Storyboard();
             storyboard.Duration = new Duration(TimeSpan.FromSeconds(8.0));
             double angle = _random.Next(1800, 3600);
@@ -87,6 +98,34 @@ namespace StonksCasino.Views.Roulette
 
             storyboard.Children.Add(rotateAnimation);
             storyboard.Begin();
+
+
+
+            //---------------------
+            Angle2 = 0;
+            int random1 = _random.Next(0, 36);
+            Storyboard storyboard2 = new Storyboard();
+            storyboard2.Duration = new Duration(TimeSpan.FromSeconds(8.0));
+            double angle2 = 9.72972973 * random1 + 3600 + Angle;
+            DoubleAnimation rotateAnimation2 = new DoubleAnimation()
+            {
+                From = Angle2,
+                To = angle2,
+                Duration = storyboard2.Duration,
+                AccelerationRatio = 0.4,
+                DecelerationRatio = 0.2
+            };
+            Angle2 += angle2;
+            Angle2 = Angle2 % 360;
+            Storyboard.SetTarget(rotateAnimation2, imBal);
+            Storyboard.SetTargetProperty(rotateAnimation2, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
+
+
+            storyboard2.Children.Add(rotateAnimation2);
+            storyboard2.Begin();
+
+            MessageBox.Show("het nummer is" + _score[random1]);
+
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

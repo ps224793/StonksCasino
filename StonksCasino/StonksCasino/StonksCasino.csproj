@@ -236,5 +236,10 @@
   <ItemGroup>
     <Resource Include="Img\Roulette\transparant.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\Roulette\Bal1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
