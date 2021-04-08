@@ -410,17 +410,31 @@
                         <RowDefinition Height="0.2*"/>
                         <RowDefinition Height="0.2*"/>
                     </Grid.RowDefinitions>
-                    
+                    <!--button 1-->
                     <Image Opacity="{Binding MyBettingTable.Bets[0].Opacity }" Source="{Binding MyBettingTable.Bets[0].ImageUrl}" Grid.Column="5" Grid.Row="22" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
                     <TextBlock Text="{Binding MyBettingTable.Bets[0].AmountLabel}" Foreground="White"  Grid.Column="5" Grid.Row="22" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Button Tag="{Binding MyBettingTable.Bets[0]}" MouseRightButtonUp="Button_MouseRightButtonUp"  Grid.Column="5" Grid.Row="23" Grid.RowSpan="9" Grid.ColumnSpan="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
-
+                    
+                    <!--button 1/2-->
                     <Image Opacity="{Binding MyBettingTable.Bets[1].Opacity }" Source="{Binding MyBettingTable.Bets[1].ImageUrl}" Grid.Column="5" Grid.Row="19" Grid.ColumnSpan="5" Grid.RowSpan="5"/>
                     <TextBlock Text="{Binding MyBettingTable.Bets[1].AmountLabel}" Foreground="White"  Grid.Column="5" Grid.Row="19" Grid.ColumnSpan="5" Grid.RowSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Button Tag="{Binding MyBettingTable.Bets[1]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="5" Grid.Row="20" Grid.RowSpan="3" Grid.ColumnSpan="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+                   
+                    <!--button 2-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[2].Opacity }" Source="{Binding MyBettingTable.Bets[2].ImageUrl}" Grid.Column="5" Grid.Row="11" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[2].AmountLabel}" Foreground="White"  Grid.Column="5" Grid.Row="11" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[2]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="5" Grid.Row="12" Grid.RowSpan="8" Grid.ColumnSpan="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
 
-
+                    <!--button 2/3-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[3].Opacity }" Source="{Binding MyBettingTable.Bets[3].ImageUrl}" Grid.Column="5" Grid.Row="8" Grid.ColumnSpan="5" Grid.RowSpan="5"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[3].AmountLabel}" Foreground="White"  Grid.Column="5" Grid.Row="8" Grid.ColumnSpan="5" Grid.RowSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[3]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="5" Grid.Row="9" Grid.RowSpan="3" Grid.ColumnSpan="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
                     
+                    <!--button 3-->
+                    <Image Opacity="{Binding MyBettingTable.Bets[4].Opacity }" Source="{Binding MyBettingTable.Bets[4].ImageUrl}" Grid.Column="5" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="10"/>
+                    <TextBlock Text="{Binding MyBettingTable.Bets[4].AmountLabel}" Foreground="White"  Grid.Column="5" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Tag="{Binding MyBettingTable.Bets[4]}" MouseRightButtonUp="Button_MouseRightButtonUp" Grid.Column="5" Grid.Row="0" Grid.RowSpan="9" Grid.ColumnSpan="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="Button_Click" Background="Transparent" Style="{DynamicResource Buttonstyleinzet}"/>
+
 
                 </Grid>
 
