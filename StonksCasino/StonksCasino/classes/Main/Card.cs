@@ -23,7 +23,7 @@ namespace StonksCasino.classes.Main
 		public CardType Type
 		{
 			get { return _type; }
-			set { _type = value; OnPropertyChanged("ImageURL"); }
+			set { _type = value; OnPropertyChanged("ImageURL"); OnPropertyChanged("ActiveURL"); }
 		}
 
 		private CardValue _value;
@@ -31,7 +31,30 @@ namespace StonksCasino.classes.Main
 		public CardValue Value
 		{
 			get { return _value; }
-			set { _value = value; OnPropertyChanged("ImageURL"); }
+			set { _value = value; OnPropertyChanged("ImageURL"); OnPropertyChanged("ActiveURL"); }
+		}
+
+		private bool _turned;
+
+		public bool Turned
+		{
+			get { return _turned; }
+			set { _turned = value; }
+		}
+
+		public string ActiveURL 
+		{
+			get
+			{
+				if (Turned == true)
+				{
+					return BackURL;
+				}
+				else
+				{
+					return ImageURL;
+				}
+			}
 		}
 
 		private CardBackColor _backColor;
@@ -39,9 +62,8 @@ namespace StonksCasino.classes.Main
 		public CardBackColor BackColor
 		{
 			get { return _backColor; }
-			set { _backColor = value; OnPropertyChanged("BackURL"); }
+			set { _backColor = value; OnPropertyChanged("BackURL"); OnPropertyChanged("ActiveURL"); }
 		}
-
 
 		public string ImageURL 
 		{
@@ -68,6 +90,15 @@ namespace StonksCasino.classes.Main
 			Type = cardType;
 			Value = cardValue;
 			BackColor = cardBackColor;
+			Turned = false;
+		}
+
+		public Card(CardType cardType, CardValue cardValue, CardBackColor cardBackColor, bool turned)
+		{
+			Type = cardType;
+			Value = cardValue;
+			BackColor = cardBackColor;
+			Turned = turned;
 		}
 	}
 }
