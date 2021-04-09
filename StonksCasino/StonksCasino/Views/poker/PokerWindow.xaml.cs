@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using StonksCasino.classes.poker;
 
 namespace StonksCasino.Views.poker
 {
@@ -19,6 +20,8 @@ namespace StonksCasino.Views.poker
     /// </summary>
     public partial class PokerWindow : Window
     {
+        private PokerDeck deck = new PokerDeck();
+
         public PokerWindow()
         {
             InitializeComponent();
