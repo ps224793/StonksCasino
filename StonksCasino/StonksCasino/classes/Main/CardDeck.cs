@@ -40,6 +40,17 @@ namespace StonksCasino.classes.Main
             }
             return false;
         }
+        
+        public Card DrawCard()
+        {
+            if (_shuffledCards.Count > 0)
+            {
+                Card card = _shuffledCards[0];
+                _shuffledCards.RemoveAt(0);
+                return card;
+            }
+            return null;
+        }
 
         public void AssembleDeck()
         {
