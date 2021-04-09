@@ -54,17 +54,11 @@ namespace StonksCasino.Views.blackjack
             set { _token = value; OnPropertyChanged(); }
         }
 
-        private Splitten _splitten = new Splitten();
-
-        public Splitten MySplitten
-        {
-            get { return _splitten; }
-            set { _splitten = value; OnPropertyChanged(); }
-        }
-
         private void Melding_Click(object sender, RoutedEventArgs e)
         {
             MyToken.GeefMelding();
+
+
         }
 
         private void Dubbelen_Click(object sender, RoutedEventArgs e)
@@ -74,7 +68,7 @@ namespace StonksCasino.Views.blackjack
 
         private void Splitten_Click(object sender, RoutedEventArgs e)
         {
-            MySplitten.Splitte();
+            MyToken.Splitte();
         }
 
         private void Stand_Click(object sender, RoutedEventArgs e)
