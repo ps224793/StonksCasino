@@ -57,6 +57,8 @@ namespace StonksCasino.Views.blackjack
         private void Melding_Click(object sender, RoutedEventArgs e)
         {
             MyToken.GeefMelding();
+
+
         }
 
         private void Dubbelen_Click(object sender, RoutedEventArgs e)
