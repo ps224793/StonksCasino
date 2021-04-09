@@ -62,7 +62,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="classes\Main\CardDeck.cs" />
+    <Compile Include="classes\blackjack\Dubbel.cs" />
+    <Compile Include="classes\blackjack\CardDeck.cs" />
     <Compile Include="classes\blackjack\PropertyChange.cs" />
+    <Compile Include="classes\blackjack\Splitten.cs" />
     <Compile Include="classes\blackjack\Token.cs" />
     <Compile Include="classes\Main\Card.cs" />
     <Compile Include="classes\Main\Database.cs" />
@@ -233,6 +236,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Img\Roulette\transparant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\Roulette\Bal1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
