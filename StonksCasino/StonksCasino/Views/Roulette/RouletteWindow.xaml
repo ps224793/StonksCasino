@@ -55,6 +55,12 @@
                     <RotateTransform Angle="0" />
                 </Image.RenderTransform>
             </Image>
+            <Image  x:Name="imBal" Source="/Img/Roulette/Bal1.png" Grid.Row="1" Grid.Column="1" RenderTransformOrigin="0.5,0.5"  >
+                <Image.RenderTransform>
+                    <RotateTransform Angle="0" />
+                </Image.RenderTransform>
+            </Image>
+
             <Grid Grid.Row="1" Grid.Column="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*"/>
