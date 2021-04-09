@@ -6,12 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using MoreLinq;
 using System.Security.Policy;
+using StonksCasino.enums.card;
 
-namespace StonksCasino.classes.blackjack
+namespace StonksCasino.classes.Main
 {
     class CardDeck
     {
-        private List<Card> _shuffledCards;
+        private List<Card> _shuffledCards = new List<Card>();
 
         public CardDeck()
         {
@@ -39,6 +40,20 @@ namespace StonksCasino.classes.blackjack
             }
             return false;
         }
+
+        public void AssembleDeck()
+        {
+            List<Card> cards = new List<Card>();
+            foreach (CardValue value in Enum.GetValues(typeof(CardValue)))
+            {
+                foreach (CardType type in Enum.GetValues(typeof(CardType)))
+                {
+                    cards.Add(new Card(type, value, CardBackColor.Blue));
+                }
+            }
+            AddCards(cards);
+        }
+
 
     }
 }

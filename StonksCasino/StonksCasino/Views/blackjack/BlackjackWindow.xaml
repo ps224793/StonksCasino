@@ -61,7 +61,7 @@
                 <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
                     <TextBlock x:Name="tbBot" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="0"></TextBlock>
                     <Border Height="2" Background="Black"></Border>
-                    <TextBlock Text="{Binding MySplitten.MyPlayerSplit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="tbPlayer" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding MyToken.MyPlayerSplit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="tbPlayer" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"></TextBlock>
                 </StackPanel>
                 <ListView Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
                     <StackPanel Orientation="Horizontal">
