@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StonksCasino.Views.poker"
         mc:Ignorable="d"
-        Title="PokerWindow" Height="450" Width="800">
+        Title="PokerWindow" Height="500" MinHeight="500" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -31,18 +31,49 @@
             </Grid.Background>
             <Grid Margin="20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
                     
                 </StackPanel>
+
+
+                <Border Grid.Row="2" Grid.Column="2" CornerRadius="5" BorderBrush="#282929" BorderThickness="10">
+                    <Grid Grid.Row="2" Grid.Column="3" Background="#282929">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="10px"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="1" Margin="0,10">
+                        <StackPanel Margin="0,0,0,5">
+                            <Button Content="Raise"></Button>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Content="-"></Button>
+                                <TextBox Grid.Column="1" Text="00" IsReadOnly="True" TextAlignment="Center"></TextBox>
+                                <Button Grid.Column="2" Content="+"></Button>
+                            </Grid>
+                        </StackPanel>
+                        <Button Content="Fold" Margin="0,0,0,5"></Button>
+                        <Button Content="Call"></Button>
+                    </StackPanel>
+
+                    <Image Grid.Column="0" Source="/Img/Main/Token.png"></Image>
+                    </Grid>
+                </Border>
             </Grid>
         </Grid>
     </Grid>

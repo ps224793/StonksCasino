@@ -68,6 +68,8 @@
     <Compile Include="classes\Main\Database.cs" />
     <Compile Include="classes\Main\User.cs" />
     <Compile Include="classes\poker\PokerDeck.cs" />
+    <Compile Include="classes\poker\PokerGame.cs" />
+    <Compile Include="classes\poker\PokerPlayer.cs" />
     <Compile Include="classes\Roulette\Bet.cs" />
     <Compile Include="classes\Roulette\Bettingtable.cs" />
     <Compile Include="enums\card\CardBackColor.cs" />

@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StonksCasino.classes.Main;
-using StonksCasino.enums.card;
 
 namespace StonksCasino.classes.poker
 {
-    class PokerDeck : CardDeck
+    class PokerGame
     {
-        public PokerDeck()
-        {
-            AssembleDeck();
-        }
 
+        private PokerDeck deck = new PokerDeck();
+
+        
+
+        public PokerGame()
+        {
+            
+        }
     }
 }
