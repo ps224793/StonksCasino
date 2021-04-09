@@ -99,21 +99,63 @@ namespace StonksCasino.classes.Roulette
 
             _bets.Add(new Bet(new int[] { 19, 22 }, false, 18));
             _bets.Add(new Bet(new int[] { 19, 20, 22, 23 }, false, 9));
-            _bets.Add(new Bet(new int[] { 8, 11 }, false, 18));
-            _bets.Add(new Bet(new int[] { 8, 9, 11, 12 }, false, 9));
-            _bets.Add(new Bet(new int[] { 9, 12 }, false, 18));
+            _bets.Add(new Bet(new int[] { 20, 23 }, false, 18));
+            _bets.Add(new Bet(new int[] { 20, 21, 23, 24 }, false, 9));
+            _bets.Add(new Bet(new int[] { 21, 24 }, false, 18));
 
-            _bets.Add(new Bet(new int[] { 10 }));
-            _bets.Add(new Bet(new int[] { 10, 11 }, false, 18));
-            _bets.Add(new Bet(new int[] { 11 }));
-            _bets.Add(new Bet(new int[] { 11, 12 }, false, 18));
-            _bets.Add(new Bet(new int[] { 12 }));
+            _bets.Add(new Bet(new int[] { 22 }));
+            _bets.Add(new Bet(new int[] { 22, 23 }, false, 18));
+            _bets.Add(new Bet(new int[] { 23 }));
+            _bets.Add(new Bet(new int[] { 23, 24 }, false, 18));
+            _bets.Add(new Bet(new int[] { 24 }));
 
-            _bets.Add(new Bet(new int[] { 10, 13 }, false, 18));
-            _bets.Add(new Bet(new int[] { 10, 11, 13, 14 }, false, 9));
-            _bets.Add(new Bet(new int[] { 11, 14 }, false, 18));
-            _bets.Add(new Bet(new int[] { 11, 12, 14, 15 }, false, 9));
-            _bets.Add(new Bet(new int[] { 12, 15 }, false, 18));
+            _bets.Add(new Bet(new int[] { 22, 25 }, false, 18));
+            _bets.Add(new Bet(new int[] { 22, 23, 25, 26 }, false, 9));
+            _bets.Add(new Bet(new int[] { 23, 26 }, false, 18));
+            _bets.Add(new Bet(new int[] { 23, 24, 26, 27 }, false, 9));
+            _bets.Add(new Bet(new int[] { 24, 27 }, false, 18));
+
+            _bets.Add(new Bet(new int[] { 25 }));
+            _bets.Add(new Bet(new int[] { 25, 26 }, false, 18));
+            _bets.Add(new Bet(new int[] { 26 }));
+            _bets.Add(new Bet(new int[] { 26, 27 }, false, 18));
+            _bets.Add(new Bet(new int[] { 27 }));
+
+            _bets.Add(new Bet(new int[] { 25, 28 }, false, 18));
+            _bets.Add(new Bet(new int[] { 25, 26, 28, 29 }, false, 9));
+            _bets.Add(new Bet(new int[] { 26, 29 }, false, 18));
+            _bets.Add(new Bet(new int[] { 26, 27, 29, 30 }, false, 9));
+            _bets.Add(new Bet(new int[] { 27, 30 }, false, 18));
+
+            _bets.Add(new Bet(new int[] { 28 }));
+            _bets.Add(new Bet(new int[] { 28, 29 }, false, 18));
+            _bets.Add(new Bet(new int[] { 29 }));
+            _bets.Add(new Bet(new int[] { 29, 30 }, false, 18));
+            _bets.Add(new Bet(new int[] { 30 }));
+
+            _bets.Add(new Bet(new int[] { 28, 31 }, false, 18));
+            _bets.Add(new Bet(new int[] { 28, 29, 31, 32 }, false, 9));
+            _bets.Add(new Bet(new int[] { 29, 32 }, false, 18));
+            _bets.Add(new Bet(new int[] { 29, 30, 32, 33 }, false, 9));
+            _bets.Add(new Bet(new int[] { 30, 32 }, false, 18));
+
+            _bets.Add(new Bet(new int[] { 31 }));
+            _bets.Add(new Bet(new int[] { 31, 32 }, false, 18));
+            _bets.Add(new Bet(new int[] { 32 }));
+            _bets.Add(new Bet(new int[] { 32, 33 }, false, 18));
+            _bets.Add(new Bet(new int[] { 33 }));
+
+            _bets.Add(new Bet(new int[] { 31, 34 }, false, 18));
+            _bets.Add(new Bet(new int[] { 31, 32, 34, 35 }, false, 9));
+            _bets.Add(new Bet(new int[] { 32, 35 }, false, 18));
+            _bets.Add(new Bet(new int[] { 32, 33, 35, 36 }, false, 9));
+            _bets.Add(new Bet(new int[] { 33, 36 }, false, 18));
+
+            _bets.Add(new Bet(new int[] { 34 }));
+            _bets.Add(new Bet(new int[] { 34, 35 }, false, 18));
+            _bets.Add(new Bet(new int[] { 35 }));
+            _bets.Add(new Bet(new int[] { 35, 36 }, false, 18));
+            _bets.Add(new Bet(new int[] { 36 }));
         }
 
     }

@@ -130,7 +130,7 @@ namespace StonksCasino.Views.Roulette
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button bt = sender as Button;
-            ((Bet)bt.Tag).SetBet(5);
+            ((Bet)bt.Tag).SetBet(1000);
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
