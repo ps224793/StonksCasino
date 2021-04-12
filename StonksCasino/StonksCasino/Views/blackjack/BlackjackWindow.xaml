@@ -49,28 +49,24 @@
                     <ColumnDefinition Width="5*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ListView Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Height="100" Width="75" Margin="0,0,10,0"></Image>
-                        <Image Source="/Img/Cards/BackBlue.png" Height="100" Margin="0,0,10,0"></Image>
-                        <Image Source="/Img/Cards/BackBlue.png" Height="100" Margin="0,0,10,0"></Image>
-                        <Image Height="100" Width="75" Margin="0,0,10,0"></Image>
-                        <Image Height="100" Width="75"></Image>
-                    </StackPanel>
+                <ListView HorizontalAlignment="Center" ItemsSource="{Binding }" Grid.Column="1" SelectedItem="{Binding SelectedCard}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding GetImageUrl}" Height="100" Margin="-20,0,0,0"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
                 <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock x:Name="tbBot" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="0"></TextBlock>
+                    <TextBlock Text="{Binding MyComputers.MyComputervalue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="tbBot" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"></TextBlock>
                     <Border Height="2" Background="Black"></Border>
                     <TextBlock Text="{Binding MyToken.MyPlayerSplit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="tbPlayer" Width="50" Height="40" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"></TextBlock>
                 </StackPanel>
-                <ListView Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Height="100" Width="75" Margin="0,0,10,0"></Image>
-                        <Image Height="100" Width="75" Margin="0,0,10,0"></Image>
-                        <Image Source="/Img/Cards/BackRed.png" Height="100" Margin="0,0,10,0"></Image>
-                        <Image Source="/Img/Cards/BackRed.png" Height="100" Margin="0,0,10,0"></Image>
-                        <Image Height="100" Width="75"></Image>
-                    </StackPanel>
+                <ListView HorizontalAlignment="Center" ItemsSource="{Binding }" Grid.Column="1" Grid.Row="2" SelectedItem="{Binding SelectedCard}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding GetImageUrl}" Height="100" Margin="-20,0,0,0"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </Grid>
             <Grid Grid.Column="1">

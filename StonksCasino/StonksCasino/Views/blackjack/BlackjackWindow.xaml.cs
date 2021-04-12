@@ -24,6 +24,8 @@ namespace StonksCasino.Views.blackjack
     /// </summary>
     public partial class BlackjackWindow : Window
     {
+
+        private BlackjackDeck deck = new BlackjackDeck();
         public User User { get; set; }
         public BlackjackWindow()
         {
@@ -46,19 +48,25 @@ namespace StonksCasino.Views.blackjack
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private Token _token = new Token();
+        private BlackJack _token = new BlackJack();
 
-        public Token MyToken
+        public BlackJack MyToken
         {
             get { return _token; }
             set { _token = value; OnPropertyChanged(); }
         }
 
-        private void Melding_Click(object sender, RoutedEventArgs e)
+        private Computers _computers = new Computers();
+
+        public Computers MyComputers
+        {
+            get { return _computers; }
+            set { _computers = value; OnPropertyChanged(); }
+        }
+
+        public void Melding_Click(object sender, RoutedEventArgs e)
         {
             MyToken.GeefMelding();
-
-
         }
 
         private void Dubbelen_Click(object sender, RoutedEventArgs e)
