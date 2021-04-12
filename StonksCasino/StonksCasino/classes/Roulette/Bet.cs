@@ -73,6 +73,14 @@ namespace StonksCasino.classes.Roulette
             get { return _set; }
             set { _set = value; OnPropertyChanged(); }
         }
+        private int _finalnumber;
+
+        public int MyFinalNumber
+        {
+            get { return _finalnumber; }
+            set { _finalnumber = value; }
+        }
+
 
         private int _multiplier = 36;
 
@@ -80,11 +88,31 @@ namespace StonksCasino.classes.Roulette
         {
             Values = values;
             _multiplier = multiplier;
+         
         }
 
         public int Checkwin(int value)
         {
-            return 0;
+            //Controleer of er ingezet is op deze
+            if (Set)
+            {
+                if (Values.Contains(value))
+                {
+                    return Amount * _multiplier;
+                }
+            }
+
+             return 0;
+        }
+
+        public void ResetBet()
+        {
+            Amount = 0;
+            AmountLabel = "";
+           
+            Opacity = 0;
+            ImageUrl = "/Img/Roulette/transparant.png";
+            Set = false;
         }
 
         public void SetBet(int amount)
