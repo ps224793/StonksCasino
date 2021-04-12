@@ -32,6 +32,11 @@ namespace StonksCasino.Views.blackjack
             Account();
             DataContext = this;
             InitializeComponent();
+
+            btSplitten.IsEnabled = false;
+            btDubbel.IsEnabled = false;
+            btStand.IsEnabled = false;
+            btHit.IsEnabled = false;
         }
         private void Account()
         {
@@ -66,17 +71,48 @@ namespace StonksCasino.Views.blackjack
 
         public void Melding_Click(object sender, RoutedEventArgs e)
         {
-            MyToken.GeefMelding();
+            try
+            {
+                int tokeninzetten = int.Parse(tokeninzet.Text);
+
+                if (tokeninzetten > 0)
+                {
+                    MyToken.GeefMelding();
+
+                    tokeninzet.IsEnabled = false;
+                    btDubbel.IsEnabled = true;
+                    btSplitten.IsEnabled = true;
+                    btStand.IsEnabled = true;
+                    btHit.IsEnabled = true;
+                    btDeal.IsEnabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("U moet minimaal 1 token inzetten om te kunnen spelen!");
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("U moet minimaal 1 token inzetten om te kunnen spelen!");
+            }
+        }
+
+        private void Hit_Click(object sender, RoutedEventArgs e)
+        {
+            btHit.IsEnabled = false;
         }
 
         private void Dubbelen_Click(object sender, RoutedEventArgs e)
         {
             MyToken.Dubbelen();
+            btDubbel.IsEnabled = false;
         }
 
         private void Splitten_Click(object sender, RoutedEventArgs e)
         {
             MyToken.Splitte();
+            btSplitten.IsEnabled = false;
         }
 
         private void Stand_Click(object sender, RoutedEventArgs e)
@@ -84,7 +120,11 @@ namespace StonksCasino.Views.blackjack
             int Player = int.Parse(tbPlayer.Text);
             int Bot = int.Parse(tbBot.Text);
 
-            if(Player == 21 || Bot > 21 && Player <= 21)
+            btStand.IsEnabled = false;
+            btDeal.IsEnabled = true;
+            tokeninzet.IsEnabled = true;
+
+            if (Player == 21 || Bot > 21 && Player <= 21)
             {
                 MessageBox.Show("Je hebt gewonnen!");
             }
