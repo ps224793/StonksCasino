@@ -7,6 +7,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Height="50" Width="100" Content="Bibliotheek" Click="Library_Click"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Img/Main/background.png" />
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Inloggen" Grid.Column="1" FontSize="30px" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="E-mail" Foreground="White" FontSize="16"></TextBlock>
+            <TextBox FontSize="14" Foreground="White" Background="Black"></TextBox>
+            <TextBlock Text="Wachtwoord" Foreground="White" FontSize="16"></TextBlock>
+            <TextBox FontSize="14" Foreground="White" Background="Black"></TextBox>
+        </StackPanel>
+        <Button Grid.Row="2" Grid.Column="1" Height="50" Width="100" Content="Game On" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="20px" Click="Library_Click"/>
     </Grid>
 </Window>

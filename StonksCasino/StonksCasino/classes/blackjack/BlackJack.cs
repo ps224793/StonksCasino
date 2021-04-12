@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace StonksCasino.classes.blackjack
 {
-    public class Token : PropertyChange
+    public class BlackJack : PropertyChange
     {
         private int _aantal;
 

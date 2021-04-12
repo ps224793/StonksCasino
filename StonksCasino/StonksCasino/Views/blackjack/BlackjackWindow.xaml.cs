@@ -24,12 +24,19 @@ namespace StonksCasino.Views.blackjack
     /// </summary>
     public partial class BlackjackWindow : Window
     {
+
+        private BlackjackDeck deck = new BlackjackDeck();
         public User User { get; set; }
         public BlackjackWindow()
         {
             Account();
             DataContext = this;
             InitializeComponent();
+
+            btSplitten.IsEnabled = false;
+            btDubbel.IsEnabled = false;
+            btStand.IsEnabled = false;
+            btHit.IsEnabled = false;
         }
         private void Account()
         {
@@ -46,29 +53,66 @@ namespace StonksCasino.Views.blackjack
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private Token _token = new Token();
+        private BlackJack _token = new BlackJack();
 
-        public Token MyToken
+        public BlackJack MyToken
         {
             get { return _token; }
             set { _token = value; OnPropertyChanged(); }
         }
 
-        private void Melding_Click(object sender, RoutedEventArgs e)
+        private Computers _computers = new Computers();
+
+        public Computers MyComputers
         {
-            MyToken.GeefMelding();
+            get { return _computers; }
+            set { _computers = value; OnPropertyChanged(); }
+        }
 
+        public void Melding_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int tokeninzetten = int.Parse(tokeninzet.Text);
 
+                if (tokeninzetten > 0)
+                {
+                    MyToken.GeefMelding();
+
+                    tokeninzet.IsEnabled = false;
+                    btDubbel.IsEnabled = true;
+                    btSplitten.IsEnabled = true;
+                    btStand.IsEnabled = true;
+                    btHit.IsEnabled = true;
+                    btDeal.IsEnabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("U moet minimaal 1 token inzetten om te kunnen spelen!");
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("U moet minimaal 1 token inzetten om te kunnen spelen!");
+            }
+        }
+
+        private void Hit_Click(object sender, RoutedEventArgs e)
+        {
+            btHit.IsEnabled = false;
         }
 
         private void Dubbelen_Click(object sender, RoutedEventArgs e)
         {
             MyToken.Dubbelen();
+            btDubbel.IsEnabled = false;
         }
 
         private void Splitten_Click(object sender, RoutedEventArgs e)
         {
             MyToken.Splitte();
+            btSplitten.IsEnabled = false;
         }
 
         private void Stand_Click(object sender, RoutedEventArgs e)
@@ -76,7 +120,11 @@ namespace StonksCasino.Views.blackjack
             int Player = int.Parse(tbPlayer.Text);
             int Bot = int.Parse(tbBot.Text);
 
-            if(Player == 21 || Bot > 21 && Player <= 21)
+            btStand.IsEnabled = false;
+            btDeal.IsEnabled = true;
+            tokeninzet.IsEnabled = true;
+
+            if (Player == 21 || Bot > 21 && Player <= 21)
             {
                 MessageBox.Show("Je hebt gewonnen!");
             }
