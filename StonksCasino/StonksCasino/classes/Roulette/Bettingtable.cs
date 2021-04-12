@@ -160,5 +160,16 @@ namespace StonksCasino.classes.Roulette
             _bets.Add(new Bet(new int[] { 0 }));
         }
 
+        public int Checkwin(int finalnumber)
+        {
+            int totalwin = 0;
+            foreach (Bet bet in _bets)
+            {
+                totalwin += bet.Checkwin(finalnumber);
+                bet.ResetBet();
+            }
+            return totalwin;
+        }
     }
+
 }

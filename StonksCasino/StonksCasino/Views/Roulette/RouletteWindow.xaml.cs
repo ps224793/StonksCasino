@@ -44,6 +44,9 @@ namespace StonksCasino.Views.Roulette
             set { _myamount = value; }
         }
 
+       
+
+
 
 
         Random _random = new Random();
@@ -69,20 +72,25 @@ namespace StonksCasino.Views.Roulette
             get { return _angle2; }
             set { _angle2 = value; }
         }
-        public User User { get; set; }
-        public RouletteWindow()
+        int _Finalnumber;
+        int _Tokens;
+        public User user { get; set; }
+        
+        public RouletteWindow(User user)
         {
+            this.user = user;
             Account();
             DataContext = this;
             InitializeComponent();
+            
         }
        
         private void Account()
         {
             DataTable dataTable = Database.Accounts();
-            string Name = dataTable.Rows[0]["Gebruikersnaam"].ToString();
-            int Tokens = (int)dataTable.Rows[0]["Token"];
-            User = new User(Name, Tokens);
+            _Tokens = (int)dataTable.Rows[0]["Token"];
+            user.MyTokens = _Tokens;
+            
         }
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
@@ -116,6 +124,7 @@ namespace StonksCasino.Views.Roulette
             Angle2 = 0;
             int random1 = _random.Next(0, 36);
             Storyboard storyboard2 = new Storyboard();
+            storyboard2.Completed += Storyboard2_Completed;
             storyboard2.Duration = new Duration(TimeSpan.FromSeconds(8.0));
             double angle2 = 9.72972973 * random1 + 3600 + Angle;
             DoubleAnimation rotateAnimation2 = new DoubleAnimation()
@@ -133,11 +142,25 @@ namespace StonksCasino.Views.Roulette
 
 
             storyboard2.Children.Add(rotateAnimation2);
-            storyboard2.Begin();
-
-            MessageBox.Show("het nummer is" + _score[random1]);
-
+            storyboard2.Begin(this);
+          
+           _Finalnumber = _score[random1];
+            
+            
         }
+
+        private void Storyboard2_Completed(object sender, EventArgs e)
+        {
+            int totelwin = MyBettingTable.Checkwin(_Finalnumber);
+            if (totelwin > 0)
+            {
+                MessageBox.Show("Gefeliciteerd u hebt € " + totelwin.ToString() + " Gewonnen");
+                DataTable data = Database.Tokensadd(_Tokens, totelwin);
+                
+            }
+              Account();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button bt = sender as Button;
