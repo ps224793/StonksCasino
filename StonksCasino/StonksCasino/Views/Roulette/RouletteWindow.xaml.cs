@@ -27,10 +27,21 @@ namespace StonksCasino.Views.Roulette
     {
         private Bettingtable _bettingtable = new Bettingtable();
 
+
+        int _betAmount;
+
         public Bettingtable MyBettingTable
         {
             get { return _bettingtable; }
             set { _bettingtable = value; OnPropertyChanged(); }
+        }
+
+        private Bet _myamount = new Bet();
+
+        public Bet MyAmount
+        {
+            get { return _myamount ; }
+            set { _myamount = value; }
         }
 
 
@@ -130,7 +141,7 @@ namespace StonksCasino.Views.Roulette
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button bt = sender as Button;
-            ((Bet)bt.Tag).SetBet(5);
+            ((Bet)bt.Tag).SetBet(_betAmount);
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
@@ -152,6 +163,71 @@ namespace StonksCasino.Views.Roulette
         {
             Button bt = sender as Button;
             ((Bet)bt.Tag).DeleteBet();
+        }
+
+        private void Fiche_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            TextBox text = sender as TextBox;
+            int inttext = 0;
+
+
+            try
+            {
+                inttext = int.Parse(text.Text);
+            }
+            catch (Exception)
+            {
+
+
+            }
+            _betAmount = inttext;
+            
+            if (text.Text.Length < 4)
+            {
+                text.FontSize = 20;
+            }
+            if (text.Text.Length >= 4)
+            {
+                text.FontSize = 15;
+            }
+            if (text.Text.Length >= 5)
+            {
+                text.FontSize = 12;
+            }
+            if (text.Text.Length >= 6)
+            {
+                text.FontSize = 10;
+            }
+            
+         
+
+
+        }
+
+
+
+        private void MaskNumericInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !TextIsNumeric(e.Text);
+        }
+
+        private void MaskNumericPaste(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(string)))
+            {
+                string input = (string)e.DataObject.GetData(typeof(string));
+                if (!TextIsNumeric(input)) e.CancelCommand();
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
+
+        private bool TextIsNumeric(string input)
+        {
+            return input.All(c => Char.IsDigit(c) || Char.IsControl(c));
         }
     }
 }
