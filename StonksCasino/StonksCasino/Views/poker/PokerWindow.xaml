@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StonksCasino.Views.poker"
         mc:Ignorable="d"
-        Title="PokerWindow" Height="500" MinHeight="500" Width="800">
+        Title="PokerWindow" Height="600" MinHeight="600" Width="800" MinWidth="800"
+        WindowState="Maximized"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -40,6 +42,20 @@
                     <RowDefinition Height="1.5*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
+
+                <ItemsControl   Background="Transparent" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" ItemsSource="{Binding Players[0].Hand, Mode=OneWay}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Image Margin="10,0" Source="{Binding ImageURL, Mode=OneWay}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
                     
                 </StackPanel>
@@ -53,8 +69,15 @@
                         <ColumnDefinition Width="10px"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="1" Margin="0,10">
-                        <StackPanel Margin="0,0,0,5">
+                     
+                    <Grid Grid.Column="1" Margin="0,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2.5*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                        
+                        <StackPanel Grid.Row="0">
                             <Button Content="Raise"></Button>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -67,9 +90,9 @@
                                 <Button Grid.Column="2" Content="+"></Button>
                             </Grid>
                         </StackPanel>
-                        <Button Content="Fold" Margin="0,0,0,5"></Button>
-                        <Button Content="Call"></Button>
-                    </StackPanel>
+                        <Button Grid.Row="1" Content="Fold"></Button>
+                        <Button Grid.Row="2" Content="Call"></Button>
+                    </Grid>
 
                     <Image Grid.Column="0" Source="/Img/Main/Token.png"></Image>
                     </Grid>

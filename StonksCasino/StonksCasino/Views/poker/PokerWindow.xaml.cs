@@ -20,10 +20,11 @@ namespace StonksCasino.Views.poker
     /// </summary>
     public partial class PokerWindow : Window
     {
-        private PokerDeck deck = new PokerDeck();
-
+        private PokerGame game;
         public PokerWindow()
         {
+            game = new PokerGame();
+            DataContext = game;
             InitializeComponent();
         }
     }
