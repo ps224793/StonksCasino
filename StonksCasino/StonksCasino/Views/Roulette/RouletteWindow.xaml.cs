@@ -163,8 +163,17 @@ namespace StonksCasino.Views.Roulette
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Button bt = sender as Button;
-            ((Bet)bt.Tag).SetBet(_betAmount);
+            if (_Tokens >= _betAmount)
+            {
+                Button bt = sender as Button;
+                ((Bet)bt.Tag).SetBet(_betAmount);
+                DataTable data = Database.Tokensremove(_Tokens, _betAmount);
+                Account();
+            }
+            else
+            {
+                MessageBox.Show("U heeft niet genoeg tokens om in te zetten");
+            }
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
@@ -185,7 +194,8 @@ namespace StonksCasino.Views.Roulette
         private void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             Button bt = sender as Button;
-            ((Bet)bt.Tag).DeleteBet();
+            ((Bet)bt.Tag).DeleteBet(_Tokens);
+            Account();
         }
 
         private void Fiche_TextChanged(object sender, TextChangedEventArgs e)

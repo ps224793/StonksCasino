@@ -1006,7 +1006,7 @@
                     </Image>
                     <Image Height="30" Source="/Img/Roulette/min.png"/>
                 </StackPanel>
-                <TextBox Grid.Row="3" Grid.RowSpan="2" BorderBrush="Transparent" Height="40" Background="Transparent" Text="1" Foreground="White" FontSize="20" TextAlignment="Center" VerticalContentAlignment="Center" Width="40" TextChanged="Fiche_TextChanged" MaxLength="6" CaretBrush="White"   PreviewTextInput="MaskNumericInput" DataObject.Pasting="MaskNumericPaste" Style="{DynamicResource TextBoxStyle1}" />
+                <TextBox Grid.Row="3" Grid.RowSpan="2" BorderBrush="Transparent" Height="40" Background="Transparent" Text="1" Foreground="White" FontSize="20" TextAlignment="Center" VerticalContentAlignment="Center" Width="40"  TextChanged="Fiche_TextChanged" MaxLength="6" CaretBrush="White"   PreviewTextInput="MaskNumericInput" DataObject.Pasting="MaskNumericPaste" Style="{DynamicResource TextBoxStyle1}" />
              
             </Grid>
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using StonksCasino.classes.Main;
 
 namespace StonksCasino.classes.Roulette
 {
@@ -117,11 +119,20 @@ namespace StonksCasino.classes.Roulette
 
         public void SetBet(int amount)
         {
-            AmountLabel = amount.ToString();
-            Amount = amount;
-            Opacity = 1;
-            ImageUrl = "/Img/Roulette/Token.png";
-            Set = true;
+            if (Set)
+            {
+                int Current = int.Parse(AmountLabel);
+                AmountLabel = (Current + amount).ToString();
+                Amount = Current + amount;
+            }
+            else
+            {
+                AmountLabel = amount.ToString();
+                Amount = amount;
+                Opacity = 1;
+                ImageUrl = "/Img/Roulette/Token.png";
+                Set = true;
+            }
         }
         public void PreviewBet()
         {
@@ -141,10 +152,12 @@ namespace StonksCasino.classes.Roulette
           
 
         }
-        public void DeleteBet()
+        public void DeleteBet(int tokens)
         {
             if (Set == true)
             {
+                int amount = int.Parse(AmountLabel);
+                DataTable data = Database.Tokensadd(tokens, amount);
                 ImageUrl = "/Img/Roulette/transparant.png";
                 AmountLabel = "";
                 Set = false;

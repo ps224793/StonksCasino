@@ -57,6 +57,29 @@ namespace StonksCasino.classes.Main
             return result;
             
         }
+        public static DataTable Tokensremove(int huidige, int value)
+        {
+            int tokens = huidige - value;
+            DataTable result = new DataTable();
+            try
+            {
+                _connection.Open();
+                SqlCommand command = _connection.CreateCommand();
+                command.CommandText = "UPDATE Accounts SET Token = " + tokens + " WHERE id=1;";
+                SqlDataReader reader = command.ExecuteReader();
+
+            }
+            catch (Exception)
+            {
+                //Problem with the databas
+            }
+            finally
+            {
+                _connection.Close();
+            }
+            return result;
+
+        }
 
     }
 }
