@@ -91,6 +91,7 @@ namespace StonksCasino.classes.Main
 			Value = cardValue;
 			BackColor = cardBackColor;
 			Turned = false;
+			OnPropertyChanged("ImageURL");
 		}
 
 		public Card(CardType cardType, CardValue cardValue, CardBackColor cardBackColor, bool turned)
@@ -99,6 +100,7 @@ namespace StonksCasino.classes.Main
 			Value = cardValue;
 			BackColor = cardBackColor;
 			Turned = turned;
+			OnPropertyChanged("ImageURL");
 		}
 	}
 }
