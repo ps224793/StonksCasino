@@ -182,42 +182,25 @@ namespace StonksCasino.Views.Roulette
 
             }
             _betAmount = inttext;
-
-            if (inttext < 1000)
+            
+            if (text.Text.Length < 4)
             {
                 text.FontSize = 20;
             }
-            else
-            {
-
-            }
-
-            if (inttext >= 1000)
+            if (text.Text.Length >= 4)
             {
                 text.FontSize = 15;
             }
-            else
-            {
-
-            }
-
-            if (inttext >= 10000)
+            if (text.Text.Length >= 5)
             {
                 text.FontSize = 12;
             }
-            else
-            {
-
-            }
-
-            if (inttext >= 100000)
+            if (text.Text.Length >= 6)
             {
                 text.FontSize = 10;
             }
-            else
-            {
-
-            }
+            
+         
 
 
         }
