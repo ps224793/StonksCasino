@@ -158,6 +158,10 @@ namespace StonksCasino.classes.Roulette
             _bets.Add(new Bet(new int[] { 36 }));
 
             _bets.Add(new Bet(new int[] { 0 }));
+
+            _bets.Add(new Bet(new int[] { 1,2,3,4,5,6,7,8,9,10,11,12 }, false, 3));
+            _bets.Add(new Bet(new int[] { 13,14,15,16,17,18,19,20,21,22,23,24}, false, 3));
+            _bets.Add(new Bet(new int[] { 25,26,27,28,29,30,31,32,33,34,35,36}, false, 3));
         }
 
         public int Checkwin(int finalnumber)

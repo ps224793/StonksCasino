@@ -26,10 +26,17 @@ namespace StonksCasino.classes.Roulette
             get { return _imageUrl; }
             set { _imageUrl = value; OnPropertyChanged(); }
         }
+        private int _fontsize = 12;
+
+        public int Myfontsize
+        {
+            get { return _fontsize; }
+            set { _fontsize = value; OnPropertyChanged();}
+        }
 
         private double _opacity;
 
-        public double Opacity
+        public double Opacity 
         {
             get { return _opacity; }
             set { _opacity = value; OnPropertyChanged(); }
@@ -132,6 +139,19 @@ namespace StonksCasino.classes.Roulette
                 Opacity = 1;
                 ImageUrl = "/Img/Roulette/Token.png";
                 Set = true;
+                if (Amount < 100)
+                {
+                    Myfontsize = 12;
+                }
+                if (Amount >= 100)
+                {
+                    Myfontsize = 10;
+                }
+                if (Amount >= 1000)
+                {
+                    Myfontsize = 6;
+                }
+
             }
         }
         public void PreviewBet()
@@ -166,6 +186,7 @@ namespace StonksCasino.classes.Roulette
 
 
         }
+       
 
 
     }
