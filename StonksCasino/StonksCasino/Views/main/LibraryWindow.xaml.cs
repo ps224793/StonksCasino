@@ -41,6 +41,17 @@ namespace StonksCasino.Views.main
 
         private void Roullete_click(object sender, RoutedEventArgs e)
         {
+            Roulettegame();
+        }
+
+        private void ImgRoulette_Click(object sender, RoutedEventArgs e)
+        {
+            Roulettegame();
+        }
+
+        private void Roulettegame()
+        {
+
             RouletteWindow roulette = new RouletteWindow(user);
             this.Hide();
             roulette.ShowDialog();
@@ -49,6 +60,16 @@ namespace StonksCasino.Views.main
 
         private void Blackjack_click(object sender, RoutedEventArgs e)
         {
+            Blackjackgame();
+        }
+
+        private void ImgBlackjack_Click(object sender, RoutedEventArgs e)
+        {
+            Blackjackgame();
+        }
+
+        private void Blackjackgame()
+        {
             BlackjackWindow roulette = new BlackjackWindow();
             this.Hide();
             roulette.ShowDialog();
@@ -56,6 +77,16 @@ namespace StonksCasino.Views.main
         }
 
         private void Poker_click(object sender, RoutedEventArgs e)
+        {
+            Pokergame();
+        }
+
+        private void ImgPoker_Click(object sender, RoutedEventArgs e)
+        {
+            Pokergame();
+        }
+
+        private void Pokergame()
         {
             PokerWindow roulette = new PokerWindow();
             this.Hide();
