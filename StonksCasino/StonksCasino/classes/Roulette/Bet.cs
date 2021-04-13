@@ -152,12 +152,12 @@ namespace StonksCasino.classes.Roulette
           
 
         }
-        public void DeleteBet(int tokens)
+        public void DeleteBet()
         {
             if (Set == true)
             {
                 int amount = int.Parse(AmountLabel);
-                DataTable data = Database.Tokensadd(tokens, amount);
+                DataTable data = Database.Tokensadd( amount);
                 ImageUrl = "/Img/Roulette/transparant.png";
                 AmountLabel = "";
                 Set = false;

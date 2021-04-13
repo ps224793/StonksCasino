@@ -34,9 +34,11 @@ namespace StonksCasino.classes.Main
             return result;
         }
 
-        public static DataTable Tokensadd(int huidige, int value)
+        public static DataTable Tokensadd( int value)
         {
-            int tokens = huidige + value;
+            DataTable dataTable = Accounts();
+            int HuidigeTokens = (int)dataTable.Rows[0]["Token"];
+            int tokens = HuidigeTokens + value;
             DataTable result = new DataTable();
             try
             {
@@ -57,9 +59,11 @@ namespace StonksCasino.classes.Main
             return result;
             
         }
-        public static DataTable Tokensremove(int huidige, int value)
+        public static DataTable Tokensremove(int value)
         {
-            int tokens = huidige - value;
+            DataTable dataTable = Accounts();
+            int HuidigeTokens = (int)dataTable.Rows[0]["Token"];
+            int tokens = HuidigeTokens - value;
             DataTable result = new DataTable();
             try
             {
