@@ -24,7 +24,7 @@ namespace StonksCasino.Views.main
     /// </summary>
     public partial class LibraryWindow : Window
     {
-        public User User { get; set; }
+        public User user { get; set; }
         public LibraryWindow()
         {
             Account();
@@ -36,7 +36,7 @@ namespace StonksCasino.Views.main
             DataTable dataTable = Database.Accounts();
             string Name = dataTable.Rows[0]["Gebruikersnaam"].ToString();
             int Tokens = (int)dataTable.Rows[0]["Token"];
-            User = new User(Name, Tokens);
+            user = new User(Name, Tokens);
         }
 
         private void Roullete_click(object sender, RoutedEventArgs e)
@@ -51,7 +51,8 @@ namespace StonksCasino.Views.main
 
         private void Roulettegame()
         {
-            RouletteWindow roulette = new RouletteWindow();
+
+            RouletteWindow roulette = new RouletteWindow(user);
             this.Hide();
             roulette.ShowDialog();
             this.Show();

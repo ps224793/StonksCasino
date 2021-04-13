@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using StonksCasino.classes.Main;
 
 namespace StonksCasino.classes.Roulette
 {
@@ -73,6 +75,14 @@ namespace StonksCasino.classes.Roulette
             get { return _set; }
             set { _set = value; OnPropertyChanged(); }
         }
+        private int _finalnumber;
+
+        public int MyFinalNumber
+        {
+            get { return _finalnumber; }
+            set { _finalnumber = value; }
+        }
+
 
         private int _multiplier = 36;
 
@@ -80,20 +90,49 @@ namespace StonksCasino.classes.Roulette
         {
             Values = values;
             _multiplier = multiplier;
+         
         }
 
         public int Checkwin(int value)
         {
-            return 0;
+            //Controleer of er ingezet is op deze
+            if (Set)
+            {
+                if (Values.Contains(value))
+                {
+                    return Amount * _multiplier;
+                }
+            }
+
+             return 0;
+        }
+
+        public void ResetBet()
+        {
+            Amount = 0;
+            AmountLabel = "";
+           
+            Opacity = 0;
+            ImageUrl = "/Img/Roulette/transparant.png";
+            Set = false;
         }
 
         public void SetBet(int amount)
         {
-            AmountLabel = amount.ToString();
-            Amount = amount;
-            Opacity = 1;
-            ImageUrl = "/Img/Roulette/Token.png";
-            Set = true;
+            if (Set)
+            {
+                int Current = int.Parse(AmountLabel);
+                AmountLabel = (Current + amount).ToString();
+                Amount = Current + amount;
+            }
+            else
+            {
+                AmountLabel = amount.ToString();
+                Amount = amount;
+                Opacity = 1;
+                ImageUrl = "/Img/Roulette/Token.png";
+                Set = true;
+            }
         }
         public void PreviewBet()
         {
@@ -117,6 +156,8 @@ namespace StonksCasino.classes.Roulette
         {
             if (Set == true)
             {
+                int amount = int.Parse(AmountLabel);
+                DataTable data = Database.Tokensadd( amount);
                 ImageUrl = "/Img/Roulette/transparant.png";
                 AmountLabel = "";
                 Set = false;

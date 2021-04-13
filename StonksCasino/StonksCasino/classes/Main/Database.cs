@@ -10,7 +10,7 @@ namespace StonksCasino.classes.Main
 {
     class Database
     {
-        static SqlConnection _connection = new SqlConnection("Server = tcp:summacasino.database.windows.net, 1433; Initial Catalog = Casino; Persist Security Info=False;User ID = Summacollegeproject3; Password=Casinoproject3;");
+        static SqlConnection _connection = new SqlConnection("Server = tcp:summacasino.database.windows.net, 1433; Initial Catalog = Casino; Persist Security Info=False;user ID = Summacollegeproject3; Password=Casinoproject3;");
 
         public static DataTable Accounts()
         {
@@ -33,5 +33,57 @@ namespace StonksCasino.classes.Main
             }
             return result;
         }
+
+        public static DataTable Tokensadd( int value)
+        {
+            DataTable dataTable = Accounts();
+            int HuidigeTokens = (int)dataTable.Rows[0]["Token"];
+            int tokens = HuidigeTokens + value;
+            DataTable result = new DataTable();
+            try
+            {
+                _connection.Open();
+                SqlCommand command = _connection.CreateCommand();
+                command.CommandText = "UPDATE Accounts SET Token = " + tokens + " WHERE id=1;";
+                SqlDataReader reader = command.ExecuteReader();
+              
+            }
+            catch (Exception)
+            {
+                //Problem with the databas
+            }
+            finally
+            {
+                _connection.Close();
+            }
+            return result;
+            
+        }
+        public static DataTable Tokensremove(int value)
+        {
+            DataTable dataTable = Accounts();
+            int HuidigeTokens = (int)dataTable.Rows[0]["Token"];
+            int tokens = HuidigeTokens - value;
+            DataTable result = new DataTable();
+            try
+            {
+                _connection.Open();
+                SqlCommand command = _connection.CreateCommand();
+                command.CommandText = "UPDATE Accounts SET Token = " + tokens + " WHERE id=1;";
+                SqlDataReader reader = command.ExecuteReader();
+
+            }
+            catch (Exception)
+            {
+                //Problem with the databas
+            }
+            finally
+            {
+                _connection.Close();
+            }
+            return result;
+
+        }
+
     }
 }
