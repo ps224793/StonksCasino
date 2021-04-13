@@ -155,7 +155,7 @@ namespace StonksCasino.Views.Roulette
             if (totelwin > 0)
             {
                 MessageBox.Show("Gefeliciteerd u hebt € " + totelwin.ToString() + " Gewonnen");
-                DataTable data = Database.Tokensadd(_Tokens, totelwin);
+                DataTable data = Database.Tokensadd( totelwin);
                 
             }
               Account();
@@ -167,7 +167,7 @@ namespace StonksCasino.Views.Roulette
             {
                 Button bt = sender as Button;
                 ((Bet)bt.Tag).SetBet(_betAmount);
-                DataTable data = Database.Tokensremove(_Tokens, _betAmount);
+                DataTable data = Database.Tokensremove(_betAmount);
                 Account();
             }
             else
@@ -194,7 +194,7 @@ namespace StonksCasino.Views.Roulette
         private void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             Button bt = sender as Button;
-            ((Bet)bt.Tag).DeleteBet(_Tokens);
+            ((Bet)bt.Tag).DeleteBet();
             Account();
         }
 
