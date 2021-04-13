@@ -28,11 +28,75 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
-            <StackPanel>
-                <Button Height="30" Width="60" Content="Roulette" Click="Roullete_click" />
-                <Button Height="30" Width="60" Content="BlackJack" Click="Blackjack_click"/>
-                <Button Height="30" Width="60" Content="Poker" Click="Poker_click"/>
-            </StackPanel>
+
+            <Grid.Background>
+                <ImageBrush ImageSource="/Img/Main/background.png" />
+            </Grid.Background>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35*"></RowDefinition>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="250*"/>
+                    <RowDefinition Height="35*"/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Column="1" Grid.Row="1" Background="White" Content="Roulette" Click="Roullete_click" />
+                <Button Grid.Column="1" Grid.Row="2" Background="Black" Click="ImgRoulette_Click">
+                    <Image  Source="/Img/Roulette/roulettetafel1.png" Grid.Column="1" Grid.Row="2" Stretch="Fill" ></Image>
+                </Button>
+
+                <Button Grid.Column="3" Grid.Row="1" Background="White" Content="BlackJack" Click="Blackjack_click"/>
+                <Button Grid.Column="3" Grid.Row="2" Background="Black" Click="ImgBlackjack_Click">
+                    <Image Source="/Img/Main/blackjacklogo.jpg" Grid.Column="3" Grid.Row="2" Stretch="Fill" ></Image>
+                </Button>
+
+                <Button Grid.Column="5" Grid.Row="1" Content="Poker" Background="White" Click="Poker_click"/>
+
+                <Button Grid.Column="5" Grid.Row="2" Background="Black" Click="ImgPoker_Click">
+                    <Image Source="/Img/Main/pokerlogo.png" Grid.Column="5" Grid.Row="2" Stretch="Fill" ></Image>
+                </Button>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="10*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35*"></RowDefinition>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="250*"/>
+                    <RowDefinition Height="35*"/>
+                </Grid.RowDefinitions>
+
+            </Grid>
         </Grid>
     </Grid>
 </Window>
