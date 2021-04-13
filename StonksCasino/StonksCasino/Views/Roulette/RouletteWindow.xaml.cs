@@ -178,9 +178,19 @@ namespace StonksCasino.Views.Roulette
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
-            Button bt = sender as Button;
             
+            Button bt = sender as Button;
             ((Bet)bt.Tag).PreviewBet();
+            bool Chip = ((Bet)bt.Tag).Set;
+            if (Chip == true)
+            {
+                bt.ToolTip = ((Bet)bt.Tag).AmountLabel;
+            }
+            else
+            {
+                bt.ToolTip = null;
+            }
+            
         }
 
         private void Button_MouseLeave(object sender, MouseEventArgs e)
@@ -262,5 +272,7 @@ namespace StonksCasino.Views.Roulette
         {
             return input.All(c => Char.IsDigit(c) || Char.IsControl(c));
         }
+
+       
     }
 }
