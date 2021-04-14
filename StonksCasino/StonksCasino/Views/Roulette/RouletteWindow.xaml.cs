@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using StonksCasino.classes.Main;
 using StonksCasino.classes.Roulette;
 
@@ -40,16 +41,14 @@ namespace StonksCasino.Views.Roulette
 
         public Bet MyAmount
         {
-            get { return _myamount ; }
+            get { return _myamount; }
             set { _myamount = value; }
         }
 
-       
-
-
-
-
         Random _random = new Random();
+
+        bool _Spinning = false;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -72,30 +71,54 @@ namespace StonksCasino.Views.Roulette
             get { return _angle2; }
             set { _angle2 = value; }
         }
+        int _value = 0;
         int _Finalnumber;
         int _Tokens;
+        bool _kaninzetten = true;
+        DispatcherTimer _timerinzetten = new DispatcherTimer();
         public User user { get; set; }
-        
+
         public RouletteWindow(User user)
         {
+            
             this.user = user;
             Account();
             DataContext = this;
+            configTimer();
             InitializeComponent();
             
+
         }
-       
+
+
         private void Account()
         {
             DataTable dataTable = Database.Accounts();
             _Tokens = (int)dataTable.Rows[0]["Token"];
             user.MyTokens = _Tokens;
-            
+
+        }
+        private void configTimer()
+        {
+            _timerinzetten.Interval = TimeSpan.FromSeconds(1);
+            _timerinzetten.Tick += _timerinzetten_Tick;
+        }
+
+        private void _timerinzetten_Tick(object sender, EventArgs e)
+        {
+            if (_value == 3)
+            {
+                _kaninzetten = false;
+                _value = 0;
+                _timerinzetten.Stop();
+            }
+            _value++;
         }
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-
+            _timerinzetten.Start();
+            _Spinning = true;
             int[] _score = new int[] { 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 20 };
             Angle = 0;
             Storyboard storyboard = new Storyboard();
@@ -126,7 +149,7 @@ namespace StonksCasino.Views.Roulette
             Storyboard storyboard2 = new Storyboard();
             storyboard2.Completed += Storyboard2_Completed;
             storyboard2.Duration = new Duration(TimeSpan.FromSeconds(8.0));
-            double angle2 = 9.72972973 * random1 + 3600 + Angle;
+            double angle2 = 9.72972973 * random1 + -3600 + Angle;
             DoubleAnimation rotateAnimation2 = new DoubleAnimation()
             {
                 From = Angle2,
@@ -143,42 +166,63 @@ namespace StonksCasino.Views.Roulette
 
             storyboard2.Children.Add(rotateAnimation2);
             storyboard2.Begin(this);
-          
-           _Finalnumber = _score[random1];
-            
-            
+
+            _Finalnumber = _score[random1];
+
+
         }
 
         private void Storyboard2_Completed(object sender, EventArgs e)
         {
             int totelwin = MyBettingTable.Checkwin(_Finalnumber);
+            MyAmount.MyTotalinzet = 0;
             if (totelwin > 0)
             {
                 MessageBox.Show("Gefeliciteerd u hebt € " + totelwin.ToString() + " Gewonnen");
-                DataTable data = Database.Tokensadd( totelwin);
-                
+                DataTable data = Database.Tokensadd(totelwin);
+
             }
-              Account();
+            _kaninzetten = true;
+            Account();
+            _Spinning = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (_Tokens >= _betAmount)
+            if (_kaninzetten)
             {
-                Button bt = sender as Button;
-                ((Bet)bt.Tag).SetBet(_betAmount);
-                DataTable data = Database.Tokensremove(_betAmount);
-                Account();
+
+
+                if (_betAmount > 0)
+                {
+
+                    if (_Tokens >= _betAmount)
+                    {
+                        MyAmount.Addtotal(_betAmount);
+                        Button bt = sender as Button;
+                        ((Bet)bt.Tag).SetBet(_betAmount);
+                        DataTable data = Database.Tokensremove(_betAmount);
+                        Account();
+                    }
+                    else
+                    {
+                        MessageBox.Show("U heeft niet genoeg tokens om in te zetten");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("U kunt geen fiche van 0 inzetten");
+                }
             }
             else
             {
-                MessageBox.Show("U heeft niet genoeg tokens om in te zetten");
+                MessageBox.Show("U kunt nu niet meer inzetten. Wacht tot er een nummer is gevallen");
             }
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
-            
+
             Button bt = sender as Button;
             ((Bet)bt.Tag).PreviewBet();
             bool Chip = ((Bet)bt.Tag).Set;
@@ -190,7 +234,7 @@ namespace StonksCasino.Views.Roulette
             {
                 bt.ToolTip = null;
             }
-            
+
         }
 
         private void Button_MouseLeave(object sender, MouseEventArgs e)
@@ -199,12 +243,15 @@ namespace StonksCasino.Views.Roulette
             ((Bet)bt.Tag).dePreviewBet();
         }
 
-     
+
 
         private void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             Button bt = sender as Button;
+            int amount = ((Bet)bt.Tag).Amount;
             ((Bet)bt.Tag).DeleteBet();
+
+            MyAmount.RemoveTotal(amount);
             Account();
         }
 
@@ -225,7 +272,7 @@ namespace StonksCasino.Views.Roulette
 
             }
             _betAmount = inttext;
-            
+
             if (text.Text.Length < 4)
             {
                 text.FontSize = 20;
@@ -242,8 +289,8 @@ namespace StonksCasino.Views.Roulette
             {
                 text.FontSize = 10;
             }
-            
-         
+
+
 
 
         }
@@ -273,6 +320,55 @@ namespace StonksCasino.Views.Roulette
             return input.All(c => Char.IsDigit(c) || Char.IsControl(c));
         }
 
-       
+        private void plus_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            MyAmount.Plusinzet();
+        }
+
+        private void min_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_betAmount > 0)
+            {
+                MyAmount.Mininzet();
+            }
+
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (_Spinning)
+            {
+                if (MyAmount.MyTotalinzet > 0)
+                {
+                    MessageBoxResult spinning = MessageBox.Show("De roulette tafel is aan het draaien. Als u nu weggaat dan bent u uw ingezetten fiches kwijt", "Weet u zeker dat u wil weggaan?", MessageBoxButton.OKCancel);
+                    if (spinning == MessageBoxResult.Cancel)
+                    {
+                        e.Cancel = true;
+                    }
+
+
+                }
+                else
+                {
+                    if (MyAmount.MyTotalinzet > 0)
+                    {
+                        MessageBoxResult Leave = MessageBox.Show("U heeft geld ingezet. Als u nu weggaat worden uw ingezetten fiches teruggegeven", "Weet u zeker dat u wil weggaan?", MessageBoxButton.OKCancel);
+                        if (Leave == MessageBoxResult.OK)
+                        {
+                            DataTable data = Database.Tokensadd(MyAmount.MyTotalinzet);
+                            Account();
+                        }
+                        else
+                        {
+                            e.Cancel = true;
+                        }
+
+
+
+                    }
+                }
+
+            }
+        }
     }
 }

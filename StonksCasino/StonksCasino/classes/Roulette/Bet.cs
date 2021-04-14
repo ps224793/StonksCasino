@@ -89,7 +89,22 @@ namespace StonksCasino.classes.Roulette
             get { return _finalnumber; }
             set { _finalnumber = value; }
         }
+        private int _totalinzet;
 
+        public int MyTotalinzet
+        {
+            get { return _totalinzet; }
+            set { _totalinzet = value; OnPropertyChanged(); }
+        }
+        private string _Inzet = "1"; 
+
+        public string MyInzet
+        {
+            get { return _Inzet; }
+            set { _Inzet = value; OnPropertyChanged(); }
+        }
+
+         
 
         private int _multiplier = 36;
 
@@ -126,6 +141,7 @@ namespace StonksCasino.classes.Roulette
 
         public void SetBet(int amount)
         {
+          
             if (Set)
             {
                 int Current = int.Parse(AmountLabel);
@@ -136,6 +152,7 @@ namespace StonksCasino.classes.Roulette
             {
                 AmountLabel = amount.ToString();
                 Amount = amount;
+               
                 Opacity = 1;
                 ImageUrl = "/Img/Roulette/Token.png";
                 Set = true;
@@ -180,13 +197,34 @@ namespace StonksCasino.classes.Roulette
                 DataTable data = Database.Tokensadd( amount);
                 ImageUrl = "/Img/Roulette/transparant.png";
                 AmountLabel = "";
+                Amount = 0;
                 Set = false;
 
             }
 
 
         }
-       
+        public void Addtotal(int amount)
+        {
+            MyTotalinzet += amount;
+        }
+        public void RemoveTotal(int amount)
+        {
+            MyTotalinzet -= amount;
+        }
+        public void Plusinzet()
+        {
+            int inzet = int.Parse(MyInzet);
+            inzet += 1;
+            MyInzet = inzet.ToString();
+        }
+        public void Mininzet()
+        {
+            int inzet = int.Parse(MyInzet);
+            inzet -= 1;
+            MyInzet = inzet.ToString();
+        }
+
 
 
     }
