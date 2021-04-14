@@ -60,7 +60,7 @@
                 </Grid.RowDefinitions>
 
                 <Button Grid.Column="1" Grid.Row="1" Background="White" Content="Roulette" Click="Roullete_click" />
-                <Button Grid.Column="1" Grid.Row="2" Background="Black" Click="ImgRoulette_Click">
+                <Button Grid.Column="1" Grid.Row="2" Background="Black" Click="ImgRoulette_Click" Style="{DynamicResource ButtonStyleMenu}">
                     <Image  Source="/Img/Roulette/roulettetafel1.png" Grid.Column="1" Grid.Row="2" Stretch="Fill" ></Image>
                 </Button>
 
