@@ -6,10 +6,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using StonksCasino.classes.Main;
 
 namespace StonksCasino.classes.Roulette
 {
+   
     public class Bet : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -18,6 +20,7 @@ namespace StonksCasino.classes.Roulette
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
 
         private string _imageUrl = "/Img/Roulette/transparant.png";
 
@@ -103,15 +106,23 @@ namespace StonksCasino.classes.Roulette
             get { return _Inzet; }
             set { _Inzet = value; OnPropertyChanged(); }
         }
+        private int _value;
 
-         
+        public int MyValue
+        {
+            get { return _value; }
+            set { _value = value; }
+        }
+
+
+
 
         private int _multiplier = 36;
 
         public Bet(int[] values = null, bool special = false, int multiplier = 36)
         {
             Values = values;
-            _multiplier = multiplier;
+            _multiplier = multiplier; 
          
         }
 
@@ -122,21 +133,50 @@ namespace StonksCasino.classes.Roulette
             {
                 if (Values.Contains(value))
                 {
+                    Opacity = 0.5;
                     return Amount * _multiplier;
+                   
                 }
+                else
+                {
+                    ResetBet();
+                }
+            }
+            else
+            {
+                ResetBet();
             }
 
              return 0;
         }
+   
+
+   
 
         public void ResetBet()
         {
+            
             Amount = 0;
             AmountLabel = "";
-           
-            Opacity = 0;
+       
+            Opacity = 1;
             ImageUrl = "/Img/Roulette/transparant.png";
             Set = false;
+        }
+        public void ResetWinningBet()
+        {
+            if (Set)
+            {
+    
+               
+                Amount = 0;
+                AmountLabel = "";
+                MyValue = 0;
+                Opacity = 1;
+                ImageUrl = "/Img/Roulette/transparant.png";
+                Set = false;
+            }
+           
         }
 
         public void SetBet(int amount)

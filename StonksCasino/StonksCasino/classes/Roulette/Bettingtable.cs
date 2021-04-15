@@ -188,9 +188,16 @@ namespace StonksCasino.classes.Roulette
             foreach (Bet bet in _bets)
             {
                 totalwin += bet.Checkwin(finalnumber);
-                bet.ResetBet();
+            
             }
             return totalwin;
+        }
+        public void Resetbet()
+        {
+            foreach (Bet bet in _bets)
+            {
+               bet.ResetWinningBet();
+            }
         }
     }
 
