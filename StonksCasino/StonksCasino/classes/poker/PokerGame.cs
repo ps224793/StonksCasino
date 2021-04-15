@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using StonksCasino.classes.Main;
 
 namespace StonksCasino.classes.poker
 {
-    class PokerGame
+    class PokerGame : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
         private PokerDeck deck = new PokerDeck();
 
@@ -20,12 +29,20 @@ namespace StonksCasino.classes.poker
             set { _players = value; }
         }
 
+        private ObservableCollection<Card> _table;
+
+        public ObservableCollection<Card> MyTable
+        {
+            get { return _table; }
+            set { _table = value; OnPropertyChanged(); }
+        }
 
         public PokerGame()
         {
             Players = new List<PokerPlayer>();
             Players.Add(new PokerPlayer());
             SetPlayerHand(Players[0]);
+            SetTable();
         }
 
         private void SetPlayerHand(PokerPlayer player)
@@ -36,6 +53,17 @@ namespace StonksCasino.classes.poker
             player.SetHand(cards);
         }
 
+        private void SetTable()
+        {
+            ObservableCollection<Card> cards = new ObservableCollection<Card>();
+            for (int i = 0; i < 5; i++)
+            {
+                Card card = deck.DrawCard();
+                //card.Turned = true;
+                cards.Add(card);
+            }
+            MyTable = cards;
+        }
 
     }
 }
