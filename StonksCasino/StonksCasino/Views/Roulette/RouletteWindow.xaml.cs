@@ -74,8 +74,11 @@ namespace StonksCasino.Views.Roulette
         int _value = 0;
         int _Finalnumber;
         int _Tokens;
-        bool _kaninzetten = true;
-        DispatcherTimer _timerinzetten = new DispatcherTimer();
+        int _valuedisplay;
+        bool _canbet = true;
+        bool _display = true;
+        DispatcherTimer _timerbet = new DispatcherTimer();
+        DispatcherTimer _timerdisplay = new DispatcherTimer();
         public User user { get; set; }
 
         public RouletteWindow(User user)
@@ -85,6 +88,7 @@ namespace StonksCasino.Views.Roulette
             Account();
             DataContext = this;
             configTimer();
+
             InitializeComponent();
             
 
@@ -100,24 +104,39 @@ namespace StonksCasino.Views.Roulette
         }
         private void configTimer()
         {
-            _timerinzetten.Interval = TimeSpan.FromSeconds(1);
-            _timerinzetten.Tick += _timerinzetten_Tick;
+            _timerbet.Interval = TimeSpan.FromSeconds(1);
+            _timerbet.Tick += _timerbet_Tick;
+            _timerdisplay.Interval = TimeSpan.FromSeconds(1);
+            _timerdisplay.Tick += _timerdisplay_Tick;
         }
 
-        private void _timerinzetten_Tick(object sender, EventArgs e)
+        private void _timerdisplay_Tick(object sender, EventArgs e)
+        {
+            if (_valuedisplay == 3)
+            {
+                MyBettingTable.Resetbet();
+                _valuedisplay = 0;
+                _display = true;
+                _timerdisplay.Stop();
+            }
+            _valuedisplay++;
+        }
+
+        private void _timerbet_Tick(object sender, EventArgs e)
         {
             if (_value == 3)
             {
-                _kaninzetten = false;
+                _canbet = false;
                 _value = 0;
-                _timerinzetten.Stop();
+                _timerbet.Stop();
+                
             }
             _value++;
         }
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-            _timerinzetten.Start();
+            _timerbet.Start();
             _Spinning = true;
             int[] _score = new int[] { 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 20 };
             Angle = 0;
@@ -182,14 +201,23 @@ namespace StonksCasino.Views.Roulette
                 DataTable data = Database.Tokensadd(totelwin);
 
             }
-            _kaninzetten = true;
+            _display = false;
+            _timerdisplay.Start();
+            _canbet = true;
             Account();
             _Spinning = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (_kaninzetten)
+            if (_display == false)
+            {
+                MyBettingTable.Resetbet();
+                _valuedisplay = 0;
+                _display = true;
+                _timerdisplay.Stop();
+            }
+            if (_canbet)
             {
 
 
@@ -222,37 +250,50 @@ namespace StonksCasino.Views.Roulette
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
-
-            Button bt = sender as Button;
-            ((Bet)bt.Tag).PreviewBet();
-            bool Chip = ((Bet)bt.Tag).Set;
-            if (Chip == true)
+            if (_canbet)
             {
-                bt.ToolTip = ((Bet)bt.Tag).AmountLabel;
+                Button bt = sender as Button;
+                ((Bet)bt.Tag).PreviewBet();
+                bool Chip = ((Bet)bt.Tag).Set;
+                if (Chip == true)
+                {
+                    bt.ToolTip = ((Bet)bt.Tag).AmountLabel;
+                }
+                else
+                {
+                    bt.ToolTip = null;
+                }
             }
-            else
-            {
-                bt.ToolTip = null;
-            }
+           
 
         }
 
         private void Button_MouseLeave(object sender, MouseEventArgs e)
         {
-            Button bt = sender as Button;
-            ((Bet)bt.Tag).dePreviewBet();
+           
+            
+                Button bt = sender as Button;
+                ((Bet)bt.Tag).dePreviewBet();
+            
         }
 
 
 
         private void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Button bt = sender as Button;
-            int amount = ((Bet)bt.Tag).Amount;
-            ((Bet)bt.Tag).DeleteBet();
+            if (_canbet)
+            {
+                Button bt = sender as Button;
+                int amount = ((Bet)bt.Tag).Amount;
+                ((Bet)bt.Tag).DeleteBet();
 
-            MyAmount.RemoveTotal(amount);
-            Account();
+                MyAmount.RemoveTotal(amount);
+                Account();
+            }
+            else
+            {
+                MessageBox.Show("u kunt uw ingezetten fiches niet meer weg halen. Wacht tot er een nummer is gevallen");
+            }
         }
 
         private void Fiche_TextChanged(object sender, TextChangedEventArgs e)
