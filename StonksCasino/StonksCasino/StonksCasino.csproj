@@ -71,12 +71,15 @@
     <Compile Include="classes\Main\User.cs" />
     <Compile Include="classes\poker\PokerDeck.cs" />
     <Compile Include="classes\poker\PokerGame.cs" />
+    <Compile Include="classes\poker\PokerHandCalculator.cs" />
+    <Compile Include="classes\poker\PokerHandValue.cs" />
     <Compile Include="classes\poker\PokerPlayer.cs" />
     <Compile Include="classes\Roulette\Bet.cs" />
     <Compile Include="classes\Roulette\Bettingtable.cs" />
     <Compile Include="enums\card\CardBackColor.cs" />
     <Compile Include="enums\card\CardType.cs" />
     <Compile Include="enums\card\CardValue.cs" />
+    <Compile Include="enums\poker\PokerHand.cs" />
     <Compile Include="Views\blackjack\BlackjackWindow.xaml.cs">
       <DependentUpon>BlackjackWindow.xaml</DependentUpon>
     </Compile>
@@ -173,9 +176,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="enums\poker\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Img\Cards\AceClubs.png" />
     <Resource Include="Img\Cards\AceDiamonds.png" />
