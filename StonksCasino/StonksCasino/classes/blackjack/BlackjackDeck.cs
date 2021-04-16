@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StonksCasino.classes.Main;
+using StonksCasino.enums.card;
 
 namespace StonksCasino.classes.blackjack
 {
     class BlackjackDeck : CardDeck
     {
+
         public BlackjackDeck()
         {
             AssembleDeck();
