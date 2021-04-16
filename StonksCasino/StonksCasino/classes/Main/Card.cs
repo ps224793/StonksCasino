@@ -10,7 +10,7 @@ using StonksCasino.enums.card;
 
 namespace StonksCasino.classes.Main
 {
-    class Card : INotifyPropertyChanged
+    public class Card : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 		protected void OnPropertyChanged([CallerMemberName] string name = null)

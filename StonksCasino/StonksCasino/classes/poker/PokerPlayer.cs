@@ -20,7 +20,6 @@ namespace StonksCasino.classes.poker
         }
     
         public ObservableCollection<Card> Hand { get; set; }
-
        
 
         private bool _folded;
