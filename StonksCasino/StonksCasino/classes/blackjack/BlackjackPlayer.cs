@@ -13,11 +13,25 @@ namespace StonksCasino.classes.blackjack
     public class BlackjackPlayer : PropertyChange
     {
 
-        public ObservableCollection<Card> Hand { get; set;}
+        public int Score
+        {
+            get { return GetScore(); }
+        }
+
+
+        private ObservableCollection<Card> _hand;
+
+        public ObservableCollection<Card> Hand
+        {
+            get { return _hand; }
+            set { _hand = value; OnPropertyChanged(); }
+        }
+
 
         public BlackjackPlayer()
         {
-
+            Hand = new ObservableCollection<Card>();
+            OnPropertyChanged("Score");
         }
 
         public void SetHand(List<Card> cards)
@@ -28,7 +42,25 @@ namespace StonksCasino.classes.blackjack
             {
                 Hand.Add(card);
             }
-            OnPropertyChanged("Hand");
+            OnPropertyChanged("Score");
+        }
+
+        public void AddCard(Card card)
+        {
+            Hand.Add(card);
+            OnPropertyChanged("Score");
+        }
+
+        private int GetScore()
+        {
+            int score = 0;
+
+            foreach (Card card in Hand)
+            {
+                score += (int)card.Value + 1;
+                
+            }
+            return score;
         }
     }
 }

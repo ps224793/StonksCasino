@@ -61,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\blackjack\BlackjackComputer.cs" />
     <Compile Include="classes\blackjack\BlackjackDeck.cs" />
     <Compile Include="classes\blackjack\BlackjackPlayer.cs" />
     <Compile Include="classes\blackjack\Computers.cs" />

@@ -1,4 +1,5 @@
 ﻿using StonksCasino.classes.Main;
+using StonksCasino.enums.card;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,10 +85,11 @@ namespace StonksCasino.classes.blackjack
         }
 
 
-
         private BlackjackDeck deck = new BlackjackDeck();
 
         private List<BlackjackPlayer> _players;
+
+        List<Card> cards = new List<Card>();
 
         public List<BlackjackPlayer> Players
         {
@@ -99,7 +101,6 @@ namespace StonksCasino.classes.blackjack
         {
             Players = new List<BlackjackPlayer>();
             Players.Add(new BlackjackPlayer());
-            SetPlayerHand(Players[0]);
         }
 
 
@@ -107,7 +108,7 @@ namespace StonksCasino.classes.blackjack
         {
             try
             {
-
+                SetPlayerHand(Players[0]);
                 Deals = false;
                 Tokendrop = false;
                 Dubbel = true;
@@ -115,22 +116,23 @@ namespace StonksCasino.classes.blackjack
                 Standing = true;
                 Hit = true;
                 
-                MessageBox.Show($"Het aantal ingezette Tokens: { MyAantal }");
-                
+                MessageBox.Show($"Het aantal ingezette Tokens: { MyAantal }");                
             }
             catch
             {
                 MessageBox.Show("U moet minimaal 1 token inzetten om te kunnen spelen!");
             }        
         }
+
         public void SetPlayerHand(BlackjackPlayer player)
         {
-            List<Card> cards = new List<Card>();
             cards.Add(deck.DrawCard());
             cards.Add(deck.DrawCard());
             player.SetHand(cards);
+
+            //MyPlayerSplit = 1;
         }
-                
+
 
         public void Dubbelen()
         {
@@ -149,8 +151,7 @@ namespace StonksCasino.classes.blackjack
         public void Hits()
         {
             Hit = true;
-            Players = new List<BlackjackPlayer>();
-            Players.Add(new BlackjackPlayer());
+            Players[0].AddCard(deck.DrawCard());
         }
 
         public void Stands()
