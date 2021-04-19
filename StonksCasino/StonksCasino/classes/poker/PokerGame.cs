@@ -43,6 +43,7 @@ namespace StonksCasino.classes.poker
             Players.Add(new PokerPlayer());
             SetPlayerHand(Players[0]);
             SetTable();
+            PokerHandCalculator.GetHandValue(_players[0].Hand.ToList(), _table.ToList());
         }
 
         private void SetPlayerHand(PokerPlayer player)
