@@ -103,11 +103,6 @@ namespace StonksCasino.Views.Roulette
 
         }
 
-        private void Bibliotheek_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void configTimer()
         {
             _timerbet.Interval = TimeSpan.FromSeconds(1);
