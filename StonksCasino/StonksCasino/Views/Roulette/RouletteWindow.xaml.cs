@@ -102,6 +102,7 @@ namespace StonksCasino.Views.Roulette
             user.MyTokens = _Tokens;
 
         }
+
         private void configTimer()
         {
             _timerbet.Interval = TimeSpan.FromSeconds(1);
