@@ -27,5 +27,10 @@ namespace StonksCasino.Views.poker
             DataContext = game;
             InitializeComponent();
         }
+
+        private void Call_Click(object sender, RoutedEventArgs e)
+        {
+            game.CalcHand();
+        }
     }
 }
