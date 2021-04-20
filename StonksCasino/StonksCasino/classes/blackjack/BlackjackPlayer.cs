@@ -12,40 +12,44 @@ namespace StonksCasino.classes.blackjack
 {
     public class BlackjackPlayer : PropertyChange
     {
-
         public int Score
         {
             get { return GetScore(); }
         }
 
+        private ObservableCollection<CardBlackjack> _hand;
+        private bool _reset = false;
+                        
+        public bool MyReset
+        {
+            get { return _reset; }
+            set { _reset = value; }
+        }
 
-        private ObservableCollection<Card> _hand;
-
-        public ObservableCollection<Card> Hand
+        public ObservableCollection<CardBlackjack> Hand
         {
             get { return _hand; }
             set { _hand = value; OnPropertyChanged(); }
         }
 
-
         public BlackjackPlayer()
         {
-            Hand = new ObservableCollection<Card>();
+            Hand = new ObservableCollection<CardBlackjack>();
             OnPropertyChanged("Score");
         }
 
-        public void SetHand(List<Card> cards)
+        public void SetHand(List<CardBlackjack> cards)
         {
-            Hand = new ObservableCollection<Card>();
+            Hand = new ObservableCollection<CardBlackjack>();
 
-            foreach (Card card in cards)
+            foreach (CardBlackjack card in cards)
             {
                 Hand.Add(card);
             }
             OnPropertyChanged("Score");
         }
 
-        public void AddCard(Card card)
+        public void AddCard(CardBlackjack card)
         {
             Hand.Add(card);
             OnPropertyChanged("Score");
@@ -53,14 +57,61 @@ namespace StonksCasino.classes.blackjack
 
         private int GetScore()
         {
+            bool set = false;
             int score = 0;
-
-            foreach (Card card in Hand)
+            if (_reset == false)
             {
-                score += (int)card.Value + 1;
-                
+                foreach (CardBlackjack card in Hand)
+                {
+                    if ((int)card.Value == 11 || (int)card.Value == 12 || (int)card.Value == 13)
+                    {
+                        score += 10;
+                    }
+
+                    else if ((int)card.Value == 1)
+                    {
+                        if ((score + 11) <= 21)
+                        {
+                            score += (int)card.Value + 10;
+                            set = true;
+                        }
+                        else
+                        {
+                            score += (int)card.Value;
+                        }
+                    }
+                    else
+                    {
+                        score += (int)card.Value;
+                    }
+                }
+                if (score > 21)
+                {
+                    foreach (CardBlackjack card in Hand)
+                    {
+                        if ((int)card.Value == 1 && set == true)
+                        {
+                            score -= 10;
+                        }
+                    }
+                }
             }
+            else
+            {
+                _reset = false;
+            }
+           
+            
             return score;
+        }
+
+        public void GameOver()
+        {
+            Hand.Clear();
+            
+            _reset = true;
+            OnPropertyChanged("Score");
+
         }
     }
 }

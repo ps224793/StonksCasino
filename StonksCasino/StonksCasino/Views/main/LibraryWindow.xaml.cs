@@ -70,7 +70,7 @@ namespace StonksCasino.Views.main
 
         private void Blackjackgame()
         {
-            BlackjackWindow roulette = new BlackjackWindow();
+            BlackjackWindow roulette = new BlackjackWindow(user);
             this.Hide();
             roulette.ShowDialog();
             this.Show();

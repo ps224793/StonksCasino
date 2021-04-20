@@ -5,11 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
+using StonksCasino.classes.blackjack;
 
 namespace StonksCasino.classes.blackjack
 {
     public class Computers : PropertyChange
     {
+        private BlackJack _blackjackhit;
+
+        public BlackJack Myblackjackhit
+        {
+            get { return _blackjackhit; }
+            set { _blackjackhit = value; }
+        }
 
         private int _Computervalue;
 
@@ -19,11 +28,11 @@ namespace StonksCasino.classes.blackjack
             set { _Computervalue = value; OnPropertyChanged(); }
         }
 
-        private BlackjackDeck deck = new BlackjackDeck();
+        private BlackjackDeckComputer deck = new BlackjackDeckComputer();
 
         private List<BlackjackComputer> _computer;
 
-        List<Card> cards = new List<Card>();
+        List<CardBlackjack> cards = new List<CardBlackjack>();
 
         public List<BlackjackComputer> Computer
         {
@@ -35,32 +44,39 @@ namespace StonksCasino.classes.blackjack
         {
             Computer = new List<BlackjackComputer>();
             Computer.Add(new BlackjackComputer());
-            SetPlayerHand(Computer[0]);
         }
 
-        public void SetPlayerHand(BlackjackComputer computer)
+        public void ComputerDeal(int player)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                if (MyComputervalue == 0)
-                {
-                    cards.Add(deck.DrawCard());
-                    cards.Add(deck.DrawCard());
-                    computer.SetHandC(cards);
-                    MyComputervalue += 1;
-                }
-                else if (MyComputervalue < 18)
-                {
-                    cards.Add(deck.DrawCard());
-                    computer.SetHandC(cards);
-                    MyComputervalue += 18;
-                }
-                else
-                {
-                    //MessageBox.Show("De dealer is klaar met zijn kaarten uitleggen");
-                }
-            }
+            SetComputerHand(Computer[0]);
+            Computerhit(player);
+        }
+
+        public void Computerhit(int playervalue)
+        {
             
+            int Player = playervalue;
+            int Bot = Computer[0].ScoreC;
+            if (Player < 22)
+            { 
+            if (Bot < 18)
+            {
+                Computer[0].AddCard(deck.DrawCard());
+                Computerhit(playervalue);
+            }
+            }
+        }
+
+        public void GameclearComputer()
+        {
+            Computer[0].GameOver();
+        }
+
+        public void SetComputerHand(BlackjackComputer computer)
+        {
+            cards.Add(deck.DrawCard());
+            cards.Add(deck.DrawCard());
+            computer.SetHandC(cards);          
         }
     }
 }
