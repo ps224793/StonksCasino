@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using StonksCasino.classes.blackjack;
 using StonksCasino.classes.Main;
+using StonksCasino.Views.main;
 
 namespace StonksCasino.Views.blackjack
 {
@@ -99,6 +100,11 @@ namespace StonksCasino.Views.blackjack
             user.MyTokens = _Tokens;
         }
 
+        private void Bibliotheek_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void BlackjackWindowRestart()
         {
             Game = new BlackJack();
@@ -149,15 +155,23 @@ namespace StonksCasino.Views.blackjack
 
         private void Dubbelen_Click(object sender, RoutedEventArgs e)
         {
-            Game.Dubbelen();
-            Game.Hits();
-            Account();
-            int Player = Game.Players[0].Score;
-            if (Player > 21)
+            int MyAantal = Game.MyAantal;
+            if (MyAantal < _Tokens)
             {
-                Game.Stands();
-                ComputerGame.ComputerDeal(Player);
-                Endresult();
+                Game.Dubbelen();
+                Game.Hits();
+                Account();
+                int Player = Game.Players[0].Score;
+                if (Player > 21)
+                {
+                    Game.Stands();
+                    ComputerGame.ComputerDeal(Player);
+                    Endresult();
+                }
+            }
+            else
+            {
+                MessageBox.Show("U heeft niet genoeg tokens om te kunnen spelen!");
             }
         }
 
@@ -182,7 +196,12 @@ namespace StonksCasino.Views.blackjack
                 int bot = ComputerGame.Computer[0].ScoreC;
                 int Player = Game.Players[0].Score;
 
-                if (Player == 21 || bot > 21 && Player <= 21)
+                if (Player == 21 && bot < 21 || bot > 21)
+                {
+                    MessageBox.Show("Je hebt gewonnen!");
+                    Game.Gamewin();
+                }
+                else if (bot > 21 && Player <= 21)
                 {
                     MessageBox.Show("Je hebt gewonnen!");
                     Game.Gamewin();
