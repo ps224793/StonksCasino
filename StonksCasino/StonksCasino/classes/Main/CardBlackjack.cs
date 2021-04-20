@@ -7,11 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using StonksCasino.enums.card;
 
-
 namespace StonksCasino.classes.Main
 {
-	public class Card : INotifyPropertyChanged
-	{
+    public class CardBlackjack : INotifyPropertyChanged
+    {
 		public event PropertyChangedEventHandler PropertyChanged;
 		protected void OnPropertyChanged([CallerMemberName] string name = null)
 		{
@@ -26,9 +25,9 @@ namespace StonksCasino.classes.Main
 			set { _type = value; OnPropertyChanged("ImageURL"); OnPropertyChanged("ActiveURL"); }
 		}
 
-		private CardValue _value;
+		private BlackcardValue _value;
 
-		public CardValue Value
+		public BlackcardValue Value
 		{
 			get { return _value; }
 			set { _value = value; OnPropertyChanged("ImageURL"); OnPropertyChanged("ActiveURL"); }
@@ -85,7 +84,7 @@ namespace StonksCasino.classes.Main
 			}
 		}
 
-		public Card(CardType cardType, CardValue cardValue, CardBackColor cardBackColor)
+		public CardBlackjack(CardType cardType, BlackcardValue cardValue, CardBackColor cardBackColor)
 		{
 			Type = cardType;
 			Value = cardValue;
@@ -94,7 +93,7 @@ namespace StonksCasino.classes.Main
 			OnPropertyChanged("ImageURL");
 		}
 
-		public Card(CardType cardType, CardValue cardValue, CardBackColor cardBackColor, bool turned)
+		public CardBlackjack(CardType cardType, BlackcardValue cardValue, CardBackColor cardBackColor, bool turned)
 		{
 			Type = cardType;
 			Value = cardValue;

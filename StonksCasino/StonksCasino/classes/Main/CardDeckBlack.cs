@@ -10,26 +10,26 @@ using StonksCasino.enums.card;
 
 namespace StonksCasino.classes.Main
 {
-    class CardDeck
+    class CardDeckBlack
     {
-        private List<Card> _shuffledCards = new List<Card>();
+        private List<CardBlackjack> _shuffledCards = new List<CardBlackjack>();
 
-        public CardDeck()
+        public CardDeckBlack()
         {
 
         }
 
-        public CardDeck(List<Card> cards)
+        public CardDeckBlack(List<CardBlackjack> cards)
         {
             AddCards(cards);
         }
 
-        public void AddCards(List<Card> addCards)
+        public void AddCards(List<CardBlackjack> addCards)
         {
             _shuffledCards.AddRange(addCards.Shuffle());
         }
 
-        public bool DrawCard(out Card card)
+        public bool DrawCard(out CardBlackjack card)
         {
             card = null;
             if (_shuffledCards.Count > 0)
@@ -41,11 +41,11 @@ namespace StonksCasino.classes.Main
             return false;
         }
 
-        public Card DrawCard()
+        public CardBlackjack DrawCard()
         {
             if (_shuffledCards.Count > 0)
             {
-                Card card = _shuffledCards[0];
+                CardBlackjack card = _shuffledCards[0];
                 _shuffledCards.RemoveAt(0);
                 return card;
             }
@@ -54,17 +54,15 @@ namespace StonksCasino.classes.Main
 
         public void AssembleDeck()
         {
-            List<Card> cards = new List<Card>();
-            foreach (CardValue value in Enum.GetValues(typeof(CardValue)))
+            List<CardBlackjack> cards = new List<CardBlackjack>();
+            foreach (BlackcardValue value in Enum.GetValues(typeof(BlackcardValue)))
             {
                 foreach (CardType type in Enum.GetValues(typeof(CardType)))
                 {
-                    cards.Add(new Card(type, value, CardBackColor.Blue));
+                    cards.Add(new CardBlackjack(type, value, CardBackColor.Blue));
                 }
             }
             AddCards(cards);
         }
-
-
     }
 }

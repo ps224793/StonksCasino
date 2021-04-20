@@ -2,6 +2,7 @@
 using StonksCasino.enums.card;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,7 +90,7 @@ namespace StonksCasino.classes.blackjack
 
         private List<BlackjackPlayer> _players;
 
-        List<Card> cards = new List<Card>();
+        List<Main.CardBlackjack> cards = new List<Main.CardBlackjack>();
 
         public List<BlackjackPlayer> Players
         {
@@ -106,17 +107,26 @@ namespace StonksCasino.classes.blackjack
 
         public void Deal()
         {
+            
             try
             {
-                SetPlayerHand(Players[0]);
-                Deals = false;
-                Tokendrop = false;
-                Dubbel = true;
-                Splitten = true;
-                Standing = true;
-                Hit = true;
-                
-                MessageBox.Show($"Het aantal ingezette Tokens: { MyAantal }");                
+                if (MyAantal > 0)
+                {
+                    DataTable data = Database.Tokensremove(MyAantal);
+                    SetPlayerHand(Players[0]);
+                    Deals = false;
+                    Tokendrop = false;
+                    Dubbel = true;
+                    Splitten = true;
+                    Standing = true;
+                    Hit = true;
+
+                    MessageBox.Show($"Het aantal ingezette Tokens: { MyAantal }");
+                }
+                else
+                {
+                    MessageBox.Show("U moet minimaal 1 token inzetten om te kunnen spelen!");
+                }
             }
             catch
             {
@@ -129,13 +139,14 @@ namespace StonksCasino.classes.blackjack
             cards.Add(deck.DrawCard());
             cards.Add(deck.DrawCard());
             player.SetHand(cards);
-
+          
             //MyPlayerSplit = 1;
         }
 
 
         public void Dubbelen()
         {
+            DataTable data = Database.Tokensremove(MyAantal);
             Dubbel = false;
             MyAantal = MyAantal * 2;
             MessageBox.Show($"Het aantal Tokens is verdubbeld naar: { MyAantal }");
@@ -164,6 +175,21 @@ namespace StonksCasino.classes.blackjack
             Tokendrop = true;
         }
 
+        public void Gamewin()
+        {
+            DataTable data = Database.Tokensadd(MyAantal * 2);
+        }
+
+        public void Gamedraw()
+        {
+            DataTable data = Database.Tokensadd(MyAantal);
+        }
+
+        public void Gameclear()
+        {
+            Players[0].GameOver();
+        }
+
         public void Blackjackwindow()
         {
             Deals = true;
@@ -173,5 +199,10 @@ namespace StonksCasino.classes.blackjack
             Standing = false;
             Hit = false;
         }
+
+        //public void HitStop()
+        //{
+        //    Hit = false;
+        //}
     }
 }

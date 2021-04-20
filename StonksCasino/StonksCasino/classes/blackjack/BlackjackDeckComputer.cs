@@ -8,10 +8,9 @@ using StonksCasino.enums.card;
 
 namespace StonksCasino.classes.blackjack
 {
-    class BlackjackDeck : CardDeckBlack
+    class BlackjackDeckComputer : CardDeckBlack
     {
-
-        public BlackjackDeck()
+        public BlackjackDeckComputer()
         {
             AssembleDeck();
         }
