@@ -109,7 +109,7 @@
                             </Grid>
                         </StackPanel>
                         <Button Grid.Row="1" Content="Fold"></Button>
-                        <Button Grid.Row="2" Content="Call"></Button>
+                        <Button Grid.Row="2" Content="Call" Click="Call_Click"></Button>
                     </Grid>
 
                     <Image Grid.Column="0" Source="/Img/Main/Token.png"></Image>

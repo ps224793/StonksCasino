@@ -43,6 +43,22 @@ namespace StonksCasino.classes.poker
             Players.Add(new PokerPlayer());
             SetPlayerHand(Players[0]);
             SetTable();
+            //PokerHandCalculator.GetHandValue(_players[0].Hand.ToList(), _table.ToList());
+        }
+
+        public void CalcHand()
+        {
+            //List<Card> handje = new List<Card>();
+            //handje.Add(new Card(enums.card.CardType.Hearts, enums.card.CardValue.Ace, enums.card.CardBackColor.Blue));
+            //handje.Add(new Card(enums.card.CardType.Clubs, enums.card.CardValue.Two, enums.card.CardBackColor.Blue));
+
+            //List<Card> tafeltje = new List<Card>();
+            //tafeltje.Add(new Card(enums.card.CardType.Clubs, enums.card.CardValue.Three, enums.card.CardBackColor.Blue));
+            //tafeltje.Add(new Card(enums.card.CardType.Clubs, enums.card.CardValue.Ten, enums.card.CardBackColor.Blue));
+            //tafeltje.Add(new Card(enums.card.CardType.Spades, enums.card.CardValue.Jack, enums.card.CardBackColor.Blue));
+            //tafeltje.Add(new Card(enums.card.CardType.Clubs, enums.card.CardValue.King, enums.card.CardBackColor.Blue));
+            //tafeltje.Add(new Card(enums.card.CardType.Diamonds, enums.card.CardValue.Queen, enums.card.CardBackColor.Blue));
+
             PokerHandCalculator.GetHandValue(_players[0].Hand.ToList(), _table.ToList());
         }
 
