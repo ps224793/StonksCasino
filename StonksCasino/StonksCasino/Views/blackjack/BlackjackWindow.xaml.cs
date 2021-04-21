@@ -14,51 +14,108 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using StonksCasino.classes.blackjack;
 using StonksCasino.classes.Main;
+using StonksCasino.Views.main;
 
 namespace StonksCasino.Views.blackjack
 {
     /// <summary>
     /// Interaction logic for BlackjackWindow.xaml
     /// </summary>
-    public partial class BlackjackWindow : Window
+    public partial class BlackjackWindow : Window, INotifyPropertyChanged
     {
-
-        private BlackjackDeck deck = new BlackjackDeck();
-        public User User { get; set; }
-        public BlackjackWindow()
-        {
-            Account();
-            DataContext = this;
-            InitializeComponent();
-
-            btSplitten.IsEnabled = false;
-            btDubbel.IsEnabled = false;
-            btStand.IsEnabled = false;
-            btHit.IsEnabled = false;
-        }
-        private void Account()
-        {
-            DataTable dataTable = Database.Accounts();
-            string Name = dataTable.Rows[0]["Gebruikersnaam"].ToString();
-            int Tokens = (int)dataTable.Rows[0]["Token"];
-            User = new User(Name, Tokens);
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+        private CardBlackjack _cardturned;
 
-        private BlackJack _token = new BlackJack();
-
-        public BlackJack MyToken
+        public CardBlackjack Mycardturned
         {
-            get { return _token; }
-            set { _token = value; OnPropertyChanged(); }
+            get { return _cardturned; }
+            set { _cardturned = value; OnPropertyChanged(); }
+        }
+
+        private BlackjackDeck deck = new BlackjackDeck();
+        public User User { get; set; }
+
+        private BlackJack _game;
+
+        public BlackJack Game
+        {
+            get { return _game; }
+            set { _game = value; OnPropertyChanged(); }
+        }
+
+        private Computers _player;
+
+        public Computers Playergame
+        {
+            get { return _player; }
+            set { _player = value; OnPropertyChanged(); }
+        }
+
+        private Computers _computer;
+
+        public Computers ComputerGame
+        {
+            get { return _computer; }
+            set { _computer = value; OnPropertyChanged(); }
+        }
+
+        private Computers _computer2;
+
+        public Computers ComputerGame2
+        {
+            get { return _computer2; }
+            set { _computer2 = value; OnPropertyChanged(); }
+        }
+
+
+        public User user { get; set; }
+        int _Tokens;
+
+        DispatcherTimer computertimer = new DispatcherTimer();
+
+        public BlackjackWindow(User user)
+        {
+            BlackjackWindowRestart();          
+            this.user = user;
+            DataContext = this;
+            Account();
+            InitializeComponent();
+
+            computertimer.Interval = TimeSpan.FromMilliseconds(1);
+            computertimer.Tick += computertimer_Tick;
+        }
+
+        private void Account()
+        {
+            DataTable dataTable = Database.Accounts();
+            _Tokens = (int)dataTable.Rows[0]["Token"];
+            user.MyTokens = _Tokens;
+        }
+
+        private void Bibliotheek_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BlackjackWindowRestart()
+        {
+            Game = new BlackJack();
+            Game.Blackjackwindow();
+            computertimer.Start();
+        }
+
+        private void computertimer_Tick(object sender, EventArgs e)
+        {
+            ComputerGame = new Computers();
+            computertimer.Stop();
         }
 
         private Computers _computers = new Computers();
@@ -69,88 +126,121 @@ namespace StonksCasino.Views.blackjack
             set { _computers = value; OnPropertyChanged(); }
         }
 
-        public void Melding_Click(object sender, RoutedEventArgs e)
+        public void Deal_click(object sender, RoutedEventArgs e)
         {
-            try
+            int MyAantal = Game.MyAantal;
+            if (MyAantal < _Tokens)
             {
-                int tokeninzetten = int.Parse(tokeninzet.Text);
-
-                if (tokeninzetten > 0)
-                {
-                    MyToken.GeefMelding();
-
-                    tokeninzet.IsEnabled = false;
-                    btDubbel.IsEnabled = true;
-                    btSplitten.IsEnabled = true;
-                    btStand.IsEnabled = true;
-                    btHit.IsEnabled = true;
-                    btDeal.IsEnabled = false;
-                }
-                else
-                {
-                    MessageBox.Show("U moet minimaal 1 token inzetten om te kunnen spelen!");
-                }
-            }
-
-            catch
+                Game.Deal();
+                Account();
+            }               
+            else
             {
-                MessageBox.Show("U moet minimaal 1 token inzetten om te kunnen spelen!");
+                MessageBox.Show("U heeft niet genoeg tokens om te kunnen spelen!");
             }
         }
 
         private void Hit_Click(object sender, RoutedEventArgs e)
-        {
-            btHit.IsEnabled = false;
+        {          
+            Game.Hits();
+            int Player = Game.Players[0].Score;
+
+            if (Player > 21)
+            {
+                Game.Stands();
+                ComputerGame.ComputerDeal(Player);
+                Endresult();               
+            }
         }
 
         private void Dubbelen_Click(object sender, RoutedEventArgs e)
         {
-            MyToken.Dubbelen();
-            btDubbel.IsEnabled = false;
+            int MyAantal = Game.MyAantal;
+            if (MyAantal < _Tokens)
+            {
+                Game.Dubbelen();
+                Game.Hits();
+                Account();
+                int Player = Game.Players[0].Score;
+                if (Player > 21)
+                {
+                    Game.Stands();
+                    ComputerGame.ComputerDeal(Player);
+                    Endresult();
+                }
+            }
+            else
+            {
+                MessageBox.Show("U heeft niet genoeg tokens om te kunnen spelen!");
+            }
         }
 
         private void Splitten_Click(object sender, RoutedEventArgs e)
         {
-            MyToken.Splitte();
-            btSplitten.IsEnabled = false;
+            Game.Splitte();
+            Account();
         }
 
         private void Stand_Click(object sender, RoutedEventArgs e)
         {
-            int Player = int.Parse(tbPlayer.Text);
-            int Bot = int.Parse(tbBot.Text);
+            int Player = Game.Players[0].Score;
+            Game.Stands();
+            ComputerGame.ComputerDeal(Player);
+            Endresult();          
+        }
 
-            btStand.IsEnabled = false;
-            btDeal.IsEnabled = true;
-            tokeninzet.IsEnabled = true;
+        private void Endresult()
+        {            
+            try
+            {
+                int bot = ComputerGame.Computer[0].ScoreC;
+                int Player = Game.Players[0].Score;
 
-            if (Player == 21 || Bot > 21 && Player <= 21)
-            {
-                MessageBox.Show("Je hebt gewonnen!");
+                if (Player == 21 && bot < 21 || bot > 21)
+                {
+                    MessageBox.Show("Je hebt gewonnen!");
+                    Game.Gamewin();
+                }
+                else if (bot > 21 && Player <= 21)
+                {
+                    MessageBox.Show("Je hebt gewonnen!");
+                    Game.Gamewin();
+                }
+                else if (Player > bot && Player <= 21)
+                {
+                    MessageBox.Show("Je hebt gewonnen!");
+                    Game.Gamewin();
+                }
+                else if (bot == 21 || Player > 21 && bot <= 21)
+                {
+                    MessageBox.Show("Je hebt verloren!");
+                }
+                else if (bot > Player && bot <= 21)
+                {
+                    MessageBox.Show("Je hebt verloren!");
+                }
+                else if (bot == Player)
+                {
+                    MessageBox.Show("Het is gelijkspel!");
+                    Game.Gamedraw();
+                }
+                else if (bot > 21 && Player > 21)
+                {
+                    MessageBox.Show("Allebij verloren!");
+                }
+                else
+                {
+                    MessageBox.Show("Fout!!!!");
+                }
+                Game.Gameclear();
+                ComputerGame.GameclearComputer();
+                Account();
+                BlackjackWindowRestart();
+
             }
-            else if(Player > Bot && Player <= 21)
+            catch
             {
-                MessageBox.Show("Je hebt gewonnen!");
-            }
-            else if(Bot == 21 || Player > 21 && Bot <= 21)
-            {
-                MessageBox.Show("Je hebt verloren!");
-            }
-            else if(Bot > Player && Bot <= 21)
-            {
-                MessageBox.Show("Je hebt verloren!");
-            }
-            else if(Bot == Player)
-            {
-                MessageBox.Show("Het is gelijkspel!");
-            }
-            else if(Bot > 21 && Player > 21)
-            {
-                MessageBox.Show("Allebij verloren!");
-            }
-            else
-            {
-                MessageBox.Show("Fout!!!!");
+
             }
         }
     }

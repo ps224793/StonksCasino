@@ -61,12 +61,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\blackjack\BlackjackComputer.cs" />
     <Compile Include="classes\blackjack\BlackjackDeck.cs" />
+    <Compile Include="classes\blackjack\BlackjackDeckComputer.cs" />
+    <Compile Include="classes\blackjack\BlackjackPlayer.cs" />
     <Compile Include="classes\blackjack\Computers.cs" />
+    <Compile Include="classes\Main\CardBlackjack.cs" />
     <Compile Include="classes\Main\CardDeck.cs" />
     <Compile Include="classes\blackjack\PropertyChange.cs" />
     <Compile Include="classes\blackjack\BlackJack.cs" />
     <Compile Include="classes\Main\Card.cs" />
+    <Compile Include="classes\Main\CardDeckBlack.cs" />
     <Compile Include="classes\Main\Database.cs" />
     <Compile Include="classes\Main\User.cs" />
     <Compile Include="classes\poker\PokerDeck.cs" />
@@ -76,6 +81,7 @@
     <Compile Include="classes\poker\PokerPlayer.cs" />
     <Compile Include="classes\Roulette\Bet.cs" />
     <Compile Include="classes\Roulette\Bettingtable.cs" />
+    <Compile Include="enums\card\BlackcardValue.cs" />
     <Compile Include="enums\card\CardBackColor.cs" />
     <Compile Include="enums\card\CardType.cs" />
     <Compile Include="enums\card\CardValue.cs" />

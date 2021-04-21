@@ -102,6 +102,7 @@ namespace StonksCasino.Views.Roulette
             user.MyTokens = _Tokens;
 
         }
+
         private void configTimer()
         {
             _timerbet.Interval = TimeSpan.FromSeconds(1);
@@ -284,11 +285,17 @@ namespace StonksCasino.Views.Roulette
             if (_canbet)
             {
                 Button bt = sender as Button;
-                int amount = ((Bet)bt.Tag).Amount;
-                ((Bet)bt.Tag).DeleteBet();
+                double opacity = ((Bet)bt.Tag).Opacity;
+                if (opacity == 1)
+                {
+                    int amount = ((Bet)bt.Tag).Amount;
+                    ((Bet)bt.Tag).DeleteBet();
 
-                MyAmount.RemoveTotal(amount);
-                Account();
+                    MyAmount.RemoveTotal(amount);
+                    Account();
+                }
+                
+             
             }
             else
             {
@@ -389,27 +396,28 @@ namespace StonksCasino.Views.Roulette
 
 
                 }
-                else
+            }
+            else
+            {
+                if (MyAmount.MyTotalinzet > 0)
                 {
-                    if (MyAmount.MyTotalinzet > 0)
+                    MessageBoxResult Leave = MessageBox.Show("U heeft geld ingezet. Als u nu weggaat worden uw ingezetten fiches teruggegeven", "Weet u zeker dat u wil weggaan?", MessageBoxButton.OKCancel);
+                    if (Leave == MessageBoxResult.OK)
                     {
-                        MessageBoxResult Leave = MessageBox.Show("U heeft geld ingezet. Als u nu weggaat worden uw ingezetten fiches teruggegeven", "Weet u zeker dat u wil weggaan?", MessageBoxButton.OKCancel);
-                        if (Leave == MessageBoxResult.OK)
-                        {
-                            DataTable data = Database.Tokensadd(MyAmount.MyTotalinzet);
-                            Account();
-                        }
-                        else
-                        {
-                            e.Cancel = true;
-                        }
-
-
-
+                        DataTable data = Database.Tokensadd(MyAmount.MyTotalinzet);
+                        Account();
                     }
+                    else
+                    {
+                        e.Cancel = true;
+                    }
+
+
+
                 }
+            }
 
             }
         }
     }
-}
+

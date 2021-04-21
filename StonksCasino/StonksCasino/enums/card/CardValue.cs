@@ -8,7 +8,7 @@ namespace StonksCasino.enums.card
 {
     public enum CardValue
     {
-        Ace,
+        
         Two,
         Three,
         Four,
@@ -20,6 +20,7 @@ namespace StonksCasino.enums.card
         Ten,
         Jack,
         Queen,
-        King
+        King,
+        Ace
     }
 }

@@ -24,6 +24,7 @@ namespace StonksCasino.Views.main
     /// </summary>
     public partial class LibraryWindow : Window
     {
+        int _Tokens;
         public User user { get; set; }
         public LibraryWindow()
         {
@@ -37,6 +38,12 @@ namespace StonksCasino.Views.main
             string Name = dataTable.Rows[0]["Gebruikersnaam"].ToString();
             int Tokens = (int)dataTable.Rows[0]["Token"];
             user = new User(Name, Tokens);
+        }
+        private void accountrefresh()
+        {
+            DataTable dataTable = Database.Accounts();
+            _Tokens = (int)dataTable.Rows[0]["Token"];
+            user.MyTokens = _Tokens;
         }
 
         private void Roullete_click(object sender, RoutedEventArgs e)
@@ -70,7 +77,7 @@ namespace StonksCasino.Views.main
 
         private void Blackjackgame()
         {
-            BlackjackWindow roulette = new BlackjackWindow();
+            BlackjackWindow roulette = new BlackjackWindow(user);
             this.Hide();
             roulette.ShowDialog();
             this.Show();
@@ -92,6 +99,12 @@ namespace StonksCasino.Views.main
             this.Hide();
             roulette.ShowDialog();
             this.Show();
+        }
+
+        private void Tokens_Cilck(object sender, RoutedEventArgs e)
+        {
+            DataTable data = Database.Tokensadd(10000);
+            accountrefresh();
         }
     }
 }
