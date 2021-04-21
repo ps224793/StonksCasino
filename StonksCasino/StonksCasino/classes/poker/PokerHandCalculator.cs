@@ -3,7 +3,6 @@ using StonksCasino.enums.card;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -57,7 +56,7 @@ namespace StonksCasino.classes.poker
             }
             else if (threeOfAKind)
             {
-                MessageBox.Show($"FullHouse, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
+                MessageBox.Show($"Three of a kind, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
             }
             else if (twopair)
             {
@@ -195,6 +194,10 @@ namespace StonksCasino.classes.poker
                 else if (combo[0].Value == card.Value)
                 {
                     combo.Add(card);
+                    if (card==hand[hand.Count-1])
+                    {
+                        pairs.Add(combo);
+                    }
                 }
                 else if (combo.Count > 1)
                 {
@@ -208,7 +211,7 @@ namespace StonksCasino.classes.poker
                     combo.Add(card);
                 }
             }
-
+            pairs.Reverse();
             if(pairs.Count > 0)
             {
                 //check four four of a kind
