@@ -1,4 +1,5 @@
-﻿using StonksCasino.enums.poker;
+﻿using StonksCasino.classes.Main;
+using StonksCasino.enums.poker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,15 +27,40 @@ namespace StonksCasino.classes.poker
 			set { _handValue = value; }
 		}
 
+		private List<Card> _hand;
+
+		public List<Card> Hand
+		{
+			get { return _hand; }
+			set { _hand = value; }
+		}
+
+		private List<Card> _highCards = new List<Card>();
+
+		public List<Card> HighCards
+		{
+			get { return _highCards; }
+			set { _highCards = value; }
+		}
+
 		public PokerHandValue(PokerHand pokerHand)
 		{
 			MyPokerHand = pokerHand;
 		}
 
-		public PokerHandValue(PokerHand pokerHand, int handValue)
+		public PokerHandValue(PokerHand pokerHand, int handValue, List<Card> hand)
 		{
 			MyPokerHand = pokerHand;
 			HandValue = handValue;
+			Hand = hand;
+		}
+
+		public PokerHandValue(PokerHand pokerHand, int handValue, List<Card> hand, List<Card> highCards)
+		{
+			MyPokerHand = pokerHand;
+			HandValue = handValue;
+			Hand = hand;
+			HighCards.AddRange(highCards);
 		}
 	}
 }
