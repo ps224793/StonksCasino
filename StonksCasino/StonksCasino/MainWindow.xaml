@@ -22,9 +22,9 @@
         </Grid.RowDefinitions>
         <TextBlock Text="Inloggen" Grid.Column="1" FontSize="30px" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <StackPanel Grid.Row="1" Grid.Column="1">
-            <TextBlock Text="Gebruikersnaam" Foreground="White" FontSize="16"></TextBlock>
+            <TextBlock Text="Gebruikersnaam" Foreground="White" FontSize="22"></TextBlock>
             <TextBox Text="{Binding MyDatabase.MyUsername, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Foreground="White" Background="Black"></TextBox>
-            <TextBlock Text="Wachtwoord" Foreground="White" FontSize="16"></TextBlock>
+            <TextBlock Text="Wachtwoord" Foreground="White" FontSize="22"></TextBlock>
             <PasswordBox PasswordChar="*"  FontSize="20" Foreground="White" Background="Black" PasswordChanged="PasswordBox_PasswordChanged" ></PasswordBox>
             <!--<TextBox Text="{Binding MyDatabase.MyPassword, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Foreground="White" Background="Black"></TextBox>-->
         </StackPanel>
