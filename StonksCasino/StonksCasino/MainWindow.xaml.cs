@@ -13,24 +13,47 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using StonksCasino.Views.main;
+using StonksCasino.classes.Main;
 
 namespace StonksCasino
 {
+
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string _pasword;
+        private Database _database = new Database();
+
+        public Database MyDatabase
+        {
+            get { return _database; }
+            set { _database = value; }
+        }
+
+
+
         public MainWindow()
         {
+            DataContext = this;
             InitializeComponent();
         }
 
         private void Library_Click(object sender, RoutedEventArgs e)
         {
-            LibraryWindow library = new LibraryWindow();
-            this.Close();
-            library.ShowDialog();
+          bool window =  MyDatabase.Login(_pasword);
+            if (window)
+            {
+                this.Close();
+            }
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            { _pasword = ((PasswordBox)sender).Password; }
         }
     }
 }
