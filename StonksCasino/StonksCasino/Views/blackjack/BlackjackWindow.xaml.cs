@@ -129,7 +129,7 @@ namespace StonksCasino.Views.blackjack
         public void Deal_click(object sender, RoutedEventArgs e)
         {
             int MyAantal = Game.MyAantal;
-            if (MyAantal < _Tokens)
+            if (MyAantal <= _Tokens)
             {
                 Game.Deal();
                 Account();
@@ -156,7 +156,7 @@ namespace StonksCasino.Views.blackjack
         private void Dubbelen_Click(object sender, RoutedEventArgs e)
         {
             int MyAantal = Game.MyAantal;
-            if (MyAantal < _Tokens)
+            if (MyAantal <= _Tokens)
             {
                 Game.Dubbelen();
                 Game.Hits();
@@ -211,7 +211,7 @@ namespace StonksCasino.Views.blackjack
                     MessageBox.Show("Je hebt gewonnen!");
                     Game.Gamewin();
                 }
-                else if (bot == 21 || Player > 21 && bot <= 21)
+                else if (Player > 21 && bot <= 21)
                 {
                     MessageBox.Show("Je hebt verloren!");
                 }
