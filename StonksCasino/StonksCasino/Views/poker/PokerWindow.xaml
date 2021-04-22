@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:StonksCasino.Views.poker"
         mc:Ignorable="d"
         Title="PokerWindow" Height="600" MinHeight="600" Width="800" MinWidth="800"
-        WindowState="Maximized"
+        WindowState="Maximized" Closing="Window_Closing"
         >
     <Grid>
         <Grid.RowDefinitions>
@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid Background="#262626" Grid.Row="0" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnBibliotheek" Content="Bibliotheek" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
+                <Button x:Name="btnBibliotheek" Content="Bibliotheek" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" Click="btnBibliotheek_Click" />
                 <Button x:Name="btnWinkel" Content="Winkel" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
                 <Button x:Name="BtnGeldStorten" Content="Geld storten" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
             </StackPanel>

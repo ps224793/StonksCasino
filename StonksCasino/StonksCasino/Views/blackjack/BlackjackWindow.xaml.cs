@@ -32,6 +32,9 @@ namespace StonksCasino.Views.blackjack
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+   
+
         private CardBlackjack _cardturned;
 
         public CardBlackjack Mycardturned
@@ -102,7 +105,11 @@ namespace StonksCasino.Views.blackjack
 
         private void Bibliotheek_Click(object sender, EventArgs e)
         {
-            this.Close();
+            
+            LibraryWindow library = new LibraryWindow();
+            this.Hide();
+            library.Show();
+           
         }
 
         private void BlackjackWindowRestart()
@@ -240,6 +247,24 @@ namespace StonksCasino.Views.blackjack
             }
             catch
             {
+
+            }
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (this.IsActive == true)
+            {
+                MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
+                if (leaving == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else if (leaving == MessageBoxResult.Yes)
+                {
+                   Application.Current.Shutdown();
+                 
+                }
 
             }
         }
