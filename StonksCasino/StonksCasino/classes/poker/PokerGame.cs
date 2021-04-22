@@ -10,7 +10,7 @@ using StonksCasino.classes.Main;
 
 namespace StonksCasino.classes.poker
 {
-    class PokerGame : INotifyPropertyChanged
+    public class PokerGame : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
