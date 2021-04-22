@@ -26,6 +26,15 @@ namespace StonksCasino.Views.main
     {
         int _Tokens;
         public User user { get; set; }
+  
+
+        private Database _database = new Database();
+
+        public Database MyDatabase
+        {
+            get { return _database; }
+            set { _database = value; }
+        }
         public LibraryWindow()
         {
             Account();
@@ -61,8 +70,8 @@ namespace StonksCasino.Views.main
 
             RouletteWindow roulette = new RouletteWindow(user);
             this.Hide();
-            roulette.ShowDialog();
-            this.Show();
+            roulette.Show();
+      
         }
 
         private void Blackjack_click(object sender, RoutedEventArgs e)
@@ -79,8 +88,8 @@ namespace StonksCasino.Views.main
         {
             BlackjackWindow roulette = new BlackjackWindow(user);
             this.Hide();
-            roulette.ShowDialog();
-            this.Show();
+            roulette.Show();
+           
         }
 
         private void Poker_click(object sender, RoutedEventArgs e)
@@ -97,14 +106,40 @@ namespace StonksCasino.Views.main
         {
             PokerWindow roulette = new PokerWindow();
             this.Hide();
-            roulette.ShowDialog();
-            this.Show();
+            roulette.Show();
+           
         }
 
         private void Tokens_Cilck(object sender, RoutedEventArgs e)
         {
             DataTable data = Database.Tokensadd(10000);
             accountrefresh();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            MyDatabase.Logout();
+          
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+            if (this.IsActive == true)          
+                {
+                MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
+                if (leaving == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else if (leaving == MessageBoxResult.Yes)
+                {
+                    
+                    Application.Current.Shutdown();
+                    
+                }
+
+            }
         }
     }
 }
