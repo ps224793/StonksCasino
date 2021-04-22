@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using StonksCasino.enums.poker;
 
 namespace StonksCasino.classes.poker
 {
@@ -28,50 +29,76 @@ namespace StonksCasino.classes.poker
             bool twopair = false;
 
             // resultFS = result Flush Straight 
+            PokerHandValue result;
+            List<Card> highCards = new List<Card>();
             List<Card> resultFS = CheckFlushStraight(cards, out royal, out straight, out flush);
-            List<Card> resultPair = CheckPairs(cards, out fourOfAKind, out  fullHouse, out  threeOfAKind, out  pair, out twopair);
+            List<Card> resultPair = CheckPairs(cards, out highCards, out fourOfAKind, out  fullHouse, out  threeOfAKind, out  pair, out twopair);
+            #region pokerhands
             if (royal && flush)
             {
                 MessageBox.Show($"RoyalFlush, {resultFS[0].Type} {resultFS[0].Value}, {resultFS[1].Type} {resultFS[1].Value}, {resultFS[2].Type} {resultFS[2].Value} {resultFS[3].Type} {resultFS[3].Value}, {resultFS[4].Type} {resultFS[4].Value}");
+                result = new PokerHandValue(PokerHand.RoyalFlush, 0, resultFS);
+                return result;
             }
             else if (straight && flush)
             {
                 MessageBox.Show($"StraightFlush, {resultFS[0].Type} {resultFS[0].Value}, {resultFS[1].Type} {resultFS[1].Value}, {resultFS[2].Type} {resultFS[2].Value} {resultFS[3].Type} {resultFS[3].Value}, {resultFS[4].Type} {resultFS[4].Value}");
+                result = new PokerHandValue(PokerHand.StraightFlush, (int)resultFS[2].Value, resultFS);
+                return result;
             }
             else if (fourOfAKind)
             {
                 MessageBox.Show($"four of a kind, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
+                result = new PokerHandValue(PokerHand.FourOfAKind, (int)resultPair[0].Value, resultPair, highCards);
+                return result;
             }
             else if (fullHouse)
             {
                 MessageBox.Show($"FullHouse, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
+                int fullHouseValue = ((int)resultPair[0].Value) * 100;
+                fullHouseValue += (int)resultPair[3].Value;
+                result = new PokerHandValue(PokerHand.FullHouse, fullHouseValue, resultPair);
+                return result;
             }
             else if (flush)
             {
                 MessageBox.Show($"Flush, {resultFS[0].Type} {resultFS[0].Value}, {resultFS[1].Type} {resultFS[1].Value}, {resultFS[2].Type} {resultFS[2].Value} {resultFS[3].Type} {resultFS[3].Value}, {resultFS[4].Type} {resultFS[4].Value}");
+                result = new PokerHandValue(PokerHand.Flush, 0, resultFS);
+                return result;
             }
             else if (straight)
             {
                 MessageBox.Show($"straight, {resultFS[0].Type} {resultFS[0].Value}, {resultFS[1].Type} {resultFS[1].Value}, {resultFS[2].Type} {resultFS[2].Value} {resultFS[3].Type} {resultFS[3].Value}, {resultFS[4].Type} {resultFS[4].Value}");
+                result = new PokerHandValue(PokerHand.Straight, (int)resultFS[2].Value, resultFS);
+                return result;
             }
             else if (threeOfAKind)
             {
                 MessageBox.Show($"Three of a kind, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
+                result = new PokerHandValue(PokerHand.ThreeOfAKind, (int)resultPair[0].Value, resultPair, highCards);
+                return result;
             }
             else if (twopair)
             {
                 MessageBox.Show($"twopair, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
+                int twoPairValue = (int)resultPair[0].Value * 100;
+                twoPairValue += (int)resultPair[2].Value;
+                result = new PokerHandValue(PokerHand.TwoPair, twoPairValue, resultPair, highCards);
+                return result;
             }
             else if (pair)
             {
                 MessageBox.Show($"pair, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
+                result = new PokerHandValue(PokerHand.Pair, (int)resultPair[0].Value, resultPair, highCards);
+                return result;
             }
             else
             {
                 MessageBox.Show($"highend, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
+                result = new PokerHandValue(PokerHand.HighCard, 0, resultPair, highCards);
+                return result;
             }
-
-            return null;
+            #endregion
         }
 
         private static List<Card> CheckFlushStraight(List<Card> cards, out bool royal, out bool straight, out bool flush)
@@ -174,8 +201,9 @@ namespace StonksCasino.classes.poker
             return false;
         }
 
-        private static List<Card> CheckPairs(List<Card> hand, out bool fourOfAKind, out bool fullHouse, out bool threeOfAKind, out bool pair, out bool twoPair)
+        private static List<Card> CheckPairs(List<Card> hand, out List<Card> highCards, out bool fourOfAKind, out bool fullHouse, out bool threeOfAKind, out bool pair, out bool twoPair)
         {
+            highCards = new List<Card>();
             fourOfAKind = false;
             fullHouse = false;
             threeOfAKind = false;
@@ -215,35 +243,37 @@ namespace StonksCasino.classes.poker
             if(pairs.Count > 0)
             {
                 //check four four of a kind
-                List<Card> Result = CheckFourOfAKind(pairs, hand, out fourOfAKind);
+                List<Card> Result = CheckFourOfAKind(pairs, hand, out highCards, out fourOfAKind);
                 if (fourOfAKind)
                 {
                     return Result;
                 }
 
                 //check for three of a kind and fullhouse
-                Result = CheckThreeOfAKind(pairs, hand, out threeOfAKind, out fullHouse);
+                Result = CheckThreeOfAKind(pairs, hand, out highCards, out threeOfAKind, out fullHouse);
                 if (fullHouse || threeOfAKind)
                 {
                     return Result;
                 }
 
                 //check for pair and twopair also rerturn if nothing
-                Result = CheckPair(pairs, hand, out pair, out twoPair);
+                Result = CheckPair(pairs, hand, out highCards, out pair, out twoPair);
                 return Result;
             }
             List<Card> result = new List<Card>();
             while (result.Count < 5)
             {
                 result.Add(hand[hand.Count - 1]);
+                highCards.Add(hand[hand.Count - 1]);
                 hand.RemoveAt(hand.Count - 1);
             }
 
             return result;
         }
 
-        private static List<Card> CheckFourOfAKind(List<List<Card>> pairs, List<Card> hand, out bool FourOfAKind)
+        private static List<Card> CheckFourOfAKind(List<List<Card>> pairs, List<Card> hand, out List<Card> highCards, out bool FourOfAKind)
         {
+            highCards = new List<Card>();
             FourOfAKind = false;
             List<Card> result = new List<Card>();
             foreach (List<Card> pair in pairs)
@@ -257,15 +287,16 @@ namespace StonksCasino.classes.poker
                     }
 
                     result.Add(hand[hand.Count - 1]);
-
+                    highCards.Add(hand[hand.Count - 1]);
                     FourOfAKind = true;
                 }
             }
             return result;
         }
 
-        private static List<Card> CheckThreeOfAKind(List<List<Card>> pairs, List<Card> hand, out bool ThreeOfAKind, out bool FullHouse)
+        private static List<Card> CheckThreeOfAKind(List<List<Card>> pairs, List<Card> hand, out List<Card> highCards, out bool ThreeOfAKind, out bool FullHouse)
         {
+            highCards = new List<Card>();
             ThreeOfAKind  = false;
             FullHouse = false;
             List<Card> result = new List<Card>();
@@ -304,14 +335,16 @@ namespace StonksCasino.classes.poker
 
                 result.Add(hand[hand.Count - 1]);
                 result.Add(hand[hand.Count - 2]);
-
+                highCards.Add(hand[hand.Count - 1]);
+                highCards.Add(hand[hand.Count - 2]);
             }
 
             return result;
         }
 
-        private static List<Card> CheckPair(List<List<Card>> pairs, List<Card> hand, out bool pair, out bool twoPair)
+        private static List<Card> CheckPair(List<List<Card>> pairs, List<Card> hand, out List<Card> highCards, out bool pair, out bool twoPair)
         {
+            highCards = new List<Card>();
             pair = false;
             twoPair = false;
 
@@ -342,6 +375,7 @@ namespace StonksCasino.classes.poker
             while (result.Count < 5)
             {
                 result.Add(hand[hand.Count -1]);
+                highCards.Add(hand[hand.Count - 1]);
                 hand.RemoveAt(hand.Count - 1);
             }
             return result;
