@@ -57,14 +57,18 @@ namespace StonksCasino.classes.blackjack
             
             int Player = playervalue;
             int Bot = Computer[0].ScoreC;
-            if (Player < 22)
-            { 
-            if (Bot < 18)
+ 
+            if (Bot < 17)
             {
                 Computer[0].AddCard(deck.DrawCard());
                 Computerhit(playervalue);
             }
+            else if (Bot < 21 && playervalue > Bot && playervalue < 21)
+            {
+                Computer[0].AddCard(deck.DrawCard());
+                Computerhit(playervalue);
             }
+            
         }
 
         public void GameclearComputer()
