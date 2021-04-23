@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using StonksCasino.classes.Main;
 using StonksCasino.classes.Roulette;
+using StonksCasino.Views.main;
 
 namespace StonksCasino.Views.Roulette
 {
@@ -28,6 +29,13 @@ namespace StonksCasino.Views.Roulette
     {
         private Bettingtable _bettingtable = new Bettingtable();
 
+        private Database _database = new Database();
+
+        public Database MyDatabase
+        {
+            get { return _database; }
+            set { _database = value; }
+        }
 
         int _betAmount;
 
@@ -386,26 +394,39 @@ namespace StonksCasino.Views.Roulette
         {
             if (_Spinning)
             {
+               
                 if (MyAmount.MyTotalinzet > 0)
                 {
-                    MessageBoxResult spinning = MessageBox.Show("De roulette tafel is aan het draaien. Als u nu weggaat dan bent u uw ingezetten fiches kwijt", "Weet u zeker dat u wil weggaan?", MessageBoxButton.OKCancel);
+                    MessageBoxResult spinning = MessageBox.Show("De roulette tafel is aan het draaien. Als u nu de applicatie afsluit dan bent u uw ingezetten fiches kwijt", "Weet u zeker dat u wil weggaan?", MessageBoxButton.OKCancel);
                     if (spinning == MessageBoxResult.Cancel)
                     {
                         e.Cancel = true;
                     }
+                    else if (spinning == MessageBoxResult.OK)
+                    {
+                        Application.Current.Shutdown();
+                       
+
+                    }
+
+
 
 
                 }
             }
-            else
+        
             {
                 if (MyAmount.MyTotalinzet > 0)
                 {
-                    MessageBoxResult Leave = MessageBox.Show("U heeft geld ingezet. Als u nu weggaat worden uw ingezetten fiches teruggegeven", "Weet u zeker dat u wil weggaan?", MessageBoxButton.OKCancel);
+                    MessageBoxResult Leave = MessageBox.Show("U heeft geld ingezet. Als u nu de applicatie afsluit worden uw fiches wel teruggegeven", "Weet u zeker dat u wil weggaan?", MessageBoxButton.OKCancel);
                     if (Leave == MessageBoxResult.OK)
                     {
                         DataTable data = Database.Tokensadd(MyAmount.MyTotalinzet);
+                    
                         Account();
+               
+                        Application.Current.Shutdown();
+                       
                     }
                     else
                     {
@@ -415,9 +436,34 @@ namespace StonksCasino.Views.Roulette
 
 
                 }
+                else
+                {
+                    if (this.IsActive == true)
+                    {
+                        MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
+                        if (leaving == MessageBoxResult.No)
+                        {
+                            e.Cancel = true;
+                        }
+                        else if (leaving == MessageBoxResult.Yes)
+                        {
+                            Application.Current.Shutdown();
+                          
+                        }
+                        
+                    }
+                    
+                }
             }
 
             }
+
+        private void btnBibliotheek_Click(object sender, RoutedEventArgs e)
+        {
+            LibraryWindow library = new LibraryWindow();
+            this.Hide();
+            library.Show();
         }
+    }
     }
 

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:StonksCasino.Views.poker"
         mc:Ignorable="d"
         Title="PokerWindow" Height="600" MinHeight="600" Width="800" MinWidth="800"
-        WindowState="Maximized"
+        WindowState="Maximized" Closing="Window_Closing"
         >
     <Grid>
         <Grid.RowDefinitions>
@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid Background="#262626" Grid.Row="0" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnBibliotheek" Content="Bibliotheek" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
+                <Button x:Name="btnBibliotheek" Content="Bibliotheek" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" Click="btnBibliotheek_Click" />
                 <Button x:Name="btnWinkel" Content="Winkel" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
                 <Button x:Name="BtnGeldStorten" Content="Geld storten" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
             </StackPanel>
@@ -34,19 +34,17 @@
             <Grid Margin="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="1.75*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1.5*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.75*"/>
                 </Grid.RowDefinitions>
                 <!-- table cards -->
                 <Grid Grid.Row="1" Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="4*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -56,17 +54,17 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Image Margin="5,0" Grid.Column="0" Grid.Row="1" Source="{Binding MyTable[0].ActiveURL, Mode=OneWay}" VerticalAlignment="Center"/>
-                    <Image Margin="5,0" Grid.Column="1" Grid.Row="1" Source="{Binding MyTable[1].ActiveURL, Mode=OneWay}" VerticalAlignment="Center"/>
-                    <Image Margin="5,0" Grid.Column="2" Grid.Row="1" Source="{Binding MyTable[2].ActiveURL, Mode=OneWay}" VerticalAlignment="Center"/>
-                    <Image Margin="5,0" Grid.Column="3" Grid.Row="1" Source="{Binding MyTable[3].ActiveURL, Mode=OneWay}" VerticalAlignment="Center"/>
-                    <Image Margin="5,0" Grid.Column="4" Grid.Row="1" Source="{Binding MyTable[4].ActiveURL, Mode=OneWay}" VerticalAlignment="Center"/>
+                    <Image Margin="10,0" Grid.Column="0" Grid.Row="1" Source="{Binding Game.MyTable[0].ActiveURL, Mode=OneWay}" VerticalAlignment="Center"/>
+                    <Image Margin="10,0" Grid.Column="1" Grid.Row="1" Source="{Binding Game.MyTable[1].ActiveURL}" VerticalAlignment="Center"/>
+                    <Image Margin="10,0" Grid.Column="2" Grid.Row="1" Source="{Binding Game.MyTable[2].ActiveURL}" VerticalAlignment="Center"/>
+                    <Image Margin="10,0" Grid.Column="3" Grid.Row="1" Source="{Binding Game.MyTable[3].ActiveURL}" VerticalAlignment="Center"/>
+                    <Image Margin="10,0" Grid.Column="4" Grid.Row="1" Source="{Binding Game.MyTable[4].ActiveURL}" VerticalAlignment="Center"/>
                 </Grid>
 
-                
-                
+
+
                 <!-- player hand -->
-                <ItemsControl   Background="Transparent" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" ItemsSource="{Binding Players[0].Hand, Mode=OneWay}">
+                <!--<ItemsControl Background="Transparent" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" ItemsSource="{Binding Players[0].Hand, Mode=OneWay}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"></StackPanel>
@@ -74,47 +72,227 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Image Margin="10,0" Source="{Binding ActiveURL, Mode=OneWay}" />
+                            <Image Margin="15,0" Source="{Binding ActiveURL, Mode=OneWay}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-                <Border Grid.Row="2" Grid.Column="2" CornerRadius="5" BorderBrush="#282929" BorderThickness="10">
-                    <Grid Grid.Row="2" Grid.Column="3" Background="#282929">
+                </ItemsControl>-->
+                <!--Bottom-->
+                <Grid  Grid.Row="2" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1.5*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="10px"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
+                    <Image Margin="0,0,10,0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Source="{Binding Game.Players[0].Hand[0].ActiveURL}" />
+                    <Image Margin="10,0,0,0" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Source="{Binding Game.Players[0].Hand[1].ActiveURL}" />
 
-                     
-                    <Grid Grid.Column="1" Margin="0,10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="2.5*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                        
-                        <StackPanel Grid.Row="0">
-                            <Button Content="Raise"></Button>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Content="-"></Button>
-                                <TextBox Grid.Column="1" Text="00" IsReadOnly="True" TextAlignment="Center"></TextBox>
-                                <Button Grid.Column="2" Content="+"></Button>
+                    <Grid  Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="1" Margin="0,10,0,0" Source="/Img/Main/Token.png" />
+                        <Image Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" Source="/Img/Main/Token.png" />
+                    </Grid>
+
+                    <!--<Image Margin="0,10,0,0" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Source="/Img/Main/Token.png" />-->
+                    <TextBlock Margin="0,10,0,0" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+
+                </Grid>
+                <!--top-->
+                <Grid  Grid.Row="0" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Margin="0,0,10,0" Grid.Column="1" HorizontalAlignment="Right" Source="/Img/Cards/BackBlue.png" />
+                    <Image Margin="10,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Source="/Img/Cards/BackBlue.png" />
+
+                    <Grid  Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="1" Margin="0,0,0,10" Source="/Img/Main/Token.png" />
+                        <Image Grid.Column="2" Margin="0,0,0,10" HorizontalAlignment="Right" Source="/Img/Main/Token.png" />
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Right">
+                        <Image HorizontalAlignment="Center" Grid.Column="0" Source="/Img/Main/Token.png" MaxWidth="140"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                    </Grid>
+
+                    <TextBlock Margin="0,0,0,10" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                </Grid>
+
+                <!--Left-->
+                <Grid  Grid.Row="0" Grid.RowSpan="3" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1.5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Margin="0,0,0,10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="/Img/Cards/BackBlue.png" RenderTransformOrigin="0.5,0.5">
+                        <Image.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                            </TransformGroup>
+                        </Image.LayoutTransform>
+                    </Image>
+                    <Image Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="/Img/Cards/BackBlue.png" RenderTransformOrigin="0.5,0.5">
+                        <Image.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                            </TransformGroup>
+                        </Image.LayoutTransform>
+                    </Image>
+
+                    <Grid  Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="1" Margin="0,0,10,0" Source="/Img/Main/Token.png" />
+                        <Image Grid.Row="0" Margin="0,0,10,0" VerticalAlignment="Bottom" Source="/Img/Main/Token.png" />
+                        <TextBlock Margin="0,0,10,0" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top">
+                        <Image HorizontalAlignment="Center" Source="/Img/Main/Token.png" MaxWidth="140"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                    </Grid>
+
+                </Grid>
+                
+                <!--right-->
+                <Grid  Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <RotateTransform Angle="180"/>
+                    </Grid.RenderTransform>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1.5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Margin="0,0,0,10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="/Img/Cards/BackBlue.png" RenderTransformOrigin="0.5,0.5">
+                        <Image.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                            </TransformGroup>
+                        </Image.LayoutTransform>
+                    </Image>
+                    <Image Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="/Img/Cards/BackBlue.png" RenderTransformOrigin="0.5,0.5">
+                        <Image.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                            </TransformGroup>
+                        </Image.LayoutTransform>
+                    </Image>
+
+                    <Grid  Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="1" Margin="0,0,10,0" Source="/Img/Main/Token.png" />
+                        <Image Grid.Row="0" Margin="0,0,10,0" VerticalAlignment="Bottom" Source="/Img/Main/Token.png" />
+                        <TextBlock Margin="0,0,10,0" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Text="500" RenderTransformOrigin="0.5,0.5">
+                            <TextBlock.RenderTransform>
+                                <RotateTransform Angle="180"/>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top">
+                        <Image HorizontalAlignment="Center" Source="/Img/Main/Token.png" MaxWidth="140"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Text="500">
+                            <TextBlock.RenderTransform>
+                                <RotateTransform Angle="180"/>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </Grid>
+
+                </Grid>
+
+
+
+                <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="2" Grid.Column="2" CornerRadius="5" BorderBrush="#282929" BorderThickness="10">
+                        <Grid Grid.Row="2" Grid.Column="3" Background="#282929">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="1" Margin="0,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2.5*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0">
+                                    <Button Content="Raise"></Button>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0" Content="-"></Button>
+                                        <TextBox Grid.Column="1" Text="00" IsReadOnly="True" TextAlignment="Center"></TextBox>
+                                        <Button Grid.Column="2" Content="+"></Button>
+                                    </Grid>
+                                </StackPanel>
+                                <Button Grid.Row="1" Content="Fold"></Button>
+                                <Button Grid.Row="2" Content="Call" Click="Call_Click"></Button>
                             </Grid>
-                        </StackPanel>
-                        <Button Grid.Row="1" Content="Fold"></Button>
-                        <Button Grid.Row="2" Content="Call" Click="Call_Click"></Button>
-                    </Grid>
 
-                    <Image Grid.Column="0" Source="/Img/Main/Token.png"></Image>
-                    </Grid>
-                </Border>
+                            <Image Grid.Column="0" Source="/Img/Main/Token.png"></Image>
+                            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                        </Grid>
+                    </Border>
+                </Grid>
+
             </Grid>
         </Grid>
     </Grid>

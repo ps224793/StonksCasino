@@ -117,30 +117,48 @@ namespace StonksCasino.classes.Main
             DataTable result = new DataTable();
             try
             {
-                if (_connection.State == ConnectionState.Closed)
-                    _connection.Open();
-                String query = "SELECT COUNT(1) FROM Accounts WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
-                SqlCommand sqlCmd = new SqlCommand(query, _connection);
-                sqlCmd.CommandType = CommandType.Text;
-                sqlCmd.Parameters.AddWithValue("@Username", MyUsername );
-                sqlCmd.Parameters.AddWithValue("@Password",  pass);
-                int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
-
-         
-                if (count == 1)
+                MyPassword = pass;
+                DataTable dataTable = Accounts();
+                bool Ingelogd = (bool)dataTable.Rows[0]["Ingelogd"];
+                if (Ingelogd == false)
                 {
-                    _connection.Close();
-                    MyPassword = pass;
-                    LibraryWindow library = new LibraryWindow();                                       
-                    library.Show();
-                    return true;
-                    
+                    if (_connection.State == ConnectionState.Closed)
+                        _connection.Open();
+                    String query = "SELECT COUNT(1) FROM Accounts WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+                    SqlCommand sqlCmd = new SqlCommand(query, _connection);
+                    sqlCmd.CommandType = CommandType.Text;
+                    sqlCmd.Parameters.AddWithValue("@Username", MyUsername);
+                    sqlCmd.Parameters.AddWithValue("@Password", pass);
+                    int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+
+
+                    if (count == 1)
+                    {
+                        String query2 = "UPDATE Accounts SET Ingelogd = 1 WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+                        SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
+                        sqlCmd2.CommandType = CommandType.Text;
+                        sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
+                        sqlCmd2.Parameters.AddWithValue("@Password", pass);
+                        sqlCmd2.ExecuteReader();
+                        _connection.Close();
+                       
+                        LibraryWindow library = new LibraryWindow();
+                        library.Show();
+                        return true;
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Gebruikersnaam of wachtwoord is onjuist.");
+                        return false;
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Gebruikersnaam of wachtwoord is onjuist.");
+                    MessageBox.Show("U kunt nu niet inloggen er is al iemand anders ingelogd op dit account");
                     return false;
                 }
+               
             }
             catch 
             {
@@ -153,6 +171,19 @@ namespace StonksCasino.classes.Main
             }
        
         }
+        public void Logout()
+        {
+            _connection.Open();
+            String query2 = "UPDATE Accounts SET Ingelogd = 0 WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+            SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
+            sqlCmd2.CommandType = CommandType.Text;
+            sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
+            sqlCmd2.Parameters.AddWithValue("@Password", MyPassword);
+            sqlCmd2.ExecuteReader();
+            _connection.Close();
+
+        }
+
 
     }
 }

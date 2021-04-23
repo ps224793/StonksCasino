@@ -32,6 +32,9 @@ namespace StonksCasino.Views.blackjack
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+   
+
         private CardBlackjack _cardturned;
 
         public CardBlackjack Mycardturned
@@ -102,7 +105,11 @@ namespace StonksCasino.Views.blackjack
 
         private void Bibliotheek_Click(object sender, EventArgs e)
         {
-            this.Close();
+            
+            LibraryWindow library = new LibraryWindow();
+            this.Hide();
+            library.Show();
+           
         }
 
         private void BlackjackWindowRestart()
@@ -196,10 +203,14 @@ namespace StonksCasino.Views.blackjack
                 int bot = ComputerGame.Computer[0].ScoreC;
                 int Player = Game.Players[0].Score;
 
-                if (Player == 21 && bot < 21 || bot > 21)
+                if (Player == 21 && bot < 21 )
                 {
                     MessageBox.Show("Je hebt gewonnen!");
                     Game.Gamewin();
+                }
+                else if (bot > 21 && Player > 21)
+                {
+                    MessageBox.Show("Allebij verloren!");
                 }
                 else if (bot > 21 && Player <= 21)
                 {
@@ -224,10 +235,7 @@ namespace StonksCasino.Views.blackjack
                     MessageBox.Show("Het is gelijkspel!");
                     Game.Gamedraw();
                 }
-                else if (bot > 21 && Player > 21)
-                {
-                    MessageBox.Show("Allebij verloren!");
-                }
+
                 else
                 {
                     MessageBox.Show("Fout!!!!");
@@ -240,6 +248,24 @@ namespace StonksCasino.Views.blackjack
             }
             catch
             {
+
+            }
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (this.IsActive == true)
+            {
+                MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
+                if (leaving == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else if (leaving == MessageBoxResult.Yes)
+                {
+                   Application.Current.Shutdown();
+                 
+                }
 
             }
         }
