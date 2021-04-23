@@ -67,6 +67,7 @@ namespace StonksCasino.classes.blackjack
             {
                 Computer[0].AddCard(deck.DrawCard());
                 Computerhit(playervalue);
+    
             }
             
         }
