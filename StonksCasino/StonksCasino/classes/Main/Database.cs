@@ -152,14 +152,14 @@ namespace StonksCasino.classes.Main
                         MessageBox.Show("Gebruikersnaam of wachtwoord is onjuist.");
                         return false;
                     }
-                }
-                else
-                {
-                    MessageBox.Show("U kunt nu niet inloggen er is al iemand anders ingelogd op dit account");
-                    return false;
-                }
-               
             }
+                else
+            {
+                MessageBox.Show("U kunt nu niet inloggen er is al iemand anders ingelogd op dit account");
+                return false;
+            }
+
+        }
             catch 
             {
                 MessageBox.Show("Gebruikersnaam of wachtwoord is onjuist.");

@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:StonksCasino.Views.poker"
         mc:Ignorable="d"
         Title="PokerWindow" Height="600" MinHeight="600" Width="800" MinWidth="800"
+        
         WindowState="Maximized" Closing="Window_Closing"
         >
+    <!--Height="600" MinHeight="600" Width="800" MinWidth="800"-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -54,11 +56,53 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Image Margin="10,0" Grid.Column="0" Grid.Row="1" Source="{Binding Game.MyTable[0].ActiveURL, Mode=OneWay}" VerticalAlignment="Center"/>
+
+                    <Image x:Name="one"  Margin="10,0" Grid.Column="0" Grid.Row="1" Source="{Binding Game.MyTable[0].ActiveURL, Mode=OneWay}" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform X="2000" Y="-2000"/>
+                                <ScaleTransform ScaleX="1"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image x:Name="two" Margin="10,0" Grid.Column="1" Grid.Row="1" Source="{Binding Game.MyTable[1].ActiveURL, Mode=OneWay}" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform X="2000" Y="-2000"/>
+                                <ScaleTransform ScaleX="1"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image x:Name="three" Margin="10,0" Grid.Column="2" Grid.Row="1" Source="{Binding Game.MyTable[2].ActiveURL, Mode=OneWay}" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform X="2000" Y="-2000"/>
+                                <ScaleTransform ScaleX="1"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image x:Name="four" Margin="10,0" Grid.Column="3" Grid.Row="1" Source="{Binding Game.MyTable[3].ActiveURL, Mode=OneWay}" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform X="2000" Y="-2000"/>
+                                <ScaleTransform ScaleX="1"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image x:Name="five" Margin="10,0" Grid.Column="4" Grid.Row="1" Source="{Binding Game.MyTable[4].ActiveURL, Mode=OneWay}" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform X="2000" Y="-2000"/>
+                                <ScaleTransform ScaleX="1"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    
+                    <!--<Image Margin="10,0" Grid.Column="0" Grid.Row="1" Source="{Binding Game.MyTable[0].ActiveURL, Mode=OneWay}" VerticalAlignment="Center"/>
                     <Image Margin="10,0" Grid.Column="1" Grid.Row="1" Source="{Binding Game.MyTable[1].ActiveURL}" VerticalAlignment="Center"/>
                     <Image Margin="10,0" Grid.Column="2" Grid.Row="1" Source="{Binding Game.MyTable[2].ActiveURL}" VerticalAlignment="Center"/>
                     <Image Margin="10,0" Grid.Column="3" Grid.Row="1" Source="{Binding Game.MyTable[3].ActiveURL}" VerticalAlignment="Center"/>
-                    <Image Margin="10,0" Grid.Column="4" Grid.Row="1" Source="{Binding Game.MyTable[4].ActiveURL}" VerticalAlignment="Center"/>
+                    <Image Margin="10,0" Grid.Column="4" Grid.Row="1" Source="{Binding Game.MyTable[4].ActiveURL}" VerticalAlignment="Center"/>-->
                 </Grid>
 
 
@@ -271,19 +315,221 @@
                                 </Grid.RowDefinitions>
 
                                 <StackPanel Grid.Row="0">
-                                    <Button Content="Raise"></Button>
+                                    <Button x:Name="btnRaise" Content="Raise">
+                                        <Button.Triggers>
+                                            <EventTrigger RoutedEvent="Button.Click" SourceName="btnRaise">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation x:Name="Reset_oneX"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:0.1"
+                                                        To="2000" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].X"
+                                                        Storyboard.TargetName="one" />
+                                                        <DoubleAnimation x:Name="Reset_oneY"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:1"
+                                                        To="-2000" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].Y"
+                                                        Storyboard.TargetName="one" />
+                                                        <DoubleAnimation x:Name="Reset_oneScaleX"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:0.1"
+                                                        To="1" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[1].ScaleX"
+                                                        Storyboard.TargetName="one" />
+                                                        
+                                                        <DoubleAnimation x:Name="Reset_twoX"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:0.1"
+                                                        To="2000" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].X"
+                                                        Storyboard.TargetName="two" />
+                                                        <DoubleAnimation x:Name="Reset_twoY"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:1"
+                                                        To="-2000" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].Y"
+                                                        Storyboard.TargetName="two" />
+                                                        
+                                                        <DoubleAnimation x:Name="Reset_threeX"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:0.1"
+                                                        To="2000" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].X"
+                                                        Storyboard.TargetName="three" />
+                                                        <DoubleAnimation x:Name="Reset_threeY"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:1"
+                                                        To="-2000" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].Y"
+                                                        Storyboard.TargetName="three" />
+
+                                                        <DoubleAnimation x:Name="Reset_fourX"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:0.1"
+                                                        To="2000" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].X"
+                                                        Storyboard.TargetName="four" />
+                                                        <DoubleAnimation x:Name="Reset_fourY"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:1"
+                                                        To="-2000" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].Y"
+                                                        Storyboard.TargetName="four" />
+
+                                                        <DoubleAnimation x:Name="Reset_fiveX"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:0.1"
+                                                        To="2000" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].X"
+                                                        Storyboard.TargetName="five" />
+                                                        <DoubleAnimation x:Name="Reset_fiveY"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:1"
+                                                        To="-2000" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].Y"
+                                                        Storyboard.TargetName="five" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Button.Triggers>
+                                    </Button>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
+
                                         <Button Grid.Column="0" Content="-"></Button>
                                         <TextBox Grid.Column="1" Text="00" IsReadOnly="True" TextAlignment="Center"></TextBox>
-                                        <Button Grid.Column="2" Content="+"></Button>
+                                        
+                                        <Button x:Name="btnPlus" Grid.Column="2" Content="+">
+                                            <Button.Triggers>
+                                                <EventTrigger RoutedEvent="Button.Click" SourceName="btnPlus">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimationUsingKeyFrames x:Name="ScaleOneX"
+                                                                                            BeginTime="0:0:0"
+                                                                Storyboard.TargetProperty="RenderTransform.Children[1].ScaleX"
+                                                                Storyboard.TargetName="one">
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.25" Value="0"/>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.35" Value="0"/>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                            <DoubleAnimationUsingKeyFrames x:Name="ScaleTwoX"
+                                                                                           BeginTime="0:0:0.5"
+                                                                Storyboard.TargetProperty="RenderTransform.Children[1].ScaleX"
+                                                                Storyboard.TargetName="two">
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.25" Value="0"/>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.35" Value="0"/>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                            <DoubleAnimationUsingKeyFrames x:Name="ScaleThreeX"
+                                                                                           BeginTime="0:0:1"
+                                                                Storyboard.TargetProperty="RenderTransform.Children[1].ScaleX"
+                                                                Storyboard.TargetName="three">
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.25" Value="0"/>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.35" Value="0"/>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                            <DoubleAnimationUsingKeyFrames x:Name="ScaleFourX"
+                                                                                           BeginTime="0:0:1.5"
+                                                                Storyboard.TargetProperty="RenderTransform.Children[1].ScaleX"
+                                                                Storyboard.TargetName="four">
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.25" Value="0"/>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.35" Value="0"/>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                            <DoubleAnimationUsingKeyFrames x:Name="ScaleFiveX"
+                                                                                           BeginTime="0:0:2"
+                                                                Storyboard.TargetProperty="RenderTransform.Children[1].ScaleX"
+                                                                Storyboard.TargetName="five">
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.25" Value="0"/>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.35" Value="0"/>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Button.Triggers>
+                                        </Button>
                                     </Grid>
                                 </StackPanel>
-                                <Button Grid.Row="1" Content="Fold"></Button>
+                                <Button x:Name="btnFold" Grid.Row="1" Content="Fold">
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.Click" SourceName="btnFold">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimationUsingKeyFrames x:Name="oneX"
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].X"
+                                                        Storyboard.TargetName="one">
+                                                        <LinearDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimation x:Name="oneY"
+                                                        BeginTime="0:0:0"
+                                                        Duration="0:0:1"
+                                                        To="0" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].Y"
+                                                        Storyboard.TargetName="one" />
+                                                    
+                                                    <DoubleAnimation x:Name="twoX"
+                                                        BeginTime="0:0:0.25"
+                                                        Duration="0:0:1"
+                                                        To="0" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].X"
+                                                        Storyboard.TargetName="two" />
+                                                    <DoubleAnimation x:Name="twoY"
+                                                        BeginTime="0:0:0.25"
+                                                        Duration="0:0:1"
+                                                        To="0" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].Y"
+                                                        Storyboard.TargetName="two" />
+
+                                                    <DoubleAnimation x:Name="threeX"
+                                                        BeginTime="0:0:0.5"
+                                                        Duration="0:0:1"
+                                                        To="0" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].X"
+                                                        Storyboard.TargetName="three" />
+                                                    <DoubleAnimation x:Name="threeY"
+                                                        BeginTime="0:0:0.5"
+                                                        Duration="0:0:1"
+                                                        To="0" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].Y"
+                                                        Storyboard.TargetName="three" />
+
+                                                    <DoubleAnimation x:Name="fourX"
+                                                        BeginTime="0:0:0.75"
+                                                        Duration="0:0:1"
+                                                        To="0" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].X"
+                                                        Storyboard.TargetName="four" />
+                                                    <DoubleAnimation x:Name="fourY"
+                                                        BeginTime="0:0:0.75"
+                                                        Duration="0:0:1"
+                                                        To="0" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].Y"
+                                                        Storyboard.TargetName="four" />
+
+                                                    <DoubleAnimation x:Name="fiveX"
+                                                        BeginTime="0:0:1"
+                                                        Duration="0:0:1"
+                                                        To="0" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].X"
+                                                        Storyboard.TargetName="five" />
+                                                    <DoubleAnimation x:Name="fiveY"
+                                                        BeginTime="0:0:1"
+                                                        Duration="0:0:1"
+                                                        To="0" 
+                                                        Storyboard.TargetProperty="RenderTransform.Children[0].Y"
+                                                        Storyboard.TargetName="five" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
+                                </Button>
                                 <Button Grid.Row="2" Content="Call" Click="Call_Click"></Button>
                             </Grid>
 
