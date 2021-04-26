@@ -24,11 +24,20 @@ namespace StonksCasino.classes.Main
 
         static string _password;
 
-        static string MyPassword
+        public string MyPassword
         {
             get { return _password; }
             set { _password = value; }
         }
+
+        private bool remember = false;
+
+        public bool MyRemember
+        {
+            get { return remember; }
+            set { remember = value; } 
+        }
+
         public static DataTable Accounts()
         {
             DataTable result = new DataTable();
@@ -40,7 +49,7 @@ namespace StonksCasino.classes.Main
                 SqlCommand sqlCmd = new SqlCommand(query, _connection);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", _username);
-                sqlCmd.Parameters.AddWithValue("@Password", MyPassword);
+                sqlCmd.Parameters.AddWithValue("@Password", _password);
                 SqlDataReader reader = sqlCmd.ExecuteReader();
                 result.Load(reader);
             }
@@ -68,7 +77,7 @@ namespace StonksCasino.classes.Main
                 SqlCommand sqlCmd = new SqlCommand(query, _connection);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", _username);
-                sqlCmd.Parameters.AddWithValue("@Password", MyPassword);
+                sqlCmd.Parameters.AddWithValue("@Password", _password);
                 sqlCmd.ExecuteReader();
             }
             catch (Exception)
@@ -95,7 +104,7 @@ namespace StonksCasino.classes.Main
                 SqlCommand sqlCmd = new SqlCommand(query, _connection);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", _username );
-                sqlCmd.Parameters.AddWithValue("@Password", MyPassword);
+                sqlCmd.Parameters.AddWithValue("@Password", _password);
                 sqlCmd.ExecuteReader();
             }
             catch (Exception)
@@ -141,7 +150,13 @@ namespace StonksCasino.classes.Main
                         sqlCmd2.Parameters.AddWithValue("@Password", pass);
                         sqlCmd2.ExecuteReader();
                         _connection.Close();
-                       
+                        if (MyRemember)
+                        {
+                            StonksCasino.Properties.Settings.Default.Username = MyUsername;
+                            StonksCasino.Properties.Settings.Default.Password = pass;
+                            StonksCasino.Properties.Settings.Default.Save();
+                        }
+  
                         LibraryWindow library = new LibraryWindow();
                         library.Show();
                         return true;
@@ -183,7 +198,75 @@ namespace StonksCasino.classes.Main
             _connection.Close();
 
         }
+        public bool Checkremember()
+        {
+            if (StonksCasino.Properties.Settings.Default.Username != "" && StonksCasino.Properties.Settings.Default.Password != "")
+            {
+                MyUsername = StonksCasino.Properties.Settings.Default.Username;
+                MyPassword = StonksCasino.Properties.Settings.Default.Password;
 
+
+                DataTable result = new DataTable();
+                try
+                {
+                  
+                    DataTable dataTable = Accounts();
+                    bool Ingelogd = (bool)dataTable.Rows[0]["Ingelogd"];
+                    if (Ingelogd == false)
+                    {
+                        if (_connection.State == ConnectionState.Closed)
+                            _connection.Open();
+                        String query = "SELECT COUNT(1) FROM Accounts WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+                        SqlCommand sqlCmd = new SqlCommand(query, _connection);
+                        sqlCmd.CommandType = CommandType.Text;
+                        sqlCmd.Parameters.AddWithValue("@Username", MyUsername);
+                        sqlCmd.Parameters.AddWithValue("@Password", MyPassword);
+                        int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+
+
+                        if (count == 1)
+                        {
+                            String query2 = "UPDATE Accounts SET Ingelogd = 1 WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+                            SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
+                            sqlCmd2.CommandType = CommandType.Text;
+                            sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
+                            sqlCmd2.Parameters.AddWithValue("@Password", MyPassword);
+                            sqlCmd2.ExecuteReader();
+                            _connection.Close();
+               
+                            StonksCasino.Properties.Settings.Default.Save();
+                            LibraryWindow library = new LibraryWindow();
+                            library.Show();
+                            return true;
+
+                        }
+                        else
+                        {
+                            
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        
+                        return false;
+                    }
+
+                }
+                catch
+                {
+                 
+                    return false;
+                }
+
+                finally
+                {
+                    _connection.Close();
+                }
+            }
+            return false;
+        }
+    }
 
     }
-}
+

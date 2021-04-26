@@ -37,7 +37,9 @@ namespace StonksCasino
 
         public MainWindow()
         {
+            
             DataContext = this;
+            chekremember();
             InitializeComponent();
         }
 
@@ -46,7 +48,7 @@ namespace StonksCasino
           bool window =  MyDatabase.Login(_pasword);
             if (window)
             {
-                this.Close();
+                this.Hide();
             }
         }
 
@@ -55,5 +57,44 @@ namespace StonksCasino
             if (this.DataContext != null)
             { _pasword = ((PasswordBox)sender).Password; }
         }
+        public void chekremember()
+        {
+            bool window = MyDatabase.Checkremember();
+            if (window)
+            {
+                this.Hide();
+            }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            _database.MyRemember = true;
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _database.MyRemember = false;
+        }
+
+        private void Window_Closed(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (this.IsActive == true)
+            {
+                MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
+                if (leaving == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else if (leaving == MessageBoxResult.Yes)
+                {
+
+                    Application.Current.Shutdown();
+
+                }
+
+            }
+        }
+
+ 
     }
 }

@@ -141,5 +141,19 @@ namespace StonksCasino.Views.main
 
             }
         }
+
+        private void Uitloggen_Click(object sender, RoutedEventArgs e)
+        {
+            MyDatabase.Logout();
+            StonksCasino.Properties.Settings.Default.Username = "";
+            StonksCasino.Properties.Settings.Default.Password = "";
+            StonksCasino.Properties.Settings.Default.Save();
+            _database.MyUsername = "";
+            _database.MyPassword = "";
+            MainWindow window = new MainWindow();
+        
+            this.Hide();
+            window.Show();
+        }
     }
 }
