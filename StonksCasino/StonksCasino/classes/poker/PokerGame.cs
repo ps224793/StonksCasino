@@ -81,6 +81,5 @@ namespace StonksCasino.classes.poker
             }
             MyTable = cards;
         }
-
     }
 }
