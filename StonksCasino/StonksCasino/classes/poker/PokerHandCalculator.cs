@@ -12,6 +12,12 @@ namespace StonksCasino.classes.poker
 {
     class PokerHandCalculator
     {
+        /// <summary>
+        /// This method calculates the highest possible value of cards for the player
+        /// </summary>
+        /// <param name="hand">This is a list of a player's cards</param>
+        /// <param name="table">This is a list of card's on the table</param>
+        /// <returns>The highest possible combination of five cards</returns>
         public static PokerHandValue GetHandValue(List<Card> hand, List<Card> table)
         {
             List<Card> cards = new List<Card>();
@@ -101,6 +107,14 @@ namespace StonksCasino.classes.poker
             #endregion
         }
 
+        /// <summary>
+        /// Checks if a list of cards contains a straight, flush or royal flush
+        /// </summary>
+        /// <param name="cards">The list of cards to be checked</param>
+        /// <param name="royal">Outputs whether result contains a royal flush</param>
+        /// <param name="straight">Outputs whether result contains a straight</param>
+        /// <param name="flush">Outputs whether result contains a flush</param>
+        /// <returns>A list of cards ordered by highest value</returns>
         private static List<Card> CheckFlushStraight(List<Card> cards, out bool royal, out bool straight, out bool flush)
         {
             royal = false;
@@ -136,6 +150,13 @@ namespace StonksCasino.classes.poker
             return result;
         }
 
+        /// <summary>
+        /// Checks if a list of cards contains a straight, straight flush or an royal flush
+        /// </summary>
+        /// <param name="cardsToCheck">The list of cards to be checked</param>
+        /// <param name="straight">Outputs a list of cards containing a straight</param>
+        /// <param name="royal">Outputs whether result contains a flush</param>
+        /// <returns>Whether result contains a straight</returns>
         private static bool CheckStraight(List<Card> cardsToCheck, out List<Card> straight, out bool royal)
         {
             royal = false;
@@ -201,6 +222,17 @@ namespace StonksCasino.classes.poker
             return false;
         }
 
+        /// <summary>
+        /// Checks if a list of cards contains any combination of pairs
+        /// </summary>
+        /// <param name="hand">The list of cards to be checked</param>
+        /// <param name="highCards">Outputs a list of cards ordered by highest value</param>
+        /// <param name="fourOfAKind">Outputs whether result contains a four of a kind</param>
+        /// <param name="fullHouse">Outputs whether result contains a fullhouse</param>
+        /// <param name="threeOfAKind">Outputs whether result contains a three of a kind</param>
+        /// <param name="pair">Outputs whether result contains a pair</param>
+        /// <param name="twoPair">Outputs whether result contains two pairs</param>
+        /// <returns>A list of cards containing the highest possible combination of pairs and high cards</returns>
         private static List<Card> CheckPairs(List<Card> hand, out List<Card> highCards, out bool fourOfAKind, out bool fullHouse, out bool threeOfAKind, out bool pair, out bool twoPair)
         {
             highCards = new List<Card>();
@@ -239,9 +271,11 @@ namespace StonksCasino.classes.poker
                     combo.Add(card);
                 }
             }
-            pairs.Reverse();
+            
             if(pairs.Count > 0)
             {
+                pairs.Reverse();
+
                 //check four four of a kind
                 List<Card> Result = CheckFourOfAKind(pairs, hand, out highCards, out fourOfAKind);
                 if (fourOfAKind)
@@ -249,8 +283,10 @@ namespace StonksCasino.classes.poker
                     return Result;
                 }
 
+                List<List<Card>> cardList = pairs.OrderBy(x => x.Count).ToList();
+
                 //check for three of a kind and fullhouse
-                Result = CheckThreeOfAKind(pairs, hand, out highCards, out threeOfAKind, out fullHouse);
+                Result = CheckThreeOfAKind(cardList, hand, out highCards, out threeOfAKind, out fullHouse);
                 if (fullHouse || threeOfAKind)
                 {
                     return Result;
@@ -271,6 +307,14 @@ namespace StonksCasino.classes.poker
             return result;
         }
 
+        /// <summary>
+        /// Checks if a list of cards contains a four of a kind
+        /// </summary>
+        /// <param name="pairs">The list of pairs to be checked</param>
+        /// <param name="hand">The list of cards from which to pull a high card</param>
+        /// <param name="highCards">Outputs a list containing one highcard</param>
+        /// <param name="FourOfAKind">Outputs whether result contains a four of a kind</param>
+        /// <returns>A list of cards possible containing a four of a kind</returns>
         private static List<Card> CheckFourOfAKind(List<List<Card>> pairs, List<Card> hand, out List<Card> highCards, out bool FourOfAKind)
         {
             highCards = new List<Card>();
@@ -294,6 +338,15 @@ namespace StonksCasino.classes.poker
             return result;
         }
 
+        /// <summary>
+        /// Checks if a list of cards contains a three of a kind or a fullhouse
+        /// </summary>
+        /// <param name="pairs">The list of pairs to be checked</param>
+        /// <param name="hand">The list of cards to be checked</param>
+        /// <param name="highCards">Outputs list of cards from which to pull two highcards</param>
+        /// <param name="ThreeOfAKind">Outputs whether result contains a three of a kind</param>
+        /// <param name="FullHouse">Outputs whether result contains a fullhouse</param>
+        /// <returns>A list of cards possible containing a three of a kind or a fullhouse</returns>
         private static List<Card> CheckThreeOfAKind(List<List<Card>> pairs, List<Card> hand, out List<Card> highCards, out bool ThreeOfAKind, out bool FullHouse)
         {
             highCards = new List<Card>();
@@ -342,6 +395,15 @@ namespace StonksCasino.classes.poker
             return result;
         }
 
+        /// <summary>
+        /// Checks if a list of cards contains a single pair of two pairs
+        /// </summary>
+        /// <param name="pairs">The list of pairs to be checked</param>
+        /// <param name="hand">The list of cards to be checked</param>
+        /// <param name="highCards">Outputs list of cards from which to pull three or one highcard(s)</param>
+        /// <param name="pair">Outputs whether result contains a single pair</param>
+        /// <param name="twoPair">Outputs whether result contains two pairs</param>
+        /// <returns>A list of cards possible containing a single pair or two pairs</returns>
         private static List<Card> CheckPair(List<List<Card>> pairs, List<Card> hand, out List<Card> highCards, out bool pair, out bool twoPair)
         {
             highCards = new List<Card>();
