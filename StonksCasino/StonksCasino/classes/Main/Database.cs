@@ -308,21 +308,22 @@ namespace StonksCasino.classes.Main
                     {
                         if (_connection.State == ConnectionState.Closed)
                             _connection.Open();
-                        String query = "SELECT COUNT(1) FROM Accounts WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+                        String query = "SELECT Wachtwoord FROM Accounts WHERE Gebruikersnaam=@Username";
                         SqlCommand sqlCmd = new SqlCommand(query, _connection);
                         sqlCmd.CommandType = CommandType.Text;
                         sqlCmd.Parameters.AddWithValue("@Username", MyUsername);
-                        sqlCmd.Parameters.AddWithValue("@Password", MyPassword);
-                        int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+                        SqlDataReader reader = sqlCmd.ExecuteReader();
+                        result.Load(reader);
 
+                        bool verify = BCrypt.Net.BCrypt.Verify(MyPassword, (string)result.Rows[0]["Wachtwoord"]);
 
-                        if (count == 1)
-                        {
-                            String query2 = "UPDATE Accounts SET Ingelogd = 1 WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+                        if (verify)
+                        { 
+                            String query2 = "UPDATE Accounts SET Ingelogd = 1 WHERE Gebruikersnaam=@Username";
                             SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
                             sqlCmd2.CommandType = CommandType.Text;
                             sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
-                            sqlCmd2.Parameters.AddWithValue("@Password", MyPassword);
+                         
                             sqlCmd2.ExecuteReader();
                             _connection.Close();
                
