@@ -108,7 +108,39 @@ namespace StonksCasino.Views.Roulette
             DataTable dataTable = Database.Accounts();
             _Tokens = (int)dataTable.Rows[0]["Token"];
             user.MyTokens = _Tokens;
+ 
 
+        }
+        private bool Checkingelogd()
+        {
+            DataTable dataTable = Database.Accounts();
+            long Time = (long)dataTable.Rows[0]["Timestamp"];
+            if (Time != Properties.Settings.Default.Timestamp)
+            {
+
+               
+                if (_Spinning == false)
+                {
+                    DataTable data = Database.Tokensadd(MyAmount.MyTotalinzet);
+                }
+                StonksCasino.Properties.Settings.Default.Username = "";
+                StonksCasino.Properties.Settings.Default.Password = "";
+                StonksCasino.Properties.Settings.Default.Save();
+                MyAmount.MyTotalinzet = 0;
+                _database.MyUsername = "";
+                _database.MyPassword = "";
+
+
+                MainWindow window = new MainWindow();
+
+                this.Hide();
+                MessageBox.Show("Er is door iemand anders ingelogd op het account waar u momenteel op speelt. Hierdoor wordt u uitgelogd");
+                window.Show();
+
+                return false;
+
+            }
+            return true;
         }
 
         private void configTimer()
@@ -145,59 +177,62 @@ namespace StonksCasino.Views.Roulette
 
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-            _timerbet.Start();
-            _Spinning = true;
-            int[] _score = new int[] { 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 20 };
-            Angle = 0;
-            Storyboard storyboard = new Storyboard();
-            storyboard.Duration = new Duration(TimeSpan.FromSeconds(8.0));
-            double angle = _random.Next(1800, 3600);
-            DoubleAnimation rotateAnimation = new DoubleAnimation()
+            bool ingelogd = Checkingelogd();
+            if (ingelogd)
             {
-                From = Angle,
-                To = angle,
-                Duration = storyboard.Duration,
-                AccelerationRatio = 0.1,
-                DecelerationRatio = 0.5
-            };
-            Angle += angle;
-            Angle = Angle % 360;
-            Storyboard.SetTarget(rotateAnimation, imWheel);
-            Storyboard.SetTargetProperty(rotateAnimation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
+                _timerbet.Start();
+                _Spinning = true;
+                int[] _score = new int[] { 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 20 };
+                Angle = 0;
+                Storyboard storyboard = new Storyboard();
+                storyboard.Duration = new Duration(TimeSpan.FromSeconds(8.0));
+                double angle = _random.Next(1800, 3600);
+                DoubleAnimation rotateAnimation = new DoubleAnimation()
+                {
+                    From = Angle,
+                    To = angle,
+                    Duration = storyboard.Duration,
+                    AccelerationRatio = 0.1,
+                    DecelerationRatio = 0.5
+                };
+                Angle += angle;
+                Angle = Angle % 360;
+                Storyboard.SetTarget(rotateAnimation, imWheel);
+                Storyboard.SetTargetProperty(rotateAnimation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
 
 
-            storyboard.Children.Add(rotateAnimation);
-            storyboard.Begin();
+                storyboard.Children.Add(rotateAnimation);
+                storyboard.Begin();
 
 
 
-            //---------------------
-            Angle2 = 0;
-            int random1 = _random.Next(0, 36);
-            Storyboard storyboard2 = new Storyboard();
-            storyboard2.Completed += Storyboard2_Completed;
-            storyboard2.Duration = new Duration(TimeSpan.FromSeconds(8.0));
-            double angle2 = 9.72972973 * random1 + -3600 + Angle;
-            DoubleAnimation rotateAnimation2 = new DoubleAnimation()
-            {
-                From = Angle2,
-                To = angle2,
-                Duration = storyboard2.Duration,
-                AccelerationRatio = 0.4,
-                DecelerationRatio = 0.2
-            };
-            Angle2 += angle2;
-            Angle2 = Angle2 % 360;
-            Storyboard.SetTarget(rotateAnimation2, imBal);
-            Storyboard.SetTargetProperty(rotateAnimation2, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
+                //---------------------
+                Angle2 = 0;
+                int random1 = _random.Next(0, 36);
+                Storyboard storyboard2 = new Storyboard();
+                storyboard2.Completed += Storyboard2_Completed;
+                storyboard2.Duration = new Duration(TimeSpan.FromSeconds(8.0));
+                double angle2 = 9.72972973 * random1 + -3600 + Angle;
+                DoubleAnimation rotateAnimation2 = new DoubleAnimation()
+                {
+                    From = Angle2,
+                    To = angle2,
+                    Duration = storyboard2.Duration,
+                    AccelerationRatio = 0.4,
+                    DecelerationRatio = 0.2
+                };
+                Angle2 += angle2;
+                Angle2 = Angle2 % 360;
+                Storyboard.SetTarget(rotateAnimation2, imBal);
+                Storyboard.SetTargetProperty(rotateAnimation2, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
 
 
-            storyboard2.Children.Add(rotateAnimation2);
-            storyboard2.Begin(this);
+                storyboard2.Children.Add(rotateAnimation2);
+                storyboard2.Begin(this);
 
-            _Finalnumber = _score[random1];
+                _Finalnumber = _score[random1];
 
-
+            }
         }
 
         private void Storyboard2_Completed(object sender, EventArgs e)
@@ -219,68 +254,73 @@ namespace StonksCasino.Views.Roulette
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (_display == false)
+            bool ingelogd = Checkingelogd();
+            if (ingelogd)
             {
-                MyBettingTable.Resetbet();
-                _valuedisplay = 0;
-                _display = true;
-                _timerdisplay.Stop();
-            }
-            if (_canbet)
-            {
-
-
-                if (_betAmount > 0)
+                if (_display == false)
+                {
+                    MyBettingTable.Resetbet();
+                    _valuedisplay = 0;
+                    _display = true;
+                    _timerdisplay.Stop();
+                }
+                if (_canbet)
                 {
 
-                    if (_Tokens >= _betAmount)
+
+                    if (_betAmount > 0)
                     {
-                        MyAmount.Addtotal(_betAmount);
-                        Button bt = sender as Button;
-                        ((Bet)bt.Tag).SetBet(_betAmount);
-                        DataTable data = Database.Tokensremove(_betAmount);
-                        Account();
+
+                        if (_Tokens >= _betAmount)
+                        {
+                            MyAmount.Addtotal(_betAmount);
+                            Button bt = sender as Button;
+                            ((Bet)bt.Tag).SetBet(_betAmount);
+                            DataTable data = Database.Tokensremove(_betAmount);
+                            Account();
+                        }
+                        else
+                        {
+                            MessageBox.Show("U heeft niet genoeg tokens om in te zetten");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("U heeft niet genoeg tokens om in te zetten");
+                        MessageBox.Show("U kunt geen fiche van 0 inzetten");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("U kunt geen fiche van 0 inzetten");
+                    MessageBox.Show("U kunt nu niet meer inzetten. Wacht tot er een nummer is gevallen");
                 }
-            }
-            else
-            {
-                MessageBox.Show("U kunt nu niet meer inzetten. Wacht tot er een nummer is gevallen");
             }
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (_canbet)
-            {
-                Button bt = sender as Button;
-                ((Bet)bt.Tag).PreviewBet();
-                bool Chip = ((Bet)bt.Tag).Set;
-                if (Chip == true)
+        
+                if (_canbet)
                 {
-                    bt.ToolTip = ((Bet)bt.Tag).AmountLabel;
+                    Button bt = sender as Button;
+                    ((Bet)bt.Tag).PreviewBet();
+                    bool Chip = ((Bet)bt.Tag).Set;
+                    if (Chip == true)
+                    {
+                        bt.ToolTip = ((Bet)bt.Tag).AmountLabel;
+                    }
+                    else
+                    {
+                        bt.ToolTip = null;
+                    }
                 }
-                else
-                {
-                    bt.ToolTip = null;
-                }
-            }
-           
+            
 
         }
 
         private void Button_MouseLeave(object sender, MouseEventArgs e)
         {
-           
             
+
                 Button bt = sender as Button;
                 ((Bet)bt.Tag).dePreviewBet();
             
@@ -290,20 +330,22 @@ namespace StonksCasino.Views.Roulette
 
         private void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (_canbet)
-            {
-                Button bt = sender as Button;
-                double opacity = ((Bet)bt.Tag).Opacity;
-                if (opacity == 1)
+            bool ingelogd = Checkingelogd();
+            if (ingelogd) {
+                if (_canbet)
                 {
-                    int amount = ((Bet)bt.Tag).Amount;
-                    ((Bet)bt.Tag).DeleteBet();
+                    Button bt = sender as Button;
+                    double opacity = ((Bet)bt.Tag).Opacity;
+                    if (opacity == 1)
+                    {
+                        int amount = ((Bet)bt.Tag).Amount;
+                        ((Bet)bt.Tag).DeleteBet();
 
-                    MyAmount.RemoveTotal(amount);
-                    Account();
+                        MyAmount.RemoveTotal(amount);
+                        Account();
+                    }
+
                 }
-                
-             
             }
             else
             {
@@ -313,41 +355,43 @@ namespace StonksCasino.Views.Roulette
 
         private void Fiche_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-            TextBox text = sender as TextBox;
-            int inttext = 0;
-
-
-            try
+            bool ingelogd = Checkingelogd();
+            if (ingelogd)
             {
-                inttext = int.Parse(text.Text);
-            }
-            catch (Exception)
-            {
+                TextBox text = sender as TextBox;
+                int inttext = 0;
+
+
+                try
+                {
+                    inttext = int.Parse(text.Text);
+                }
+                catch (Exception)
+                {
+
+
+                }
+                _betAmount = inttext;
+
+                if (text.Text.Length < 4)
+                {
+                    text.FontSize = 20;
+                }
+                if (text.Text.Length >= 4)
+                {
+                    text.FontSize = 15;
+                }
+                if (text.Text.Length >= 5)
+                {
+                    text.FontSize = 12;
+                }
+                if (text.Text.Length >= 6)
+                {
+                    text.FontSize = 10;
+                }
 
 
             }
-            _betAmount = inttext;
-
-            if (text.Text.Length < 4)
-            {
-                text.FontSize = 20;
-            }
-            if (text.Text.Length >= 4)
-            {
-                text.FontSize = 15;
-            }
-            if (text.Text.Length >= 5)
-            {
-                text.FontSize = 12;
-            }
-            if (text.Text.Length >= 6)
-            {
-                text.FontSize = 10;
-            }
-
-
-
 
         }
 
@@ -378,16 +422,23 @@ namespace StonksCasino.Views.Roulette
 
         private void plus_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            MyAmount.Plusinzet();
+            bool ingelogd = Checkingelogd();
+            if (ingelogd)
+            {
+                MyAmount.Plusinzet();
+            }
         }
 
         private void min_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (_betAmount > 0)
+            bool ingelogd = Checkingelogd();
+            if (ingelogd)
             {
-                MyAmount.Mininzet();
+                if (_betAmount > 0)
+                {
+                    MyAmount.Mininzet();
+                }
             }
-
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
