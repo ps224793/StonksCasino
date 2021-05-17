@@ -99,6 +99,9 @@
     <Compile Include="Views\Roulette\RouletteWindow.xaml.cs">
       <DependentUpon>RouletteWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\slotmachine\SlotmachineWindow.xaml.cs">
+      <DependentUpon>SlotmachineWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -124,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Roulette\RouletteWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\slotmachine\SlotmachineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
