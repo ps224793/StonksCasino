@@ -259,5 +259,12 @@
     <Resource Include="Img\Main\blackjacklogo.jpg" />
     <Resource Include="Img\Main\pokerlogo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\PokerButtons\BigBlind.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\PokerButtons\Dealer.png" />
+    <Resource Include="Img\PokerButtons\SmallBlind.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

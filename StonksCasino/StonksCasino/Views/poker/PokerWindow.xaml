@@ -142,11 +142,11 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="1" Margin="0,10,0,0" Source="/Img/Main/Token.png" />
-                        <Image Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" Source="/Img/Main/Token.png" />
+                        <Image Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" Source="{Binding Game.Players[0].ButtonImageURL}" />
                     </Grid>
 
                     <!--<Image Margin="0,10,0,0" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Source="/Img/Main/Token.png" />-->
-                    <TextBlock Margin="0,10,0,0" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                    <TextBlock Margin="0,10,0,0" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Game.Players[0].Bet}" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"/>
 
                 </Grid>
                 <!--top-->
@@ -161,8 +161,8 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Margin="0,0,10,0" Grid.Column="1" HorizontalAlignment="Right" Source="/Img/Cards/BackBlue.png" />
-                    <Image Margin="10,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Source="/Img/Cards/BackBlue.png" />
+                    <Image Margin="0,0,10,0" Grid.Column="1" HorizontalAlignment="Right" Source="{Binding Game.Players[2].Hand[1].ActiveURL}" />
+                    <Image Margin="10,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Source="{Binding Game.Players[2].Hand[0].ActiveURL}" />
 
                     <Grid  Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" >
                         <Grid.ColumnDefinitions>
@@ -171,15 +171,15 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="1" Margin="0,0,0,10" Source="/Img/Main/Token.png" />
-                        <Image Grid.Column="2" Margin="0,0,0,10" HorizontalAlignment="Right" Source="/Img/Main/Token.png" />
+                        <Image Grid.Column="2" Margin="0,0,0,10" HorizontalAlignment="Right" Source="{Binding Game.Players[2].ButtonImageURL}" />
                     </Grid>
 
                     <Grid HorizontalAlignment="Right">
                         <Image HorizontalAlignment="Center" Grid.Column="0" Source="/Img/Main/Token.png" MaxWidth="140"/>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Game.Players[2].Balance}" TextAlignment="Center" Foreground="White" FontWeight="Bold"/>
                     </Grid>
 
-                    <TextBlock Margin="0,0,0,10" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                    <TextBlock Margin="0,0,0,10" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Game.Players[2].Bet}" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"/>
                 </Grid>
 
                 <!--Left-->
@@ -194,7 +194,7 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Margin="0,0,0,10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="/Img/Cards/BackBlue.png" RenderTransformOrigin="0.5,0.5">
+                    <Image Margin="0,0,0,10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[1].Hand[0].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.LayoutTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -203,7 +203,7 @@
                             </TransformGroup>
                         </Image.LayoutTransform>
                     </Image>
-                    <Image Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="/Img/Cards/BackBlue.png" RenderTransformOrigin="0.5,0.5">
+                    <Image Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[1].Hand[1].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.LayoutTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -220,13 +220,13 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Image Grid.Row="1" Margin="0,0,10,0" Source="/Img/Main/Token.png" />
-                        <Image Grid.Row="0" Margin="0,0,10,0" VerticalAlignment="Bottom" Source="/Img/Main/Token.png" />
-                        <TextBlock Margin="0,0,10,0" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                        <Image Grid.Row="0" Margin="0,0,10,0" VerticalAlignment="Bottom" Source="{Binding Game.Players[1].ButtonImageURL}" />
+                        <TextBlock Margin="0,0,10,0" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Game.Players[1].Bet}" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"/>
                     </Grid>
 
                     <Grid HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top">
                         <Image HorizontalAlignment="Center" Source="/Img/Main/Token.png" MaxWidth="140"/>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Game.Players[1].Balance}" TextAlignment="Center" Foreground="White" FontWeight="Bold"/>
                     </Grid>
 
                 </Grid>
@@ -246,7 +246,7 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Margin="0,0,0,10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="/Img/Cards/BackBlue.png" RenderTransformOrigin="0.5,0.5">
+                    <Image Margin="0,0,0,10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[3].Hand[1].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.LayoutTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -255,7 +255,7 @@
                             </TransformGroup>
                         </Image.LayoutTransform>
                     </Image>
-                    <Image Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="/Img/Cards/BackBlue.png" RenderTransformOrigin="0.5,0.5">
+                    <Image Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[3].Hand[0].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.LayoutTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -272,8 +272,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Image Grid.Row="1" Margin="0,0,10,0" Source="/Img/Main/Token.png" />
-                        <Image Grid.Row="0" Margin="0,0,10,0" VerticalAlignment="Bottom" Source="/Img/Main/Token.png" />
-                        <TextBlock Margin="0,0,10,0" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Text="500" RenderTransformOrigin="0.5,0.5">
+                        <Image Grid.Row="0" Margin="0,0,10,0" VerticalAlignment="Bottom" Source="{Binding Game.Players[3].ButtonImageURL}" />
+                        <TextBlock Margin="0,0,10,0" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Game.Players[3].Bet}" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.5,0.5">
                             <TextBlock.RenderTransform>
                                 <RotateTransform Angle="180"/>
                             </TextBlock.RenderTransform>
@@ -282,7 +282,7 @@
 
                     <Grid HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top">
                         <Image HorizontalAlignment="Center" Source="/Img/Main/Token.png" MaxWidth="140"/>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Text="500">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Game.Players[3].Balance}" TextAlignment="Center" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.5,0.5">
                             <TextBlock.RenderTransform>
                                 <RotateTransform Angle="180"/>
                             </TextBlock.RenderTransform>
@@ -315,7 +315,7 @@
                                 </Grid.RowDefinitions>
 
                                 <StackPanel Grid.Row="0">
-                                    <Button x:Name="btnRaise" Content="Raise">
+                                    <Button x:Name="btnRaise" Content="Raise" Click="Raise_Bet">
                                         <Button.Triggers>
                                             <EventTrigger RoutedEvent="Button.Click" SourceName="btnRaise">
                                                 <BeginStoryboard>
@@ -402,10 +402,10 @@
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Button Grid.Column="0" Content="-"></Button>
-                                        <TextBox Grid.Column="1" Text="00" IsReadOnly="True" TextAlignment="Center"></TextBox>
-                                        
-                                        <Button x:Name="btnPlus" Grid.Column="2" Content="+">
+                                        <Button Grid.Column="0" Content="-" Click="Lower_Raise"/>
+                                        <TextBox Grid.Column="1" Text="{Binding Game.Players[0].RaiseBet}" TextAlignment="Center"/>
+
+                                        <Button x:Name="btnPlus" Grid.Column="2" Content="+" Click="Higher_Raise">
                                             <Button.Triggers>
                                                 <EventTrigger RoutedEvent="Button.Click" SourceName="btnPlus">
                                                     <BeginStoryboard>
@@ -534,7 +534,7 @@
                             </Grid>
 
                             <Image Grid.Column="0" Source="/Img/Main/Token.png"></Image>
-                            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold">500</TextBlock>
+                            <TextBlock Text="{Binding Game.Players[0].Balance}" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"/>
                         </Grid>
                     </Border>
                 </Grid>

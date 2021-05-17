@@ -30,10 +30,10 @@ namespace StonksCasino.classes.poker
         public PokerButton Button
         {
             get { return _button; }
-            set { _button = value; OnPropertyChanged("BackURL"); OnPropertyChanged("ActiveURL"); }
+            set { _button = value; OnPropertyChanged("ButtonImageURL"); }
         }
 
-        public string ImageURL
+        public string ButtonImageURL
         {
             get
             {
@@ -106,6 +106,17 @@ namespace StonksCasino.classes.poker
             set { _balance = value; OnPropertyChanged(); }
         }
 
+        private int _raiseBet;
+
+        /// <summary>
+        /// Represents the amount of chips this player has left
+        /// </summary>
+        public int RaiseBet
+        {
+            get { return _raiseBet; }
+            set { _raiseBet = value; OnPropertyChanged(); }
+        }
+
         private int _bet;
 
         /// <summary>
@@ -140,11 +151,10 @@ namespace StonksCasino.classes.poker
         /// <summary>
         /// Raises this player's bet with the amount given
         /// </summary>
-        /// <param name="amount">How much this player's bet must be raised</param>
-        public void Raise(int amount)
+        public void Raise()
         {
-            Balance -= amount;
-            Bet += amount;
+            Balance -= RaiseBet;
+            Bet += RaiseBet;
             // End of this player's turn
         }
 
