@@ -53,6 +53,13 @@ namespace StonksCasino.Views.blackjack
             get { return _game; }
             set { _game = value; OnPropertyChanged(); }
         }
+        private Database _database = new Database();
+
+        public Database MyDatabase
+        {
+            get { return _database; }
+            set { _database = value; }
+        }
 
         private Computers _player;
 
@@ -101,6 +108,30 @@ namespace StonksCasino.Views.blackjack
             DataTable dataTable = Database.Accounts();
             _Tokens = (int)dataTable.Rows[0]["Token"];
             user.MyTokens = _Tokens;
+
+        }
+        private bool Checkingelogd()
+        {
+            DataTable dataTable = Database.Accounts();
+            long Time = (long)dataTable.Rows[0]["Timestamp"];
+            if (Time != Properties.Settings.Default.Timestamp)
+            {
+                MessageBox.Show("Er is door iemand anders ingelogd op het account waar u momenteel op speelt. Hierdoor wordt u uitgelogd");
+                StonksCasino.Properties.Settings.Default.Username = "";
+                StonksCasino.Properties.Settings.Default.Password = "";
+                StonksCasino.Properties.Settings.Default.Save();
+                _database.MyUsername = "";
+                _database.MyPassword = "";
+
+
+                MainWindow window = new MainWindow();
+
+                this.Hide();
+                window.Show();
+                return false;
+
+            }
+            return true;
         }
 
         private void Bibliotheek_Click(object sender, EventArgs e)
@@ -135,40 +166,31 @@ namespace StonksCasino.Views.blackjack
 
         public void Deal_click(object sender, RoutedEventArgs e)
         {
-            int MyAantal = Game.MyAantal;
-            if (MyAantal <= _Tokens)
+           bool ingelogd = Checkingelogd();
+            if (ingelogd)
             {
-                Game.Deal();
-                Account();
-            }               
-            else
-            {
-                MessageBox.Show("U heeft niet genoeg tokens om te kunnen spelen!");
+                int MyAantal = Game.MyAantal;
+                if (MyAantal <= _Tokens)
+                {
+                    Game.Deal();
+                    Account();
+                }
+                else
+                {
+                    MessageBox.Show("U heeft niet genoeg tokens om te kunnen spelen!");
+                }
             }
+          
         }
 
         private void Hit_Click(object sender, RoutedEventArgs e)
-        {          
-            Game.Hits();
-            int Player = Game.Players[0].Score;
-
-            if (Player > 21)
-            {
-                Game.Stands();
-                ComputerGame.ComputerDeal(Player);
-                Endresult();               
-            }
-        }
-
-        private void Dubbelen_Click(object sender, RoutedEventArgs e)
         {
-            int MyAantal = Game.MyAantal;
-            if (MyAantal <= _Tokens)
+            bool ingelogd = Checkingelogd();
+            if (ingelogd)
             {
-                Game.Dubbelen();
                 Game.Hits();
-                Account();
                 int Player = Game.Players[0].Score;
+
                 if (Player > 21)
                 {
                     Game.Stands();
@@ -176,24 +198,55 @@ namespace StonksCasino.Views.blackjack
                     Endresult();
                 }
             }
-            else
+        }
+
+        private void Dubbelen_Click(object sender, RoutedEventArgs e)
+        {
+            bool ingelogd = Checkingelogd();
+            if (ingelogd)
             {
-                MessageBox.Show("U heeft niet genoeg tokens om te kunnen spelen!");
+                int MyAantal = Game.MyAantal;
+                if (MyAantal <= _Tokens)
+                {
+                    Game.Dubbelen();
+                    Game.Hits();
+                    Account();
+                    int Player = Game.Players[0].Score;
+                    if (Player > 21)
+                    {
+                        Game.Stands();
+                        ComputerGame.ComputerDeal(Player);
+                        Endresult();
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("U heeft niet genoeg tokens om te kunnen spelen!");
+                }
             }
         }
 
         private void Splitten_Click(object sender, RoutedEventArgs e)
         {
-            Game.Splitte();
-            Account();
+            bool ingelogd = Checkingelogd();
+            if (ingelogd)
+            {
+                Game.Splitte();
+                Account();
+            }
         }
 
         private void Stand_Click(object sender, RoutedEventArgs e)
         {
-            int Player = Game.Players[0].Score;
-            Game.Stands();
-            ComputerGame.ComputerDeal(Player);
-            Endresult();          
+            bool ingelogd = Checkingelogd();
+            if (ingelogd)
+            {
+                int Player = Game.Players[0].Score;
+                Game.Stands();
+                ComputerGame.ComputerDeal(Player);
+                Endresult();
+            }
         }
 
         private void Endresult()

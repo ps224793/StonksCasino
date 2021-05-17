@@ -46,5 +46,17 @@ namespace StonksCasino.Properties {
                 this["Password"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public long Timestamp {
+            get {
+                return ((long)(this["Timestamp"]));
+            }
+            set {
+                this["Timestamp"] = value;
+            }
+        }
     }
 }

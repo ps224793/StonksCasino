@@ -47,12 +47,24 @@ namespace StonksCasino.Views.main
             string Name = dataTable.Rows[0]["Gebruikersnaam"].ToString();
             int Tokens = (int)dataTable.Rows[0]["Token"];
             user = new User(Name, Tokens);
+            long Time = (long)dataTable.Rows[0]["Timestamp"];
+            if (Time != Properties.Settings.Default.Timestamp)
+            {
+                _database.MyLogout = false;
+                Application.Current.Shutdown();
+            }
         }
         private void accountrefresh()
         {
             DataTable dataTable = Database.Accounts();
             _Tokens = (int)dataTable.Rows[0]["Token"];
             user.MyTokens = _Tokens;
+            long Time = (long)dataTable.Rows[0]["Timestamp"];
+            if (Time != Properties.Settings.Default.Timestamp)
+            {
+               _database.MyLogout = false;
+                Application.Current.Shutdown();
+            }
         }
 
         private void Roullete_click(object sender, RoutedEventArgs e)
@@ -67,7 +79,7 @@ namespace StonksCasino.Views.main
 
         private void Roulettegame()
         {
-
+            accountrefresh();
             RouletteWindow roulette = new RouletteWindow(user);
             this.Hide();
             roulette.Show();
@@ -86,6 +98,7 @@ namespace StonksCasino.Views.main
 
         private void Blackjackgame()
         {
+            accountrefresh();
             BlackjackWindow roulette = new BlackjackWindow(user);
             this.Hide();
             roulette.Show();
@@ -104,6 +117,7 @@ namespace StonksCasino.Views.main
 
         private void Pokergame()
         {
+            accountrefresh();
             PokerWindow roulette = new PokerWindow();
             this.Hide();
             roulette.Show();

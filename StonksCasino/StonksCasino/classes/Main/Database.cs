@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-
+using StonksCasino;
 using StonksCasino.Views.main;
-
+using BCrypt.Net;
 namespace StonksCasino.classes.Main
 {
    public class Database
@@ -37,21 +37,28 @@ namespace StonksCasino.classes.Main
             get { return remember; }
             set { remember = value; } 
         }
+        static bool _logout = true;
 
+        public bool MyLogout
+        {
+            get { return _logout; }
+            set { _logout = value; }
+        }
+        
         public static DataTable Accounts()
         {
             DataTable result = new DataTable();
             try
             {
                 _connection.Open();
-            
-                string query = "SELECT * FROM Accounts WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+           
+                string query = "SELECT * FROM Accounts WHERE Gebruikersnaam=@Username";
                 SqlCommand sqlCmd = new SqlCommand(query, _connection);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", _username);
-                sqlCmd.Parameters.AddWithValue("@Password", _password);
                 SqlDataReader reader = sqlCmd.ExecuteReader();
                 result.Load(reader);
+               
             }
             catch (Exception)
             {
@@ -61,6 +68,7 @@ namespace StonksCasino.classes.Main
             {
                 _connection.Close();
             }
+
             return result;
         }
 
@@ -69,6 +77,7 @@ namespace StonksCasino.classes.Main
             DataTable dataTable = Accounts();
             int HuidigeTokens = (int)dataTable.Rows[0]["Token"];
             int tokens = HuidigeTokens + value;
+          
             DataTable result = new DataTable();
             try
             {
@@ -94,7 +103,15 @@ namespace StonksCasino.classes.Main
         public static DataTable Tokensremove(int value)
         {
             DataTable dataTable = Accounts();
+            long Time = (long)dataTable.Rows[0]["Timestamp"];
+            if (Time != Properties.Settings.Default.Timestamp)
+            {
+                _logout = false;
+
+           
+            }
             int HuidigeTokens = (int)dataTable.Rows[0]["Token"];
+
             int tokens = HuidigeTokens - value;
             DataTable result = new DataTable();
             try
@@ -126,6 +143,7 @@ namespace StonksCasino.classes.Main
             DataTable result = new DataTable();
             try
             {
+
                 MyPassword = pass;
                 DataTable dataTable = Accounts();
                 bool Ingelogd = (bool)dataTable.Rows[0]["Ingelogd"];
@@ -133,30 +151,36 @@ namespace StonksCasino.classes.Main
                 {
                     if (_connection.State == ConnectionState.Closed)
                         _connection.Open();
-                    String query = "SELECT COUNT(1) FROM Accounts WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+                    String query = "SELECT Wachtwoord FROM Accounts WHERE Gebruikersnaam=@Username";
                     SqlCommand sqlCmd = new SqlCommand(query, _connection);
                     sqlCmd.CommandType = CommandType.Text;
                     sqlCmd.Parameters.AddWithValue("@Username", MyUsername);
-                    sqlCmd.Parameters.AddWithValue("@Password", pass);
-                    int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
+                    result.Load(reader);
 
+                    bool verify = BCrypt.Net.BCrypt.Verify(MyPassword, (string)result.Rows[0]["Wachtwoord"]);
 
-                    if (count == 1)
+                    if (verify)
                     {
-                        String query2 = "UPDATE Accounts SET Ingelogd = 1 WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+                        long timeStamp = GetTimestamp(DateTime.Now);
+                        Properties.Settings.Default.Timestamp = timeStamp;
+                        Properties.Settings.Default.Save();
+                        String query2 = "UPDATE Accounts SET Ingelogd = 1 WHERE Gebruikersnaam=@Username " +
+                                        " UPDATE Accounts SET Timestamp =@Timestamp WHERE Gebruikersnaam=@Username ";
                         SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
                         sqlCmd2.CommandType = CommandType.Text;
                         sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
-                        sqlCmd2.Parameters.AddWithValue("@Password", pass);
+                 
+                        sqlCmd2.Parameters.AddWithValue("@Timestamp", Properties.Settings.Default.Timestamp);
                         sqlCmd2.ExecuteReader();
                         _connection.Close();
                         if (MyRemember)
                         {
-                            StonksCasino.Properties.Settings.Default.Username = MyUsername;
-                            StonksCasino.Properties.Settings.Default.Password = pass;
-                            StonksCasino.Properties.Settings.Default.Save();
+                            Properties.Settings.Default.Username = MyUsername;
+                            Properties.Settings.Default.Password = pass;
+                            Properties.Settings.Default.Save();
                         }
-  
+
                         LibraryWindow library = new LibraryWindow();
                         library.Show();
                         return true;
@@ -164,18 +188,66 @@ namespace StonksCasino.classes.Main
                     }
                     else
                     {
+
                         MessageBox.Show("Gebruikersnaam of wachtwoord is onjuist.");
                         return false;
                     }
-            }
-                else
-            {
-                MessageBox.Show("U kunt nu niet inloggen er is al iemand anders ingelogd op dit account");
-                return false;
+                }
+                if (Ingelogd == true)
+                {
+                    if (_connection.State == ConnectionState.Closed)
+                        _connection.Open();
+                    String query = "SELECT Wachtwoord FROM Accounts WHERE Gebruikersnaam=@Username";
+                    SqlCommand sqlCmd = new SqlCommand(query, _connection);
+                    sqlCmd.CommandType = CommandType.Text;
+                    sqlCmd.Parameters.AddWithValue("@Username", MyUsername);
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
+                    result.Load(reader);
+
+                    bool verify = BCrypt.Net.BCrypt.Verify(MyPassword, (string)result.Rows[0]["Wachtwoord"]);
+
+                    if (verify)
+                    {
+                        MessageBoxResult mes = MessageBox.Show("Er is al iemand anders ingelogd op dit account! Als u toch wilt inloggen wordt de ander van uw account afgezet. Let op! Dit kan nadelige gevolgen hebben voor uw account als de persoon die ingelogd is momenteel bezig is met een spel heb je het risico om je inzit kwijt te raken. Wilt u toch inloggen?", "Inloggen", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        if (mes == MessageBoxResult.Yes)
+                        {
+
+                            long timeStamp = GetTimestamp(DateTime.Now);
+                            Properties.Settings.Default.Timestamp = timeStamp;
+                            Properties.Settings.Default.Save();
+                            String query2 = "UPDATE Accounts SET Timestamp=@Timestamp WHERE Gebruikersnaam=@Username";
+                            SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
+                            sqlCmd2.CommandType = CommandType.Text;
+                            sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
+
+                            sqlCmd2.Parameters.AddWithValue("@Timestamp", Properties.Settings.Default.Timestamp);
+                            sqlCmd2.ExecuteReader();
+                            _connection.Close();
+                            if (MyRemember)
+                            {
+                                Properties.Settings.Default.Username = MyUsername;
+                                Properties.Settings.Default.Password = pass;
+                                Properties.Settings.Default.Save();
+                            }
+
+                            LibraryWindow library1 = new LibraryWindow();
+                            library1.Show();
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Gebruikersnaam of wachtwoord is onjuist.");
+                    }
+                        return false;
+                    }
+                
             }
 
-        }
-            catch 
+
+
+
+            catch
             {
                 MessageBox.Show("Gebruikersnaam of wachtwoord is onjuist.");
                 return false;
@@ -184,26 +256,46 @@ namespace StonksCasino.classes.Main
             {
                 _connection.Close();
             }
-       
+            return false;
+        }
+
+        public static long GetTimestamp(DateTime value)
+        {
+            return long.Parse(value.ToString("yyyyMMddHHmmssffff"));
         }
         public void Logout()
         {
-            _connection.Open();
-            String query2 = "UPDATE Accounts SET Ingelogd = 0 WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
-            SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
-            sqlCmd2.CommandType = CommandType.Text;
-            sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
-            sqlCmd2.Parameters.AddWithValue("@Password", MyPassword);
-            sqlCmd2.ExecuteReader();
-            _connection.Close();
+            if (_logout)
+            {
+                
 
+                DataTable result = new DataTable();
+                _connection.Open();
+                string query = "SELECT * FROM Accounts WHERE Gebruikersnaam=@Username ";
+                SqlCommand sqlCmd = new SqlCommand(query, _connection);
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.Parameters.AddWithValue("@Username", _username);
+              
+                SqlDataReader reader = sqlCmd.ExecuteReader();
+                result.Load(reader);
+            
+                    String query2 = "UPDATE Accounts SET Ingelogd = 0 WHERE Gebruikersnaam=@Username";
+                    SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
+                    sqlCmd2.CommandType = CommandType.Text;
+                    sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
+                    sqlCmd2.Parameters.AddWithValue("@Password", MyPassword);
+                    sqlCmd2.ExecuteReader();
+                
+
+                _connection.Close();
+            }
         }
         public bool Checkremember()
         {
-            if (StonksCasino.Properties.Settings.Default.Username != "" && StonksCasino.Properties.Settings.Default.Password != "")
+            if (Properties.Settings.Default.Username != "" && Properties.Settings.Default.Password != "")
             {
-                MyUsername = StonksCasino.Properties.Settings.Default.Username;
-                MyPassword = StonksCasino.Properties.Settings.Default.Password;
+                MyUsername = Properties.Settings.Default.Username;
+                MyPassword = Properties.Settings.Default.Password;
 
 
                 DataTable result = new DataTable();
@@ -234,7 +326,7 @@ namespace StonksCasino.classes.Main
                             sqlCmd2.ExecuteReader();
                             _connection.Close();
                
-                            StonksCasino.Properties.Settings.Default.Save();
+                            Properties.Settings.Default.Save();
                             LibraryWindow library = new LibraryWindow();
                             library.Show();
                             return true;
