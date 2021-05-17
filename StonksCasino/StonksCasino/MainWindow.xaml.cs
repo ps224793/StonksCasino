@@ -24,7 +24,7 @@ namespace StonksCasino
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string _pasword;
+        
         private Database _database = new Database();
 
         public Database MyDatabase
@@ -45,18 +45,14 @@ namespace StonksCasino
 
         private void Library_Click(object sender, RoutedEventArgs e)
         {
-          bool window =  MyDatabase.Login(_pasword);
+          bool window =  MyDatabase.Login(Password.Password);
             if (window)
             {
                 this.Hide();
             }
         }
 
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (this.DataContext != null)
-            { _pasword = ((PasswordBox)sender).Password; }
-        }
+        
         public void chekremember()
         {
             bool window = MyDatabase.Checkremember();
