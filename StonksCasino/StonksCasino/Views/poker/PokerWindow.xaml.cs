@@ -16,6 +16,7 @@ using StonksCasino.Views.main;
 using StonksCasino.classes.Main;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Animation;
 
 namespace StonksCasino.Views.poker
 {
@@ -73,6 +74,32 @@ namespace StonksCasino.Views.poker
             LibraryWindow library = new LibraryWindow();
             this.Hide();
             library.Show();
+        }
+
+        private void Higher_Raise(object sender, RoutedEventArgs e)
+        {
+            if (Game.Players[0].Balance > Game.Players[0].RaiseBet)
+            {
+                Game.Players[0].RaiseBet++;
+            }
+        }
+
+        private void Lower_Raise(object sender, RoutedEventArgs e)
+        {
+            if(Game.Players[0].RaiseBet > 0)
+            {
+                Game.Players[0].RaiseBet--;
+            }
+        }
+
+        private void Raise_Bet(object sender, RoutedEventArgs e)
+        {
+            if(Game.Players[0].Balance >= Game.Players[0].RaiseBet && Game.Players[0].RaiseBet > 0)
+            {
+                Game.Players[0].Bet += Game.Players[0].RaiseBet;
+                Game.Players[0].Balance -= Game.Players[0].RaiseBet;
+                Game.Players[0].RaiseBet = 0;
+            }
         }
     }
 }
