@@ -82,11 +82,11 @@ namespace StonksCasino.classes.Main
             try
             {
                 _connection.Open();
-                string query = "UPDATE Accounts SET Token = " + tokens + " WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+                string query = "UPDATE Accounts SET Token = " + tokens + " WHERE Gebruikersnaam=@Username ";
                 SqlCommand sqlCmd = new SqlCommand(query, _connection);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", _username);
-                sqlCmd.Parameters.AddWithValue("@Password", _password);
+       
                 sqlCmd.ExecuteReader();
             }
             catch (Exception)
@@ -117,11 +117,11 @@ namespace StonksCasino.classes.Main
             try
             {
                 _connection.Open();
-                 string query = "UPDATE Accounts SET Token = " + tokens + " WHERE Gebruikersnaam=@Username AND Wachtwoord=@Password";
+                 string query = "UPDATE Accounts SET Token = " + tokens + " WHERE Gebruikersnaam=@Username";
                 SqlCommand sqlCmd = new SqlCommand(query, _connection);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", _username );
-                sqlCmd.Parameters.AddWithValue("@Password", _password);
+                
                 sqlCmd.ExecuteReader();
             }
             catch (Exception)
