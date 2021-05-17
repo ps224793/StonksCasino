@@ -40,8 +40,18 @@ namespace StonksCasino.classes.poker
         public PokerGame()
         {
             Players = new List<PokerPlayer>();
-            Players.Add(new PokerPlayer());
-            SetPlayerHand(Players[0]);
+            for (int i = 0; i < 4; i++)
+            {
+                Players.Add(new PokerPlayer());
+                SetPlayerHand(Players[i]);
+                Players[i].Balance = 500;
+                Players[i].RaiseBet = 0;
+                Players[i].Bet = 0;
+            }
+            Players[0].Button = enums.poker.PokerButton.Dealer;
+            Players[1].Button = enums.poker.PokerButton.SmallBlind;
+            Players[2].Button = enums.poker.PokerButton.BigBlind;
+            Players[3].Button = enums.poker.PokerButton.None;
             SetTable();
             //PokerHandCalculator.GetHandValue(_players[0].Hand.ToList(), _table.ToList());
         }
@@ -81,6 +91,5 @@ namespace StonksCasino.classes.poker
             }
             MyTable = cards;
         }
-
     }
 }
