@@ -283,10 +283,17 @@ namespace StonksCasino.classes.poker
                     return Result;
                 }
 
-                List<List<Card>> cardList = pairs.OrderBy(x => x.Count).ToList();
+                //List<List<Card>> cardList = pairs.OrderBy(x => x.Count).ToList();
+
+                List<CardPair> cardPairs = new List<CardPair>();
+                foreach (List<Card> cardlist in pairs)
+                {
+                    cardPairs.Add(new CardPair(cardlist));
+                }
+                cardPairs = cardPairs.OrderBy(x => x.Pair.Count).ThenBy(y => y.MyCardValue).ToList();
 
                 //check for three of a kind and fullhouse
-                Result = CheckThreeOfAKind(cardList, hand, out highCards, out threeOfAKind, out fullHouse);
+                Result = CheckThreeOfAKind(cardPairs, hand, out highCards, out threeOfAKind, out fullHouse);
                 if (fullHouse || threeOfAKind)
                 {
                     return Result;
@@ -347,32 +354,32 @@ namespace StonksCasino.classes.poker
         /// <param name="ThreeOfAKind">Outputs whether result contains a three of a kind</param>
         /// <param name="FullHouse">Outputs whether result contains a fullhouse</param>
         /// <returns>A list of cards possible containing a three of a kind or a fullhouse</returns>
-        private static List<Card> CheckThreeOfAKind(List<List<Card>> pairs, List<Card> hand, out List<Card> highCards, out bool ThreeOfAKind, out bool FullHouse)
+        private static List<Card> CheckThreeOfAKind(List<CardPair> pairs, List<Card> hand, out List<Card> highCards, out bool ThreeOfAKind, out bool FullHouse)
         {
             highCards = new List<Card>();
             ThreeOfAKind  = false;
             FullHouse = false;
             List<Card> result = new List<Card>();
 
-            if(pairs[0][0].Value == CardValue.Ace && pairs[0].Count == 3)
+            if(pairs[0].MyCardValue == CardValue.Ace && pairs[0].Pair.Count == 3)
             {
                 ThreeOfAKind = true;
-                result.AddRange(pairs[0]);
+                result.AddRange(pairs[0].Pair);
                 pairs.RemoveAt(0);
             }
 
             for (int i = pairs.Count-1; i >= 0; i--)
             {
-                if (!ThreeOfAKind && pairs[i].Count == 3)
+                if (!ThreeOfAKind && pairs[i].Pair.Count == 3)
                 {
                     ThreeOfAKind = true;
-                    result.AddRange(pairs[i]);
+                    result.AddRange(pairs[i].Pair);
                 }
                 else if (ThreeOfAKind)
                 {
                     FullHouse = true;
-                    result.Add(pairs[i][0]);
-                    result.Add(pairs[i][1]);
+                    result.Add(pairs[i].Pair[0]);
+                    result.Add(pairs[i].Pair[1]);
                     return result;
                 }
             }
