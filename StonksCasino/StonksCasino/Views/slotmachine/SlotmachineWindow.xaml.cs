@@ -27,12 +27,12 @@ namespace StonksCasino.Views.slotmachine
     public partial class SlotmachineWindow : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        
         public User user { get; set; }
         public User User { get; set; }
         int _Tokens;
@@ -88,5 +88,15 @@ namespace StonksCasino.Views.slotmachine
             }
         }
 
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            HelpTab();
+        }
+
+        private void HelpTab()
+        {
+            HelpWindow roulette = new HelpWindow();
+            roulette.Show();
+        }
     }
 }

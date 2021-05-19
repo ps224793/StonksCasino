@@ -98,6 +98,7 @@
     <Compile Include="classes\poker\PokerPlayer.cs" />
     <Compile Include="classes\Roulette\Bet.cs" />
     <Compile Include="classes\Roulette\Bettingtable.cs" />
+    <Compile Include="classes\Slotmachine\Slotmachine.cs" />
     <Compile Include="enums\card\BlackcardValue.cs" />
     <Compile Include="enums\card\CardBackColor.cs" />
     <Compile Include="enums\card\CardType.cs" />
@@ -115,6 +116,9 @@
     </Compile>
     <Compile Include="Views\Roulette\RouletteWindow.xaml.cs">
       <DependentUpon>RouletteWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\slotmachine\HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\slotmachine\SlotmachineWindow.xaml.cs">
       <DependentUpon>SlotmachineWindow.xaml</DependentUpon>
@@ -144,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Roulette\RouletteWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\slotmachine\HelpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -289,6 +297,20 @@
   <ItemGroup>
     <Resource Include="Img\PokerButtons\Dealer.png" />
     <Resource Include="Img\PokerButtons\SmallBlind.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Img\Slotmachine\Bal.png" />
+    <Resource Include="Img\Slotmachine\Bar.png" />
+    <Resource Include="Img\Slotmachine\bell.png" />
+    <Resource Include="Img\Slotmachine\Cherry.png" />
+    <Resource Include="Img\Slotmachine\Diamond.png" />
+    <Resource Include="Img\Slotmachine\Grape.png" />
+    <Resource Include="Img\Slotmachine\Lever.png" />
+    <Resource Include="Img\Slotmachine\Melon.png" />
+    <Resource Include="Img\Slotmachine\Orange.png" />
+    <Resource Include="Img\Slotmachine\Seven.png" />
+    <Resource Include="Img\Slotmachine\Star.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
