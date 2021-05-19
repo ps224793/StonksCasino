@@ -68,9 +68,6 @@
 
                     <TextBlock Background="Black" Grid.Column="3" Grid.RowSpan="6"></TextBlock>
                     <TextBlock Background="Black" Grid.Column="5" Grid.RowSpan="6"></TextBlock>
-
-                    <TextBlock Background="Black" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="6"></TextBlock>
-                    <TextBlock Background="Black" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6"></TextBlock>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="1">
                     <Grid.ColumnDefinitions>
@@ -84,7 +81,7 @@
                         <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="1*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button Background="Black" Grid.Column="1" Height="60px" Width="60" Foreground="White" FontSize="30" HorizontalAlignment="Right"> ?
+                    <Button Click="Help_Click" Background="Black" Grid.Column="1" Height="60px" Width="60" Foreground="White" FontSize="30" HorizontalAlignment="Right"> ?
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="200"></Setter>
@@ -98,7 +95,7 @@
                         <TextBlock TextAlignment="Center">Beurten verhogen<LineBreak/>+ 100 fiches</TextBlock>
                     </Button>
                     <Button Background="Black" Grid.Column="1" Grid.Row="3" Height="60px" Foreground="White">
-                        <TextBlock TextAlignment="Center">Aantal Beurten: <LineBreak/>0</TextBlock>
+                        <TextBlock TextAlignment="Center">Aantal Beurten: <LineBreak/> 0</TextBlock>
                     </Button>
                 </Grid>
             </Grid>
