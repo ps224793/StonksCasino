@@ -100,9 +100,7 @@
                     <RowDefinition Height="250*"/>
                     <RowDefinition Height="35*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="5" VerticalAlignment="Center">
-                    <Button Content="+ 10.000 Tokens" Background="Black" Foreground="White" FontSize="30" Click="Tokens_Cilck"/>
-                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="5" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
     </Grid>

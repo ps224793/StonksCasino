@@ -45,10 +45,10 @@ namespace StonksCasino.Views.main
         private void Account()
         {
             DataTable dataTable = Database.Accounts();
-            string Name = dataTable.Rows[0]["Gebruikersnaam"].ToString();
-            int Tokens = (int)dataTable.Rows[0]["Token"];
+            string Name = dataTable.Rows[0]["username"].ToString();
+            int Tokens = (int)dataTable.Rows[0]["token"];
             user = new User(Name, Tokens);
-            long Time = (long)dataTable.Rows[0]["Timestamp"];
+            long Time = (long)dataTable.Rows[0]["timestamp"];
             if (Time != Properties.Settings.Default.Timestamp)
             {
                 _database.MyLogout = false;
@@ -58,9 +58,9 @@ namespace StonksCasino.Views.main
         private void accountrefresh()
         {
             DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["Token"];
+            _Tokens = (int)dataTable.Rows[0]["token"];
             user.MyTokens = _Tokens;
-            long Time = (long)dataTable.Rows[0]["Timestamp"];
+            long Time = (long)dataTable.Rows[0]["timestamp"];
             if (Time != Properties.Settings.Default.Timestamp)
             {
                _database.MyLogout = false;

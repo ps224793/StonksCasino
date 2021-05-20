@@ -194,9 +194,6 @@
     <Resource Include="Img\Roulette\plus.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Img\Roulette\Roulette.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Img\Roulette\Token.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
