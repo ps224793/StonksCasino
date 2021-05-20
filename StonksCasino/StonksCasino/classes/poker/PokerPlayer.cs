@@ -19,7 +19,7 @@ namespace StonksCasino.classes.poker
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        
+
         /// <summary>
         /// Represents the cards this player has in their hand
         /// </summary>
@@ -155,6 +155,7 @@ namespace StonksCasino.classes.poker
         {
             Balance -= RaiseBet;
             Bet += RaiseBet;
+            Checked = true;
             // End of this player's turn
         }
 
@@ -166,6 +167,7 @@ namespace StonksCasino.classes.poker
         {
             Balance -= Math.Abs(topBet - Bet);
             Bet = topBet;
+            Checked = true;
             // End of this player's turn
         }
 
@@ -174,6 +176,7 @@ namespace StonksCasino.classes.poker
         /// </summary>
         public void Check()
         {
+            Checked = true;
             // End of this player's turn
         }
 

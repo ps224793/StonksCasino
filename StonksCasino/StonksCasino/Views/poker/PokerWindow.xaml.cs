@@ -46,9 +46,56 @@ namespace StonksCasino.Views.poker
             InitializeComponent();
         }
 
+        private void Raise_Bet(object sender, RoutedEventArgs e)
+        {
+            if (Game.Players[0].Balance >= Game.Players[0].RaiseBet && Game.Players[0].RaiseBet > 0)
+            {
+                Game.Players[0].Bet += Game.Players[0].RaiseBet;
+                Game.Players[0].Balance -= Game.Players[0].RaiseBet;
+                Game.Players[0].RaiseBet = 0;
+                if (Game.Players[0].Balance == 0)
+                {
+                    Game.Players[0].IsAllIn = true;
+                }
+            }
+        }
+
+        private void Higher_Raise(object sender, RoutedEventArgs e)
+        {
+            if (Game.Players[0].Balance > Game.Players[0].RaiseBet)
+            {
+                Game.Players[0].RaiseBet++;
+            }
+        }
+
+        private void Lower_Raise(object sender, RoutedEventArgs e)
+        {
+            if (Game.Players[0].RaiseBet > 0)
+            {
+                Game.Players[0].RaiseBet--;
+            }
+        }
+
+        private void btnFold_Click(object sender, RoutedEventArgs e)
+        {
+            Game.Players[0].Fold();
+        }
+
         private void Call_Click(object sender, RoutedEventArgs e)
         {
-            Game.CalcHand();
+            int MaxBet = Game.Players[0].Bet + Game.Players[0].Balance;
+            if (MaxBet <= Game.TopBet)
+            {
+                Game.Players[0].AllIn();
+            }
+            else if (Game.Players[0].Bet < Game.TopBet)
+            {
+                Game.Players[0].Call(Game.TopBet);
+            }
+            else
+            {
+                Game.Players[0].Check();
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -73,66 +120,6 @@ namespace StonksCasino.Views.poker
             LibraryWindow library = new LibraryWindow();
             this.Hide();
             library.Show();
-        }
-
-        private async void Higher_Raise(object sender, RoutedEventArgs e)
-        {
-            if (Game.Players[0].Balance > Game.Players[0].RaiseBet)
-            {
-                Game.Players[0].RaiseBet++;
-            }
-
-            Storyboard playerleft = (Storyboard)this.FindResource("sbPlayer1");
-            playerleft.Begin();
-            Storyboard playertop = (Storyboard)this.FindResource("sbPlayer2");
-            playertop.Begin();
-            Storyboard playerright = (Storyboard)this.FindResource("sbPlayer3");
-            playerright.Begin();
-
-            await Task.Delay(300);
-            Game.Players[1].Hand[0].Turned = false;
-            Game.Players[1].Hand[1].Turned = false;
-            Game.Players[2].Hand[0].Turned = false;
-            Game.Players[2].Hand[1].Turned = false;
-            Game.Players[3].Hand[0].Turned = false;
-            Game.Players[3].Hand[1].Turned = false;
-        }
-
-        private void Lower_Raise(object sender, RoutedEventArgs e)
-        {
-            if (Game.Players[0].RaiseBet > 0)
-            {
-                Game.Players[0].RaiseBet--;
-            }
-
-            Storyboard board = (Storyboard)this.FindResource("sbTableIn");
-            board.Begin();
-        }
-
-        private void Raise_Bet(object sender, RoutedEventArgs e)
-        {
-            if (Game.Players[0].Balance >= Game.Players[0].RaiseBet && Game.Players[0].RaiseBet > 0)
-            {
-                Game.Players[0].Bet += Game.Players[0].RaiseBet;
-                Game.Players[0].Balance -= Game.Players[0].RaiseBet;
-                Game.Players[0].RaiseBet = 0;
-            }
-
-            Storyboard board = (Storyboard)this.FindResource("sbTableOut");
-            board.Begin();
-        }
-
-        private async void btnFold_Click(object sender, RoutedEventArgs e)
-        {
-            Storyboard board = (Storyboard)this.FindResource("sbFlop");
-            board.Begin();
-
-            await Task.Delay(300);
-            Game.MyTable[0].Turned = false;
-            await Task.Delay(500);
-            Game.MyTable[1].Turned = false;
-            await Task.Delay(500);
-            Game.MyTable[2].Turned = false;
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -175,6 +162,54 @@ namespace StonksCasino.Views.poker
             player2_out.Begin();
             Storyboard player3_out = (Storyboard)this.FindResource("sbPlayer3_Out");
             player3_out.Begin();
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            Storyboard board = (Storyboard)this.FindResource("sbTableIn");
+            board.Begin();
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            Storyboard board = (Storyboard)this.FindResource("sbTableOut");
+            board.Begin();
+        }
+
+        private async void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            Storyboard playerleft = (Storyboard)this.FindResource("sbPlayer1");
+            playerleft.Begin();
+            Storyboard playertop = (Storyboard)this.FindResource("sbPlayer2");
+            playertop.Begin();
+            Storyboard playerright = (Storyboard)this.FindResource("sbPlayer3");
+            playerright.Begin();
+
+            await Task.Delay(300);
+            Game.Players[1].Hand[0].Turned = false;
+            Game.Players[1].Hand[1].Turned = false;
+            Game.Players[2].Hand[0].Turned = false;
+            Game.Players[2].Hand[1].Turned = false;
+            Game.Players[3].Hand[0].Turned = false;
+            Game.Players[3].Hand[1].Turned = false;
+        }
+
+        private async void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            Storyboard board = (Storyboard)this.FindResource("sbFlop");
+            board.Begin();
+
+            await Task.Delay(300);
+            Game.MyTable[0].Turned = false;
+            await Task.Delay(500);
+            Game.MyTable[1].Turned = false;
+            await Task.Delay(500);
+            Game.MyTable[2].Turned = false;
+        }
+
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            Game.CalcHand();
         }
     }
 }
