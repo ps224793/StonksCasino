@@ -52,7 +52,7 @@ namespace StonksCasino.classes.Main
             {
                 _connection.Open();
            
-                string query = "SELECT * FROM Accounts WHERE Gebruikersnaam=@Username";
+                string query = "SELECT * FROM accounts WHERE username=@Username";
                 SqlCommand sqlCmd = new SqlCommand(query, _connection);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", _username);
@@ -75,14 +75,14 @@ namespace StonksCasino.classes.Main
         public static DataTable Tokensadd( int value)
         {
             DataTable dataTable = Accounts();
-            int HuidigeTokens = (int)dataTable.Rows[0]["Token"];
+            int HuidigeTokens = (int)dataTable.Rows[0]["token"];
             int tokens = HuidigeTokens + value;
           
             DataTable result = new DataTable();
             try
             {
                 _connection.Open();
-                string query = "UPDATE Accounts SET Token = " + tokens + " WHERE Gebruikersnaam=@Username ";
+                string query = "UPDATE accounts SET token = " + tokens + " WHERE username=@Username ";
                 SqlCommand sqlCmd = new SqlCommand(query, _connection);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", _username);
@@ -103,21 +103,21 @@ namespace StonksCasino.classes.Main
         public static DataTable Tokensremove(int value)
         {
             DataTable dataTable = Accounts();
-            long Time = (long)dataTable.Rows[0]["Timestamp"];
+            long Time = (long)dataTable.Rows[0]["timestamp"];
             if (Time != Properties.Settings.Default.Timestamp)
             {
                 _logout = false;
 
            
             }
-            int HuidigeTokens = (int)dataTable.Rows[0]["Token"];
+            int HuidigeTokens = (int)dataTable.Rows[0]["token"];
 
             int tokens = HuidigeTokens - value;
             DataTable result = new DataTable();
             try
             {
                 _connection.Open();
-                 string query = "UPDATE Accounts SET Token = " + tokens + " WHERE Gebruikersnaam=@Username";
+                 string query = "UPDATE accounts SET token = " + tokens + " WHERE username=@Username";
                 SqlCommand sqlCmd = new SqlCommand(query, _connection);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", _username );
@@ -146,27 +146,27 @@ namespace StonksCasino.classes.Main
 
                 MyPassword = pass;
                 DataTable dataTable = Accounts();
-                bool Ingelogd = (bool)dataTable.Rows[0]["Ingelogd"];
+                bool Ingelogd = (bool)dataTable.Rows[0]["active"];
                 if (Ingelogd == false)
                 {
                     if (_connection.State == ConnectionState.Closed)
                         _connection.Open();
-                    String query = "SELECT Wachtwoord FROM Accounts WHERE Gebruikersnaam=@Username";
+                    String query = "SELECT password FROM accounts WHERE username=@Username";
                     SqlCommand sqlCmd = new SqlCommand(query, _connection);
                     sqlCmd.CommandType = CommandType.Text;
                     sqlCmd.Parameters.AddWithValue("@Username", MyUsername);
                     SqlDataReader reader = sqlCmd.ExecuteReader();
                     result.Load(reader);
 
-                    bool verify = BCrypt.Net.BCrypt.Verify(MyPassword, (string)result.Rows[0]["Wachtwoord"]);
+                    bool verify = BCrypt.Net.BCrypt.Verify(MyPassword, (string)result.Rows[0]["password"]);
 
                     if (verify)
                     {
                         long timeStamp = GetTimestamp(DateTime.Now);
                         Properties.Settings.Default.Timestamp = timeStamp;
                         Properties.Settings.Default.Save();
-                        String query2 = "UPDATE Accounts SET Ingelogd = 1 WHERE Gebruikersnaam=@Username " +
-                                        " UPDATE Accounts SET Timestamp =@Timestamp WHERE Gebruikersnaam=@Username ";
+                        String query2 = "UPDATE accounts SET active = 1 WHERE username=@Username " +
+                                        " UPDATE accounts SET timestamp =@Timestamp WHERE username=@Username ";
                         SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
                         sqlCmd2.CommandType = CommandType.Text;
                         sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
@@ -197,14 +197,14 @@ namespace StonksCasino.classes.Main
                 {
                     if (_connection.State == ConnectionState.Closed)
                         _connection.Open();
-                    String query = "SELECT Wachtwoord FROM Accounts WHERE Gebruikersnaam=@Username";
+                    String query = "SELECT password FROM accounts WHERE username=@Username";
                     SqlCommand sqlCmd = new SqlCommand(query, _connection);
                     sqlCmd.CommandType = CommandType.Text;
                     sqlCmd.Parameters.AddWithValue("@Username", MyUsername);
                     SqlDataReader reader = sqlCmd.ExecuteReader();
                     result.Load(reader);
 
-                    bool verify = BCrypt.Net.BCrypt.Verify(MyPassword, (string)result.Rows[0]["Wachtwoord"]);
+                    bool verify = BCrypt.Net.BCrypt.Verify(MyPassword, (string)result.Rows[0]["password"]);
 
                     if (verify)
                     {
@@ -215,7 +215,7 @@ namespace StonksCasino.classes.Main
                             long timeStamp = GetTimestamp(DateTime.Now);
                             Properties.Settings.Default.Timestamp = timeStamp;
                             Properties.Settings.Default.Save();
-                            String query2 = "UPDATE Accounts SET Timestamp=@Timestamp WHERE Gebruikersnaam=@Username";
+                            String query2 = "UPDATE accounts SET timestamp=@Timestamp WHERE username=@Username";
                             SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
                             sqlCmd2.CommandType = CommandType.Text;
                             sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
@@ -271,7 +271,7 @@ namespace StonksCasino.classes.Main
 
                 DataTable result = new DataTable();
                 _connection.Open();
-                string query = "SELECT * FROM Accounts WHERE Gebruikersnaam=@Username ";
+                string query = "SELECT * FROM accounts WHERE username=@Username ";
                 SqlCommand sqlCmd = new SqlCommand(query, _connection);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", _username);
@@ -279,7 +279,7 @@ namespace StonksCasino.classes.Main
                 SqlDataReader reader = sqlCmd.ExecuteReader();
                 result.Load(reader);
             
-                    String query2 = "UPDATE Accounts SET Ingelogd = 0 WHERE Gebruikersnaam=@Username";
+                    String query2 = "UPDATE accounts SET active = 0 WHERE username=@Username";
                     SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
                     sqlCmd2.CommandType = CommandType.Text;
                     sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);
@@ -303,23 +303,23 @@ namespace StonksCasino.classes.Main
                 {
                   
                     DataTable dataTable = Accounts();
-                    bool Ingelogd = (bool)dataTable.Rows[0]["Ingelogd"];
+                    bool Ingelogd = (bool)dataTable.Rows[0]["active"];
                     if (Ingelogd == false)
                     {
                         if (_connection.State == ConnectionState.Closed)
                             _connection.Open();
-                        String query = "SELECT Wachtwoord FROM Accounts WHERE Gebruikersnaam=@Username";
+                        String query = "SELECT password FROM accounts WHERE username=@Username";
                         SqlCommand sqlCmd = new SqlCommand(query, _connection);
                         sqlCmd.CommandType = CommandType.Text;
                         sqlCmd.Parameters.AddWithValue("@Username", MyUsername);
                         SqlDataReader reader = sqlCmd.ExecuteReader();
                         result.Load(reader);
 
-                        bool verify = BCrypt.Net.BCrypt.Verify(MyPassword, (string)result.Rows[0]["Wachtwoord"]);
+                        bool verify = BCrypt.Net.BCrypt.Verify(MyPassword, (string)result.Rows[0]["password"]);
 
                         if (verify)
                         { 
-                            String query2 = "UPDATE Accounts SET Ingelogd = 1 WHERE Gebruikersnaam=@Username";
+                            String query2 = "UPDATE accounts SET active = 1 WHERE username=@Username";
                             SqlCommand sqlCmd2 = new SqlCommand(query2, _connection);
                             sqlCmd2.CommandType = CommandType.Text;
                             sqlCmd2.Parameters.AddWithValue("@Username", MyUsername);

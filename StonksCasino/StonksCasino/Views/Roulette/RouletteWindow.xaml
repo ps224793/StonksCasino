@@ -78,7 +78,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button x:Name="BtnPlay" Background="ForestGreen"  Foreground="White" BorderBrush="LightGreen" Width="100" Height="80" Click="BtnPlay_Click" >Speel!</Button>
+                    <Button Background="ForestGreen"  Foreground="White" BorderBrush="LightGreen" Width="100" Height="80" Click="BtnPlay_Click" >Speel!</Button>
                 </StackPanel>
                 <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center"/>
                 <Grid Grid.Row="2" x:Name="gridgetallen">

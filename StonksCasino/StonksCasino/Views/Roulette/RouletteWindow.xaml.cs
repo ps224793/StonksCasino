@@ -106,7 +106,7 @@ namespace StonksCasino.Views.Roulette
         private void Account()
         {
             DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["Token"];
+            _Tokens = (int)dataTable.Rows[0]["token"];
             user.MyTokens = _Tokens;
  
 
@@ -114,7 +114,7 @@ namespace StonksCasino.Views.Roulette
         private bool Checkingelogd()
         {
             DataTable dataTable = Database.Accounts();
-            long Time = (long)dataTable.Rows[0]["Timestamp"];
+            long Time = (long)dataTable.Rows[0]["timestamp"];
             if (Time != Properties.Settings.Default.Timestamp)
             {
 

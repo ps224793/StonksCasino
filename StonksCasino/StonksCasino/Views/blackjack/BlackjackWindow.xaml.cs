@@ -106,14 +106,14 @@ namespace StonksCasino.Views.blackjack
         private void Account()
         {
             DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["Token"];
+            _Tokens = (int)dataTable.Rows[0]["token"];
             user.MyTokens = _Tokens;
 
         }
         private bool Checkingelogd()
         {
             DataTable dataTable = Database.Accounts();
-            long Time = (long)dataTable.Rows[0]["Timestamp"];
+            long Time = (long)dataTable.Rows[0]["timestamp"];
             if (Time != Properties.Settings.Default.Timestamp)
             {
                 MessageBox.Show("Er is door iemand anders ingelogd op het account waar u momenteel op speelt. Hierdoor wordt u uitgelogd");
