@@ -143,11 +143,6 @@ namespace StonksCasino.Views.main
             roulette.Show();
         }
 
-        private void Tokens_Cilck(object sender, RoutedEventArgs e)
-        {
-            DataTable data = Database.Tokensadd(10000);
-            accountrefresh();
-        }
 
         private void Window_Closed(object sender, EventArgs e)
         {
