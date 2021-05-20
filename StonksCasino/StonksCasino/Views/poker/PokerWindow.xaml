@@ -8,10 +8,7 @@
         Title="PokerWindow" Height="600" MinHeight="600" Width="800" MinWidth="800"
         WindowState="Maximized" Closing="Window_Closing"
         >
-    <!--Height="600" MinHeight="600" Width="800" MinWidth="800"-->
     <Grid>
-        
-        <!--TEST-->
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition />
@@ -100,30 +97,8 @@
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
-
-                    <!--<Image Margin="10,0" Grid.Column="0" Grid.Row="1" Source="{Binding Game.MyTable[0].ActiveURL, Mode=OneWay}" VerticalAlignment="Center"/>
-                    <Image Margin="10,0" Grid.Column="1" Grid.Row="1" Source="{Binding Game.MyTable[1].ActiveURL}" VerticalAlignment="Center"/>
-                    <Image Margin="10,0" Grid.Column="2" Grid.Row="1" Source="{Binding Game.MyTable[2].ActiveURL}" VerticalAlignment="Center"/>
-                    <Image Margin="10,0" Grid.Column="3" Grid.Row="1" Source="{Binding Game.MyTable[3].ActiveURL}" VerticalAlignment="Center"/>
-                    <Image Margin="10,0" Grid.Column="4" Grid.Row="1" Source="{Binding Game.MyTable[4].ActiveURL}" VerticalAlignment="Center"/>-->
                 </Grid>
 
-
-
-                <!-- player hand -->
-                <!--<ItemsControl Background="Transparent" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" ItemsSource="{Binding Players[0].Hand, Mode=OneWay}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"></StackPanel>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Image Margin="15,0" Source="{Binding ActiveURL, Mode=OneWay}" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>-->
-                <!--Bottom-->
                 <Grid  Grid.Row="2" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
@@ -160,10 +135,9 @@
                         <Image Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" Source="{Binding Game.Players[0].ButtonImageURL}" />
                     </Grid>
 
-                    <!--<Image Margin="0,10,0,0" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Source="/Img/Main/Token.png" />-->
                     <TextBlock Margin="0,10,0,0" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Game.Players[0].Bet}" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"/>
-
                 </Grid>
+
                 <!--top-->
                 <Grid  Grid.Row="0" Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -269,7 +243,6 @@
                         <Image HorizontalAlignment="Center" Source="/Img/Main/Token.png" MaxWidth="140"/>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Game.Players[1].Balance}" TextAlignment="Center" Foreground="White" FontWeight="Bold"/>
                     </Grid>
-
                 </Grid>
 
                 <!--right-->
@@ -341,10 +314,7 @@
                             </TextBlock.RenderTransform>
                         </TextBlock>
                     </Grid>
-
                 </Grid>
-
-
 
                 <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
                     <Grid.RowDefinitions>
@@ -396,12 +366,16 @@
                         </Grid>
                     </Border>
                 </Grid>
-
             </Grid>
-            <Button Content="idk" HorizontalAlignment="Left" Margin="490,464,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-            <Button Content="river" HorizontalAlignment="Left" Margin="490,484,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-            <Button Content="Wegschuiven" HorizontalAlignment="Left" Margin="490,444,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_3"/>
-            <Button Content="Uitdelen" HorizontalAlignment="Left" Margin="490,424,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2"/>
+            <Button Content="turn"        HorizontalAlignment="Left" Margin="494,409,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+            <Button Content="river"       HorizontalAlignment="Left" Margin="494,429,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+            <Button Content="Wegschuiven" HorizontalAlignment="Left" Margin="494,469,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_3"/>
+            <Button Content="Uitdelen"    HorizontalAlignment="Left" Margin="494,349,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2"/>
+            <Button Content="TableIn"     HorizontalAlignment="Left" Margin="494,369,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_4"/>
+            <Button Content="TableOut"    HorizontalAlignment="Left" Margin="494,489,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_5"/>
+            <Button Content="TurnPCcards" HorizontalAlignment="Left" Margin="494,449,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_6"/>
+            <Button Content="Flop"        HorizontalAlignment="Left" Margin="494,389,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_7"/>
+            <Button Content="CalculateHand"        HorizontalAlignment="Left" Margin="494,330,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_8"/>
         </Grid>
     </Grid>
 
@@ -488,12 +462,6 @@
                 To="-2000" 
                 Storyboard.TargetProperty="RenderTransform.Children[0].Y"
                 Storyboard.TargetName="one" />
-            <DoubleAnimation x:Name="Reset_oneScaleX"
-                BeginTime="0:0:0"
-                Duration="0:0:0.1"
-                To="1" 
-                Storyboard.TargetProperty="RenderTransform.Children[1].ScaleX"
-                Storyboard.TargetName="one" />
 
             <DoubleAnimation x:Name="Reset_twoX"
                 BeginTime="0:0:0"
@@ -549,9 +517,6 @@
         </Storyboard>
 
 
-        <!--=======================
-            PLAYER HANDS IN
-        =======================-->
         <Storyboard x:Key="sbPlayer0_In">
             <DoubleAnimation
                 BeginTime="0:0:0"
@@ -566,6 +531,8 @@
                 Storyboard.TargetProperty="RenderTransform.Children[0].Y"
                 Storyboard.TargetName="player0_Right" />
         </Storyboard>
+
+
         <Storyboard x:Key="sbPlayer1_In">
             <DoubleAnimation
                 BeginTime="0:0:0.25"
@@ -580,6 +547,8 @@
                 Storyboard.TargetProperty="RenderTransform.Children[1].X"
                 Storyboard.TargetName="player1_Right" />
         </Storyboard>
+
+
         <Storyboard x:Key="sbPlayer2_In">
             <DoubleAnimation
                 BeginTime="0:0:0.5"
@@ -594,6 +563,8 @@
                 Storyboard.TargetProperty="RenderTransform.Children[1].Y"
                 Storyboard.TargetName="player2_Right" />
         </Storyboard>
+
+
         <Storyboard x:Key="sbPlayer3_In">
             <DoubleAnimation
                 BeginTime="0:0:0.75"
@@ -608,9 +579,8 @@
                 Storyboard.TargetProperty="RenderTransform.Children[1].X"
                 Storyboard.TargetName="player3_Right" />
         </Storyboard>
-        <!--=======================
-            PLAYER HANDS OUT
-        =======================-->
+
+
         <Storyboard x:Key="sbPlayer0_Out">
             <DoubleAnimation
                 BeginTime="0:0:0"
@@ -625,6 +595,8 @@
                 Storyboard.TargetProperty="RenderTransform.Children[0].Y"
                 Storyboard.TargetName="player0_Right" />
         </Storyboard>
+
+
         <Storyboard x:Key="sbPlayer1_Out">
             <DoubleAnimation
                 BeginTime="0:0:0"
@@ -639,6 +611,8 @@
                 Storyboard.TargetProperty="RenderTransform.Children[1].X"
                 Storyboard.TargetName="player1_Right" />
         </Storyboard>
+
+
         <Storyboard x:Key="sbPlayer2_Out">
             <DoubleAnimation
                 BeginTime="0:0:0"
@@ -653,6 +627,8 @@
                 Storyboard.TargetProperty="RenderTransform.Children[1].Y"
                 Storyboard.TargetName="player2_Right" />
         </Storyboard>
+
+
         <Storyboard x:Key="sbPlayer3_Out">
             <DoubleAnimation
                 BeginTime="0:0:0"
@@ -667,7 +643,6 @@
                 Storyboard.TargetProperty="RenderTransform.Children[1].X"
                 Storyboard.TargetName="player3_Right" />
         </Storyboard>
-
 
 
         <Storyboard x:Key="sbFlop">
@@ -721,6 +696,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
+
         <Storyboard x:Key="sbPlayer1">
             <DoubleAnimationUsingKeyFrames
                 BeginTime="0:0:0"
@@ -739,6 +715,7 @@
                 <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+
 
         <Storyboard x:Key="sbPlayer2">
             <DoubleAnimationUsingKeyFrames
@@ -759,6 +736,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
+
         <Storyboard x:Key="sbPlayer3">
             <DoubleAnimationUsingKeyFrames
                 BeginTime="0:0:0"
@@ -777,6 +755,5 @@
                 <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-
     </Window.Resources>
 </Window>

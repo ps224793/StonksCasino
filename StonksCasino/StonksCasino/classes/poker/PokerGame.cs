@@ -29,6 +29,14 @@ namespace StonksCasino.classes.poker
             set { _players = value; }
         }
 
+        private int _topBet = 0;
+
+        public int TopBet
+        {
+            get { return _topBet; }
+            set { _topBet = value; }
+        }
+
         private ObservableCollection<Card> _table;
 
         public ObservableCollection<Card> MyTable
