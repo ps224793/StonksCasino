@@ -16,6 +16,7 @@ using StonksCasino.classes.Main;
 using StonksCasino.Views.Roulette;
 using StonksCasino.Views.blackjack;
 using StonksCasino.Views.poker;
+using StonksCasino.Views.slotmachine;
 
 namespace StonksCasino.Views.main
 {
@@ -122,6 +123,30 @@ namespace StonksCasino.Views.main
             this.Hide();
             roulette.Show();
            
+        }
+
+        private void SlotMachine_click(object sender, RoutedEventArgs e)
+        {
+            SlotMachinegame();
+        }
+
+        private void ImgSlotMachine_Click(object sender, RoutedEventArgs e)
+        {
+            SlotMachinegame();
+        }
+
+        private void SlotMachinegame()
+        {
+            accountrefresh();
+            SlotmachineWindow roulette = new SlotmachineWindow(user);
+            this.Hide();
+            roulette.Show();
+        }
+
+        private void Tokens_Cilck(object sender, RoutedEventArgs e)
+        {
+            DataTable data = Database.Tokensadd(10000);
+            accountrefresh();
         }
 
         private void Window_Closed(object sender, EventArgs e)

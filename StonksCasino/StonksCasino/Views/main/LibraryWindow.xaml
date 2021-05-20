@@ -71,9 +71,13 @@
                 </Button>
 
                 <Button Grid.Column="5" Grid.Row="1" Content="Poker" Background="White" Click="Poker_click"/>
-
                 <Button Grid.Column="5" Grid.Row="2" Background="Black" Click="ImgPoker_Click">
                     <Image Source="/Img/Main/pokerlogo.png" Grid.Column="5" Grid.Row="2" Stretch="Fill" ></Image>
+                </Button>
+
+                <Button Grid.Column="7" Grid.Row="1" Content="Slot Machine" Background="White" Click="SlotMachine_click"></Button>
+                <Button Grid.Column="7" Grid.Row="2" Background="Black" Click="ImgSlotMachine_Click">
+                    <Image Source="/Img/Slotmachine/Seven.png" Stretch="Fill"></Image>
                 </Button>
             </Grid>
 

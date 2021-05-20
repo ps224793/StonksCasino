@@ -39,7 +39,7 @@ namespace StonksCasino.classes.Main
 		public bool Turned
 		{
 			get { return _turned; }
-			set { _turned = value; }
+			set { _turned = value; OnPropertyChanged("ActiveURL"); }
 		}
 
 		public string ActiveURL

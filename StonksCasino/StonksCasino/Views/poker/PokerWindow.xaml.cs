@@ -31,9 +31,9 @@ namespace StonksCasino.Views.poker
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        private  PokerGame _game;
+        private PokerGame _game;
 
-        public  PokerGame Game
+        public PokerGame Game
         {
             get { return _game; }
             set { _game = value; OnPropertyChanged(); }
@@ -63,7 +63,6 @@ namespace StonksCasino.Views.poker
                 else if (leaving == MessageBoxResult.Yes)
                 {
                     Application.Current.Shutdown();
-                   
                 }
 
             }
@@ -76,30 +75,106 @@ namespace StonksCasino.Views.poker
             library.Show();
         }
 
-        private void Higher_Raise(object sender, RoutedEventArgs e)
+        private async void Higher_Raise(object sender, RoutedEventArgs e)
         {
             if (Game.Players[0].Balance > Game.Players[0].RaiseBet)
             {
                 Game.Players[0].RaiseBet++;
             }
+
+            Storyboard playerleft = (Storyboard)this.FindResource("sbPlayer1");
+            playerleft.Begin();
+            Storyboard playertop = (Storyboard)this.FindResource("sbPlayer2");
+            playertop.Begin();
+            Storyboard playerright = (Storyboard)this.FindResource("sbPlayer3");
+            playerright.Begin();
+
+            await Task.Delay(300);
+            Game.Players[1].Hand[0].Turned = false;
+            Game.Players[1].Hand[1].Turned = false;
+            Game.Players[2].Hand[0].Turned = false;
+            Game.Players[2].Hand[1].Turned = false;
+            Game.Players[3].Hand[0].Turned = false;
+            Game.Players[3].Hand[1].Turned = false;
         }
 
         private void Lower_Raise(object sender, RoutedEventArgs e)
         {
-            if(Game.Players[0].RaiseBet > 0)
+            if (Game.Players[0].RaiseBet > 0)
             {
                 Game.Players[0].RaiseBet--;
             }
+
+            Storyboard board = (Storyboard)this.FindResource("sbTableIn");
+            board.Begin();
         }
 
         private void Raise_Bet(object sender, RoutedEventArgs e)
         {
-            if(Game.Players[0].Balance >= Game.Players[0].RaiseBet && Game.Players[0].RaiseBet > 0)
+            if (Game.Players[0].Balance >= Game.Players[0].RaiseBet && Game.Players[0].RaiseBet > 0)
             {
                 Game.Players[0].Bet += Game.Players[0].RaiseBet;
                 Game.Players[0].Balance -= Game.Players[0].RaiseBet;
                 Game.Players[0].RaiseBet = 0;
             }
+
+            Storyboard board = (Storyboard)this.FindResource("sbTableOut");
+            board.Begin();
+        }
+
+        private async void btnFold_Click(object sender, RoutedEventArgs e)
+        {
+            Storyboard board = (Storyboard)this.FindResource("sbFlop");
+            board.Begin();
+
+            await Task.Delay(300);
+            Game.MyTable[0].Turned = false;
+            await Task.Delay(500);
+            Game.MyTable[1].Turned = false;
+            await Task.Delay(500);
+            Game.MyTable[2].Turned = false;
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Storyboard board = (Storyboard)this.FindResource("sbTurn");
+            board.Begin();
+
+            await Task.Delay(300);
+            Game.MyTable[3].Turned = false;
+        }
+
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Storyboard board = (Storyboard)this.FindResource("sbRiver");
+            board.Begin();
+
+            await Task.Delay(300);
+            Game.MyTable[4].Turned = false;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Storyboard player0 = (Storyboard)this.FindResource("sbPlayer0_In");
+            player0.Begin();
+            Storyboard player1 = (Storyboard)this.FindResource("sbPlayer1_In");
+            player1.Begin();
+            Storyboard player2 = (Storyboard)this.FindResource("sbPlayer2_In");
+            player2.Begin();
+            Storyboard player3 = (Storyboard)this.FindResource("sbPlayer3_In");
+            player3.Begin();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Storyboard player0_out = (Storyboard)this.FindResource("sbPlayer0_Out");
+            player0_out.Begin();
+            Storyboard player1_out = (Storyboard)this.FindResource("sbPlayer1_Out");
+            player1_out.Begin();
+            Storyboard player2_out = (Storyboard)this.FindResource("sbPlayer2_Out");
+            player2_out.Begin();
+            Storyboard player3_out = (Storyboard)this.FindResource("sbPlayer3_Out");
+            player3_out.Begin();
         }
     }
 }

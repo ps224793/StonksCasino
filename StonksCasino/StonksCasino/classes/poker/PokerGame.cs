@@ -52,6 +52,10 @@ namespace StonksCasino.classes.poker
             Players[1].Button = enums.poker.PokerButton.SmallBlind;
             Players[2].Button = enums.poker.PokerButton.BigBlind;
             Players[3].Button = enums.poker.PokerButton.None;
+            foreach (Card card in Players[0].Hand)
+            {
+                card.Turned = false;
+            }
             SetTable();
             //PokerHandCalculator.GetHandValue(_players[0].Hand.ToList(), _table.ToList());
         }
@@ -59,7 +63,7 @@ namespace StonksCasino.classes.poker
         public void CalcHand()
         {
             //List<Card> handje = new List<Card>();
-            //handje.Add(new Card(enums.card.CardType.Clubs, enums.card.CardValue.Eight, enums.card.CardBackColor.Blue));
+            //handje.Add(new Card(enums.card.CardType.Clubs, enums.card.CardValue.Six, enums.card.CardBackColor.Blue));
             //handje.Add(new Card(enums.card.CardType.Clubs, enums.card.CardValue.Jack, enums.card.CardBackColor.Blue));
 
             //List<Card> tafeltje = new List<Card>();
@@ -67,8 +71,8 @@ namespace StonksCasino.classes.poker
             //tafeltje.Add(new Card(enums.card.CardType.Clubs, enums.card.CardValue.Three, enums.card.CardBackColor.Blue));
             //tafeltje.Add(new Card(enums.card.CardType.Spades, enums.card.CardValue.Three, enums.card.CardBackColor.Blue));
             //tafeltje.Add(new Card(enums.card.CardType.Hearts, enums.card.CardValue.Three, enums.card.CardBackColor.Blue));
-            //tafeltje.Add(new Card(enums.card.CardType.Diamonds, enums.card.CardValue.Queen, enums.card.CardBackColor.Blue));
-
+            //tafeltje.Add(new Card(enums.card.CardType.Hearts, enums.card.CardValue.Seven, enums.card.CardBackColor.Blue));
+            //PokerHandCalculator.GetHandValue(tafeltje, handje);
             PokerHandCalculator.GetHandValue(_players[0].Hand.ToList(), _table.ToList());
         }
 
@@ -77,6 +81,10 @@ namespace StonksCasino.classes.poker
             List<Card> cards = new List<Card>();
             cards.Add(deck.DrawCard());
             cards.Add(deck.DrawCard());
+            foreach (Card card in cards)
+            {
+                card.Turned = true;
+            }
             player.SetHand(cards);
         }
 
@@ -86,7 +94,7 @@ namespace StonksCasino.classes.poker
             for (int i = 0; i < 5; i++)
             {
                 Card card = deck.DrawCard();
-                //card.Turned = true;
+                card.Turned = true;
                 cards.Add(card);
             }
             MyTable = cards;
