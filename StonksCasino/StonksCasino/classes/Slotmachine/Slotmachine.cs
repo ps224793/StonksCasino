@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace StonksCasino.classes.Slotmachine
 {
-    class Slotmachine
+    public class Slotmachine
     {
+        
     }
 }
