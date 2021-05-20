@@ -60,8 +60,14 @@ namespace StonksCasino.Views.slotmachine
 
         DispatcherTimer computertimer = new DispatcherTimer();
 
-        public int Beurt = 100;
-        public int _betAmount;
+        private int _beurt = 0;
+
+        public int Beurt
+        {
+            get { return _beurt; }
+            set { _beurt = value; OnPropertyChanged(); }
+        }
+
 
         public SlotmachineWindow(User user)
         {
@@ -72,6 +78,8 @@ namespace StonksCasino.Views.slotmachine
 
             computertimer.Interval = TimeSpan.FromMilliseconds(1);
             computertimer.Tick += computertimer_Tick;
+
+            Check();
         }
 
         private void computertimer_Tick(object sender, EventArgs e)
@@ -131,16 +139,39 @@ namespace StonksCasino.Views.slotmachine
             set { _myamount = value; }
         }
 
-        public void Verhogen_Click(object sender, RoutedEventArgs e)
+        public void Check()
         {
-            DataTable data = Database.Tokensadd(100);
-            accountrefresh();
+            if (_Tokens < 100 || Beurt >= 10)
+            {
+                btVerhogen.IsEnabled = false;
+            }
+            else
+            {
+                btVerhogen.IsEnabled = true;
+            }
+            if (Beurt <= 0)
+            {
+                btVerlagen.IsEnabled = false;
+            }
+            else
+            {
+                btVerlagen.IsEnabled = true;
+            }
         }
 
-        private void Verlagen_Click(object sender, RoutedEventArgs e)
+        public void Verhogen_Click(object sender, RoutedEventArgs e)
         {
             DataTable data = Database.Tokensremove(100);
             accountrefresh();
+            Beurt++;
+            Check();
+        }
+        private void Verlagen_Click(object sender, RoutedEventArgs e)
+        {
+            DataTable data = Database.Tokensadd(100);
+            accountrefresh();
+            Beurt--;
+            Check();
         }
 
         private Slotmachine _slotmachine;
