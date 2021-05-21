@@ -39,11 +39,25 @@ namespace StonksCasino.Views.poker
             set { _game = value; OnPropertyChanged(); }
         }
 
+        private int _cardWidth;
+
+        public int CardWidth
+        {
+            get { return _cardWidth; }
+            set { _cardWidth = value; OnPropertyChanged(); }
+        }
+
+
         public PokerWindow()
         {
             Game = new PokerGame();
             DataContext = this;
             InitializeComponent();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            CardWidth = (int)one.ActualWidth;
         }
 
         private void Raise_Bet(object sender, RoutedEventArgs e)
@@ -210,6 +224,11 @@ namespace StonksCasino.Views.poker
         private void Button_Click_8(object sender, RoutedEventArgs e)
         {
             Game.CalcHand();
+        }
+
+        private void Button_Click_9(object sender, RoutedEventArgs e)
+        {
+            Game.firstBettingRound();
         }
     }
 }

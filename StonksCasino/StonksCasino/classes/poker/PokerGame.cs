@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using StonksCasino.classes.Main;
+using StonksCasino.enums.poker;
 
 namespace StonksCasino.classes.poker
 {
@@ -106,6 +107,36 @@ namespace StonksCasino.classes.poker
                 cards.Add(card);
             }
             MyTable = cards;
+        }
+
+        public void firstBettingRound()
+        {
+            foreach(PokerPlayer player in Players)
+            {
+                switch (player.Button)
+                {
+                    case PokerButton.SmallBlind:
+                        player.Bet = 5;
+                        break;
+                    case PokerButton.BigBlind:
+                        player.Bet = 10;
+                        break;
+                    case PokerButton.None:
+                        if(player != Players[0])
+                        {
+                            // Execute alogrithm
+                        }
+                        break;
+                }
+            }
+        }
+
+        public void showdown(List<PokerPlayer> Players)
+        {
+            foreach (PokerPlayer player in Players)
+            {
+
+            }
         }
     }
 }
