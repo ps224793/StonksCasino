@@ -223,7 +223,8 @@ namespace StonksCasino.Views.poker
 
         private void Button_Click_8(object sender, RoutedEventArgs e)
         {
-            Game.CalcHand();
+            // Game.CalcHand();
+            Game.showdown(Game.Players);
         }
 
         private void Button_Click_9(object sender, RoutedEventArgs e)

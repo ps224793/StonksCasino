@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using StonksCasino.classes.Main;
 using StonksCasino.enums.poker;
 
@@ -29,6 +30,15 @@ namespace StonksCasino.classes.poker
             get { return _players; }
             set { _players = value; }
         }
+
+        private int _blindsBet = 5;
+
+        public int BlindsBet
+        {
+            get { return _blindsBet; }
+            set { _blindsBet = value; }
+        }
+
 
         private int _topBet = 0;
 
@@ -116,10 +126,10 @@ namespace StonksCasino.classes.poker
                 switch (player.Button)
                 {
                     case PokerButton.SmallBlind:
-                        player.Bet = 5;
+                        player.Bet = BlindsBet;
                         break;
                     case PokerButton.BigBlind:
-                        player.Bet = 10;
+                        player.Bet = BlindsBet * 2;
                         break;
                     case PokerButton.None:
                         if(player != Players[0])
@@ -133,9 +143,40 @@ namespace StonksCasino.classes.poker
 
         public void showdown(List<PokerPlayer> Players)
         {
+            List<PokerHandValue> playerHands = new List<PokerHandValue>();
             foreach (PokerPlayer player in Players)
             {
-
+                PokerHandValue result = PokerHandCalculator.GetHandValue(player.Hand.ToList(), _table.ToList());
+                playerHands.Add(result);
+            }
+            playerHands = playerHands.OrderBy(x => x.MyPokerHand).ToList();
+            List<PokerHandValue> highestHands = new List<PokerHandValue>();
+            foreach (PokerHandValue playerHand in playerHands)
+            {
+                if(playerHand.MyPokerHand == playerHands[0].MyPokerHand)
+                {
+                    highestHands.Add(playerHand);
+                }
+            }
+            if(highestHands.Count > 1)
+            {
+                if(highestHands[0].Hand[0].Value > highestHands[1].Hand[0].Value)
+                {
+                    // playerHands2[0] wint
+                }
+                else if(highestHands[0].Hand[0].Value < highestHands[1].Hand[0].Value)
+                {
+                    // playerHands2[1] wint
+                }
+                else
+                {
+                    // vergelijk volgende kaarten
+                }
+                MessageBox.Show("Done1");
+            }
+            else
+            {
+                MessageBox.Show($"De Winnende hand: {highestHands[0].MyPokerHand}, {highestHands[0].Hand[0].Type} {highestHands[0].Hand[0].Value}, {highestHands[0].Hand[1].Type} {highestHands[0].Hand[1].Value}, {highestHands[0].Hand[2].Type} {highestHands[0].Hand[2].Value}, {highestHands[0].Hand[3].Type} {highestHands[0].Hand[3].Value}, {highestHands[0].Hand[4].Type} {highestHands[0].Hand[4].Value}");
             }
         }
     }
