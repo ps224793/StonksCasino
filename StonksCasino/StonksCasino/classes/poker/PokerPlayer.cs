@@ -20,6 +20,15 @@ namespace StonksCasino.classes.poker
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        private string _pokerName;
+
+        public string PokerName
+        {
+            get { return _pokerName; }
+            set { _pokerName = value; }
+        }
+
+
         /// <summary>
         /// Represents the cards this player has in their hand
         /// </summary>

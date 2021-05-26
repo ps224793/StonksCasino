@@ -119,7 +119,7 @@ namespace StonksCasino.Views.main
         private void Pokergame()
         {
             accountrefresh();
-            PokerWindow roulette = new PokerWindow();
+            PokerWindow roulette = new PokerWindow(user);
             this.Hide();
             roulette.Show();
            
