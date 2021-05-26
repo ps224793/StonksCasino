@@ -73,8 +73,6 @@ namespace StonksCasino.Views.poker
             DataTable dataTable = Database.Accounts();
             _Tokens = (int)dataTable.Rows[0]["token"];
             user.MyTokens = _Tokens;
-
-
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -84,16 +82,7 @@ namespace StonksCasino.Views.poker
 
         private void Raise_Bet(object sender, RoutedEventArgs e)
         {
-            if (Game.Players[0].Balance >= Game.Players[0].RaiseBet && Game.Players[0].RaiseBet > 0)
-            {
-                Game.Players[0].Bet += Game.Players[0].RaiseBet;
-                Game.Players[0].Balance -= Game.Players[0].RaiseBet;
-                Game.Players[0].RaiseBet = 0;
-                if (Game.Players[0].Balance == 0)
-                {
-                    Game.Players[0].IsAllIn = true;
-                }
-            }
+            Game.Raise(Game.Players[0]);
         }
 
         private void Higher_Raise(object sender, RoutedEventArgs e)
@@ -106,7 +95,7 @@ namespace StonksCasino.Views.poker
 
         private void Lower_Raise(object sender, RoutedEventArgs e)
         {
-            if (Game.Players[0].RaiseBet > 0)
+            if (Game.Players[0].RaiseBet > Game.LastRaise + (Game.TopBet - Game.Players[0].Bet))
             {
                 Game.Players[0].RaiseBet--;
             }
@@ -114,7 +103,7 @@ namespace StonksCasino.Views.poker
 
         private void btnFold_Click(object sender, RoutedEventArgs e)
         {
-            Game.Players[0].Fold();
+            Game.Fold(Game.Players[0]);
         }
 
         private void Call_Click(object sender, RoutedEventArgs e)
@@ -122,15 +111,15 @@ namespace StonksCasino.Views.poker
             int MaxBet = Game.Players[0].Bet + Game.Players[0].Balance;
             if (MaxBet <= Game.TopBet)
             {
-                Game.Players[0].AllIn();
+                Game.AllIn(Game.Players[0]);
             }
             else if (Game.Players[0].Bet < Game.TopBet)
             {
-                Game.Players[0].Call(Game.TopBet);
+                Game.Call(Game.Players[0]);
             }
             else
             {
-                Game.Players[0].Check();
+                Game.Check(Game.Players[0]);
             }
         }
 

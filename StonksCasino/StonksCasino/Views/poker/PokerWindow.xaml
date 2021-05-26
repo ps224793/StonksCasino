@@ -348,7 +348,7 @@
                                 </Grid.RowDefinitions>
 
                                 <StackPanel Grid.Row="0">
-                                    <Button x:Name="btnRaise" Content="Raise" Click="Raise_Bet"></Button>
+                                    <Button x:Name="btnRaise" Content="{Binding Game.RaiseOrAllIn, Mode=OneWay}" Click="Raise_Bet"></Button>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
@@ -364,7 +364,7 @@
                                 </StackPanel>
 
                                 <Button x:Name="btnFold" Grid.Row="1" Content="Fold" Click="btnFold_Click"></Button>
-                                <Button Grid.Row="2" Content="Call" Click="Call_Click"></Button>
+                                <Button Grid.Row="2" Content="{Binding Game.CallOrCheck, Mode=OneWay}" Click="Call_Click"></Button>
                             </Grid>
 
                             <Image Grid.Column="0" Source="/Img/Main/Token.png" Grid.RowSpan="2"></Image>
