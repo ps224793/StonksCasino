@@ -45,19 +45,19 @@ namespace StonksCasino.classes.poker
             if (royal && flush)
             {
                 MessageBox.Show($"{player.PokerName} heeft een RoyalFlush, {resultFS[0].Type} {resultFS[0].Value}, {resultFS[1].Type} {resultFS[1].Value}, {resultFS[2].Type} {resultFS[2].Value} {resultFS[3].Type} {resultFS[3].Value}, {resultFS[4].Type} {resultFS[4].Value}");
-                result = new PokerHandValue(PokerHand.RoyalFlush, 0, resultFS, player);
+                result = new PokerHandValue(PokerHand.RoyalFlush, 0, resultFS, player.PlayerID);
                 return result;
             }
             else if (straight && flush)
             {
                 MessageBox.Show($"{player.PokerName} heeft een Straight Flush, {resultFS[0].Type} {resultFS[0].Value}, {resultFS[1].Type} {resultFS[1].Value}, {resultFS[2].Type} {resultFS[2].Value} {resultFS[3].Type} {resultFS[3].Value}, {resultFS[4].Type} {resultFS[4].Value}");
-                result = new PokerHandValue(PokerHand.StraightFlush, (int)resultFS[2].Value, resultFS, player);
+                result = new PokerHandValue(PokerHand.StraightFlush, (int)resultFS[2].Value, resultFS, player.PlayerID);
                 return result;
             }
             else if (fourOfAKind)
             {
                 MessageBox.Show($"{player.PokerName} heeft een four of a kind, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
-                result = new PokerHandValue(PokerHand.FourOfAKind, (int)resultPair[0].Value, resultPair, highCards, player);
+                result = new PokerHandValue(PokerHand.FourOfAKind, (int)resultPair[0].Value, resultPair, highCards, player.PlayerID);
                 return result;
             }
             else if (fullHouse)
@@ -65,25 +65,25 @@ namespace StonksCasino.classes.poker
                 MessageBox.Show($"{player.PokerName} heeft een FullHouse, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
                 int fullHouseValue = ((int)resultPair[0].Value) * 100;
                 fullHouseValue += (int)resultPair[3].Value;
-                result = new PokerHandValue(PokerHand.FullHouse, fullHouseValue, resultPair, player);
+                result = new PokerHandValue(PokerHand.FullHouse, fullHouseValue, resultPair, player.PlayerID);
                 return result;
             }
             else if (flush)
             {
                 MessageBox.Show($"{player.PokerName} heeft een Flush, {resultFS[0].Type} {resultFS[0].Value}, {resultFS[1].Type} {resultFS[1].Value}, {resultFS[2].Type} {resultFS[2].Value} {resultFS[3].Type} {resultFS[3].Value}, {resultFS[4].Type} {resultFS[4].Value}");
-                result = new PokerHandValue(PokerHand.Flush, 0, resultFS, player);
+                result = new PokerHandValue(PokerHand.Flush, 0, resultFS, player.PlayerID);
                 return result;
             }
             else if (straight)
             {
                 MessageBox.Show($"{player.PokerName} heeft een straight, {resultFS[0].Type} {resultFS[0].Value}, {resultFS[1].Type} {resultFS[1].Value}, {resultFS[2].Type} {resultFS[2].Value} {resultFS[3].Type} {resultFS[3].Value}, {resultFS[4].Type} {resultFS[4].Value}");
-                result = new PokerHandValue(PokerHand.Straight, (int)resultFS[2].Value, resultFS, player);
+                result = new PokerHandValue(PokerHand.Straight, (int)resultFS[2].Value, resultFS, player.PlayerID);
                 return result;
             }
             else if (threeOfAKind)
             {
                 MessageBox.Show($"{player.PokerName} heeft een Three of a kind, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
-                result = new PokerHandValue(PokerHand.ThreeOfAKind, (int)resultPair[0].Value, resultPair, highCards, player);
+                result = new PokerHandValue(PokerHand.ThreeOfAKind, (int)resultPair[0].Value, resultPair, highCards, player.PlayerID);
                 return result;
             }
             else if (twopair)
@@ -91,19 +91,19 @@ namespace StonksCasino.classes.poker
                 MessageBox.Show($"{player.PokerName} heeft een twopair, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
                 int twoPairValue = (int)resultPair[0].Value * 100;
                 twoPairValue += (int)resultPair[2].Value;
-                result = new PokerHandValue(PokerHand.TwoPair, twoPairValue, resultPair, highCards, player);
+                result = new PokerHandValue(PokerHand.TwoPair, twoPairValue, resultPair, highCards, player.PlayerID);
                 return result;
             }
             else if (pair)
             {
                 MessageBox.Show($"{player.PokerName} heeft een pair, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
-                result = new PokerHandValue(PokerHand.Pair, (int)resultPair[0].Value, resultPair, highCards, player);
+                result = new PokerHandValue(PokerHand.Pair, (int)resultPair[0].Value, resultPair, highCards, player.PlayerID);
                 return result;
             }
             else
             {
                 MessageBox.Show($"{player.PokerName} heeft een highend, {resultPair[0].Type} {resultPair[0].Value}, {resultPair[1].Type} {resultPair[1].Value}, {resultPair[2].Type} {resultPair[2].Value} {resultPair[3].Type} {resultPair[3].Value}, {resultPair[4].Type} {resultPair[4].Value}");
-                result = new PokerHandValue(PokerHand.HighCard, 0, resultPair, highCards, player);
+                result = new PokerHandValue(PokerHand.HighCard, 0, resultPair, highCards, player.PlayerID);
                 return result;
             }
             #endregion

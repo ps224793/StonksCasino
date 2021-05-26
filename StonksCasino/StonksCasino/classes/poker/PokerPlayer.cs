@@ -28,6 +28,14 @@ namespace StonksCasino.classes.poker
             set { _pokerName = value; }
         }
 
+        private int _playerID;
+
+        public int PlayerID
+        {
+            get { return _playerID; }
+            set { _playerID = value; }
+        }
+
 
         /// <summary>
         /// Represents the cards this player has in their hand
@@ -160,11 +168,21 @@ namespace StonksCasino.classes.poker
         /// <summary>
         /// Raises this player's bet with the amount given
         /// </summary>
-        public void Raise()
+        public int Raise(int topBet, out int raiseBet)
         {
+            int raised = RaiseBet - (topBet - Bet);
+            raiseBet = RaiseBet;
             Balance -= RaiseBet;
             Bet += RaiseBet;
-            Checked = true;
+            if (Balance == 0)
+            {
+                IsAllIn = true;
+            }
+            else
+            {
+                Checked = true;
+            }
+            return raised;
             // End of this player's turn
         }
 
@@ -172,11 +190,13 @@ namespace StonksCasino.classes.poker
         /// Raises this player's bet to match the highest bet on the table
         /// </summary>
         /// <param name="topBet">The current highest bet on the table</param>
-        public void Call(int topBet)
+        public int Call(int pot, int topBet)
         {
-            Balance -= Math.Abs(topBet - Bet);
+            Balance -= (topBet - Bet);
+            pot += (topBet - Bet);
             Bet = topBet;
             Checked = true;
+            return pot;
             // End of this player's turn
         }
 
@@ -192,11 +212,13 @@ namespace StonksCasino.classes.poker
         /// <summary>
         /// Raises this player's bet with all their remaining balance
         /// </summary>
-        public void AllIn()
+        public int AllIn(int pot)
         {
             Bet += Balance;
+            pot += Balance;
             Balance = 0;
             IsAllIn = true;
+            return pot;
             // End of this player's turn
         }
 

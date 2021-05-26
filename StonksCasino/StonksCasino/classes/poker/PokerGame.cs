@@ -39,14 +39,100 @@ namespace StonksCasino.classes.poker
             set { _blindsBet = value; }
         }
 
+        private int _currentPot = 0;
+
+        public int CurrentPot
+        {
+            get
+            {
+                if (true)
+                {
+                    return MainPot;
+                }
+                else
+                {
+                    return SidePot;
+                }
+            }
+            set
+            {
+                if (true)
+                {
+                    MainPot = value;
+                }
+                else
+                {
+                    SidePot = value;
+                }
+            }
+        }
+
+        private int _mainPot = 0;
+
+        public int MainPot
+        {
+            get { return _mainPot; }
+            set { _mainPot = value; }
+        }
+
+        private int _sidePot = 0;
+
+        public int SidePot
+        {
+            get { return _mainPot; }
+            set { _mainPot = value; }
+        }
 
         private int _topBet = 0;
 
         public int TopBet
         {
             get { return _topBet; }
-            set { _topBet = value; }
+            set { _topBet = value; OnPropertyChanged("CallOrCheck"); OnPropertyChanged("RaiseOrAllIn"); }
         }
+
+        public string RaiseOrAllIn
+        {
+            get
+            {
+                if (Players[0].Balance <= LastRaise + (TopBet - Players[0].Bet))
+                {
+                    return "All-in";
+                }
+                else
+                {
+                    return "Raise";
+                }
+            }
+        }
+
+        public string CallOrCheck
+        {
+            get
+            {
+                if (Players[0].Balance <= (TopBet - Players[0].Bet))
+                {
+                    return "All-in";
+                }
+                else if (Players[0].Bet == TopBet)
+                {
+                    return "Check";
+                }
+                else
+                {
+                    return "Call";
+                }
+            }
+        }
+
+        private int _lastRaise = 0;
+
+        public int LastRaise
+        {
+            get { return _lastRaise; }
+            set { _lastRaise = value; }
+        }
+
 
         private ObservableCollection<Card> _table;
 
@@ -66,6 +152,7 @@ namespace StonksCasino.classes.poker
                 Players[i].Balance = 500;
                 Players[i].RaiseBet = 0;
                 Players[i].Bet = 0;
+                Players[i].PlayerID = i;
                 switch (i)
                 {
                     case 0:
@@ -82,10 +169,10 @@ namespace StonksCasino.classes.poker
                         break;
                 }
             }
-            Players[0].Button = enums.poker.PokerButton.Dealer;
-            Players[1].Button = enums.poker.PokerButton.SmallBlind;
-            Players[2].Button = enums.poker.PokerButton.BigBlind;
-            Players[3].Button = enums.poker.PokerButton.None;
+            Players[0].Button = PokerButton.Dealer;
+            Players[1].Button = PokerButton.SmallBlind;
+            Players[2].Button = PokerButton.BigBlind;
+            Players[3].Button = PokerButton.None;
             foreach (Card card in Players[0].Hand)
             {
                 card.Turned = false;
@@ -134,6 +221,44 @@ namespace StonksCasino.classes.poker
             MyTable = cards;
         }
 
+        public void Raise(PokerPlayer player)
+        {
+            if (player.RaiseBet <= player.Balance && player.RaiseBet >= (LastRaise + (TopBet - player.Bet)))
+            {
+                int raiseBet;
+                LastRaise = player.Raise(TopBet, out raiseBet);
+                TopBet += raiseBet;
+                CurrentPot += raiseBet;
+            }
+        }
+
+        public void Fold(PokerPlayer player)
+        {
+            player.Fold();
+        }
+
+        public void Call(PokerPlayer player)
+        {
+            if (player.Balance >= (TopBet - player.Bet))
+            {
+                CurrentPot = player.Call(CurrentPot, TopBet);
+            }
+        }
+
+        public void Check(PokerPlayer player)
+        {
+            player.Check();
+        }
+
+        public void AllIn(PokerPlayer player)
+        {
+            if (player.Balance >= (TopBet - player.Bet))
+            {
+                CurrentPot = player.AllIn(CurrentPot);
+                // Switch from MainPot to SidePot
+            }
+        }
+
         public void firstBettingRound()
         {
             foreach (PokerPlayer player in Players)
@@ -141,10 +266,16 @@ namespace StonksCasino.classes.poker
                 switch (player.Button)
                 {
                     case PokerButton.SmallBlind:
-                        player.Bet = BlindsBet;
+                        player.Bet += BlindsBet;
+                        player.Balance -= BlindsBet;
+                        MainPot += BlindsBet;
                         break;
                     case PokerButton.BigBlind:
-                        player.Bet = BlindsBet * 2;
+                        player.Bet += BlindsBet * 2;
+                        player.Balance -= (BlindsBet * 2);
+                        MainPot += (BlindsBet * 2);
+                        TopBet = (BlindsBet * 2);
+                        LastRaise = TopBet;
                         break;
                     case PokerButton.None:
                         if (player != Players[0])
@@ -175,38 +306,38 @@ namespace StonksCasino.classes.poker
             }
             if (highestHands.Count > 1)
             {
-                for (int x = 1; x < highestHands.Count; x++)
+                for (int handToCompare = 1; handToCompare < highestHands.Count; handToCompare++)
                 {
-                    for (int i = 0; i < 5; i++)
+                    for (int cardToCompare = 0; cardToCompare < 5; cardToCompare++)
                     {
                         if (highestHands[0].MyPokerHand == PokerHand.Straight ||
                             highestHands[0].MyPokerHand == PokerHand.StraightFlush)
                         {
-                            if (highestHands[0].Hand[2].Value > highestHands[x].Hand[2].Value)
+                            if (highestHands[0].Hand[2].Value > highestHands[handToCompare].Hand[2].Value)
                             {
-                                highestHands.RemoveAt(x);
-                                x = 0;
+                                highestHands.RemoveAt(handToCompare);
+                                handToCompare = 0;
                                 break;
                             }
-                            else if (highestHands[0].Hand[2].Value < highestHands[x].Hand[2].Value)
+                            else if (highestHands[0].Hand[2].Value < highestHands[handToCompare].Hand[2].Value)
                             {
                                 highestHands.RemoveAt(0);
-                                x = 0;
+                                handToCompare = 0;
                                 break;
                             }
                         }
                         else
                         {
-                            if (highestHands[0].Hand[i].Value > highestHands[x].Hand[i].Value)
+                            if (highestHands[0].Hand[cardToCompare].Value > highestHands[handToCompare].Hand[cardToCompare].Value)
                             {
-                                highestHands.RemoveAt(x);
-                                x = 0;
+                                highestHands.RemoveAt(handToCompare);
+                                handToCompare = 0;
                                 break;
                             }
-                            else if (highestHands[0].Hand[i].Value < highestHands[x].Hand[i].Value)
+                            else if (highestHands[0].Hand[cardToCompare].Value < highestHands[handToCompare].Hand[cardToCompare].Value)
                             {
                                 highestHands.RemoveAt(0);
-                                x = 0;
+                                handToCompare = 0;
                                 break;
                             }
                         }
@@ -218,25 +349,29 @@ namespace StonksCasino.classes.poker
                 }
                 else
                 {
-                    MessageBox.Show($"{highestHands[0].Player.PokerName} heeft gewonnen: \n" +
-                                $"{highestHands[0].MyPokerHand}, " +
-                                $"{highestHands[0].Hand[0].Type} {highestHands[0].Hand[0].Value}, " +
-                                $"{highestHands[0].Hand[1].Type} {highestHands[0].Hand[1].Value}, " +
-                                $"{highestHands[0].Hand[2].Type} {highestHands[0].Hand[2].Value}, " +
-                                $"{highestHands[0].Hand[3].Type} {highestHands[0].Hand[3].Value}, " +
-                                $"{highestHands[0].Hand[4].Type} {highestHands[0].Hand[4].Value}");
+                    EndGame(highestHands[0]);
                 }
             }
             else
             {
-                MessageBox.Show($"{highestHands[0].Player.PokerName} heeft gewonnen: \n" +
-                                $"{highestHands[0].MyPokerHand}, " +
-                                $"{highestHands[0].Hand[0].Type} {highestHands[0].Hand[0].Value}, " +
-                                $"{highestHands[0].Hand[1].Type} {highestHands[0].Hand[1].Value}, " +
-                                $"{highestHands[0].Hand[2].Type} {highestHands[0].Hand[2].Value}, " +
-                                $"{highestHands[0].Hand[3].Type} {highestHands[0].Hand[3].Value}, " +
-                                $"{highestHands[0].Hand[4].Type} {highestHands[0].Hand[4].Value}");
+                EndGame(highestHands[0]);
             }
+        }
+
+        public void EndGame(PokerHandValue winningHand)
+        {
+            foreach (PokerPlayer player in Players)
+            {
+                player.Bet = 0;
+            }
+            Players[winningHand.PlayerID].Balance += CurrentPot;
+            MessageBox.Show($"{Players[winningHand.PlayerID].PokerName} heeft gewonnen: \n" +
+                            $"{winningHand.MyPokerHand}, " +
+                            $"{winningHand.Hand[0].Type} {winningHand.Hand[0].Value}, " +
+                            $"{winningHand.Hand[1].Type} {winningHand.Hand[1].Value}, " +
+                            $"{winningHand.Hand[2].Type} {winningHand.Hand[2].Value}, " +
+                            $"{winningHand.Hand[3].Type} {winningHand.Hand[3].Value}, " +
+                            $"{winningHand.Hand[4].Type} {winningHand.Hand[4].Value}");
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace StonksCasino.classes.poker
 {
-    class PokerHandValue
+    public class PokerHandValue
     {
 		private PokerHand _pokerHand;
 
@@ -19,12 +19,12 @@ namespace StonksCasino.classes.poker
 			set { _pokerHand = value; }
 		}
 
-        private PokerPlayer _player;
+        private int _playerID;
 
-        public PokerPlayer Player
-        {
-            get { return _player; }
-            set { _player = value; }
+        public int PlayerID
+		{
+            get { return _playerID; }
+            set { _playerID = value; }
         }
 
         private int _handValue;
@@ -56,21 +56,21 @@ namespace StonksCasino.classes.poker
 			MyPokerHand = pokerHand;
 		}
 
-		public PokerHandValue(PokerHand pokerHand, int handValue, List<Card> hand, PokerPlayer player)
+		public PokerHandValue(PokerHand pokerHand, int handValue, List<Card> hand, int playerID)
 		{
 			MyPokerHand = pokerHand;
 			HandValue = handValue;
 			Hand = hand;
-			Player = player;
+			PlayerID = playerID;
 		}
 
-		public PokerHandValue(PokerHand pokerHand, int handValue, List<Card> hand, List<Card> highCards, PokerPlayer player)
+		public PokerHandValue(PokerHand pokerHand, int handValue, List<Card> hand, List<Card> highCards, int playerID)
 		{
 			MyPokerHand = pokerHand;
 			HandValue = handValue;
 			Hand = hand;
 			HighCards.AddRange(highCards);
-			Player = player;
+			PlayerID = playerID;
 		}
 	}
 }
