@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using StonksCasino.classes.Main;
 using StonksCasino.enums.poker;
 
@@ -30,6 +31,15 @@ namespace StonksCasino.classes.poker
             set { _players = value; }
         }
 
+        private int _blindsBet = 5;
+
+        public int BlindsBet
+        {
+            get { return _blindsBet; }
+            set { _blindsBet = value; }
+        }
+
+
         private int _topBet = 0;
 
         public int TopBet
@@ -46,7 +56,7 @@ namespace StonksCasino.classes.poker
             set { _table = value; OnPropertyChanged(); }
         }
 
-        public PokerGame()
+        public PokerGame(User user)
         {
             Players = new List<PokerPlayer>();
             for (int i = 0; i < 4; i++)
@@ -56,6 +66,21 @@ namespace StonksCasino.classes.poker
                 Players[i].Balance = 500;
                 Players[i].RaiseBet = 0;
                 Players[i].Bet = 0;
+                switch (i)
+                {
+                    case 0:
+                        Players[i].PokerName = $"{user.MyName}";
+                        break;
+                    case 1:
+                        Players[i].PokerName = "Gambletron 2000";
+                        break;
+                    case 2:
+                        Players[i].PokerName = "The Pokernator";
+                        break;
+                    case 3:
+                        Players[i].PokerName = "MyloBot";
+                        break;
+                }
             }
             Players[0].Button = enums.poker.PokerButton.Dealer;
             Players[1].Button = enums.poker.PokerButton.SmallBlind;
@@ -82,7 +107,7 @@ namespace StonksCasino.classes.poker
             //tafeltje.Add(new Card(enums.card.CardType.Hearts, enums.card.CardValue.Three, enums.card.CardBackColor.Blue));
             //tafeltje.Add(new Card(enums.card.CardType.Hearts, enums.card.CardValue.Seven, enums.card.CardBackColor.Blue));
             //PokerHandCalculator.GetHandValue(tafeltje, handje);
-            PokerHandCalculator.GetHandValue(_players[0].Hand.ToList(), _table.ToList());
+            PokerHandCalculator.GetHandValue(_players[0], _table.ToList());
         }
 
         private void SetPlayerHand(PokerPlayer player)
@@ -111,18 +136,18 @@ namespace StonksCasino.classes.poker
 
         public void firstBettingRound()
         {
-            foreach(PokerPlayer player in Players)
+            foreach (PokerPlayer player in Players)
             {
                 switch (player.Button)
                 {
                     case PokerButton.SmallBlind:
-                        player.Bet = 5;
+                        player.Bet = BlindsBet;
                         break;
                     case PokerButton.BigBlind:
-                        player.Bet = 10;
+                        player.Bet = BlindsBet * 2;
                         break;
                     case PokerButton.None:
-                        if(player != Players[0])
+                        if (player != Players[0])
                         {
                             // Execute alogrithm
                         }
@@ -133,9 +158,84 @@ namespace StonksCasino.classes.poker
 
         public void showdown(List<PokerPlayer> Players)
         {
+            List<PokerHandValue> playerHands = new List<PokerHandValue>();
             foreach (PokerPlayer player in Players)
             {
-
+                PokerHandValue result = PokerHandCalculator.GetHandValue(player, _table.ToList());
+                playerHands.Add(result);
+            }
+            playerHands = playerHands.OrderBy(x => x.MyPokerHand).ToList();
+            List<PokerHandValue> highestHands = new List<PokerHandValue>();
+            foreach (PokerHandValue playerHand in playerHands)
+            {
+                if (playerHand.MyPokerHand == playerHands[0].MyPokerHand)
+                {
+                    highestHands.Add(playerHand);
+                }
+            }
+            if (highestHands.Count > 1)
+            {
+                for (int x = 1; x < highestHands.Count; x++)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (highestHands[0].MyPokerHand == PokerHand.Straight ||
+                            highestHands[0].MyPokerHand == PokerHand.StraightFlush)
+                        {
+                            if (highestHands[0].Hand[2].Value > highestHands[x].Hand[2].Value)
+                            {
+                                highestHands.RemoveAt(x);
+                                x = 0;
+                                break;
+                            }
+                            else if (highestHands[0].Hand[2].Value < highestHands[x].Hand[2].Value)
+                            {
+                                highestHands.RemoveAt(0);
+                                x = 0;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (highestHands[0].Hand[i].Value > highestHands[x].Hand[i].Value)
+                            {
+                                highestHands.RemoveAt(x);
+                                x = 0;
+                                break;
+                            }
+                            else if (highestHands[0].Hand[i].Value < highestHands[x].Hand[i].Value)
+                            {
+                                highestHands.RemoveAt(0);
+                                x = 0;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (highestHands.Count > 1)
+                {
+                    MessageBox.Show("Gelijkspel");
+                }
+                else
+                {
+                    MessageBox.Show($"{highestHands[0].Player.PokerName} heeft gewonnen: \n" +
+                                $"{highestHands[0].MyPokerHand}, " +
+                                $"{highestHands[0].Hand[0].Type} {highestHands[0].Hand[0].Value}, " +
+                                $"{highestHands[0].Hand[1].Type} {highestHands[0].Hand[1].Value}, " +
+                                $"{highestHands[0].Hand[2].Type} {highestHands[0].Hand[2].Value}, " +
+                                $"{highestHands[0].Hand[3].Type} {highestHands[0].Hand[3].Value}, " +
+                                $"{highestHands[0].Hand[4].Type} {highestHands[0].Hand[4].Value}");
+                }
+            }
+            else
+            {
+                MessageBox.Show($"{highestHands[0].Player.PokerName} heeft gewonnen: \n" +
+                                $"{highestHands[0].MyPokerHand}, " +
+                                $"{highestHands[0].Hand[0].Type} {highestHands[0].Hand[0].Value}, " +
+                                $"{highestHands[0].Hand[1].Type} {highestHands[0].Hand[1].Value}, " +
+                                $"{highestHands[0].Hand[2].Type} {highestHands[0].Hand[2].Value}, " +
+                                $"{highestHands[0].Hand[3].Type} {highestHands[0].Hand[3].Value}, " +
+                                $"{highestHands[0].Hand[4].Type} {highestHands[0].Hand[4].Value}");
             }
         }
     }

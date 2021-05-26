@@ -19,7 +19,15 @@ namespace StonksCasino.classes.poker
 			set { _pokerHand = value; }
 		}
 
-		private int _handValue;
+        private PokerPlayer _player;
+
+        public PokerPlayer Player
+        {
+            get { return _player; }
+            set { _player = value; }
+        }
+
+        private int _handValue;
 
 		public int HandValue
 		{
@@ -48,19 +56,21 @@ namespace StonksCasino.classes.poker
 			MyPokerHand = pokerHand;
 		}
 
-		public PokerHandValue(PokerHand pokerHand, int handValue, List<Card> hand)
+		public PokerHandValue(PokerHand pokerHand, int handValue, List<Card> hand, PokerPlayer player)
 		{
 			MyPokerHand = pokerHand;
 			HandValue = handValue;
 			Hand = hand;
+			Player = player;
 		}
 
-		public PokerHandValue(PokerHand pokerHand, int handValue, List<Card> hand, List<Card> highCards)
+		public PokerHandValue(PokerHand pokerHand, int handValue, List<Card> hand, List<Card> highCards, PokerPlayer player)
 		{
 			MyPokerHand = pokerHand;
 			HandValue = handValue;
 			Hand = hand;
 			HighCards.AddRange(highCards);
+			Player = player;
 		}
 	}
 }

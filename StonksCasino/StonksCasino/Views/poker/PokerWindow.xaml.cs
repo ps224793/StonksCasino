@@ -17,6 +17,7 @@ using StonksCasino.classes.Main;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Animation;
+using System.Data;
 
 namespace StonksCasino.Views.poker
 {
@@ -47,12 +48,33 @@ namespace StonksCasino.Views.poker
             set { _cardWidth = value; OnPropertyChanged(); }
         }
 
+        int _Tokens;
 
-        public PokerWindow()
+        private Database _database = new Database();
+
+        public Database MyDatabase
         {
-            Game = new PokerGame();
+            get { return _database; }
+            set { _database = value; }
+        }
+
+        public User user { get; set; }
+
+        public PokerWindow(User user)
+        {
+            this.user = user;
+            Game = new PokerGame(user);
             DataContext = this;
             InitializeComponent();
+        }
+
+        private void Account()
+        {
+            DataTable dataTable = Database.Accounts();
+            _Tokens = (int)dataTable.Rows[0]["token"];
+            user.MyTokens = _Tokens;
+
+
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -223,7 +245,8 @@ namespace StonksCasino.Views.poker
 
         private void Button_Click_8(object sender, RoutedEventArgs e)
         {
-            Game.CalcHand();
+            // Game.CalcHand();
+            Game.showdown(Game.Players);
         }
 
         private void Button_Click_9(object sender, RoutedEventArgs e)
