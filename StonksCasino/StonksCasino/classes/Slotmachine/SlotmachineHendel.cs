@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StonksCasino.classes.Slotmachine
 {
-    public class Slotmachine
+    public class SlotmachineHendel
     {
         public List<SlotRow> SlotRows { get; set; } = new List<SlotRow>();
 

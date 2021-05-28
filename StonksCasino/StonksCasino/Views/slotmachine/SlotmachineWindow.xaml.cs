@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -177,10 +178,100 @@ namespace StonksCasino.Views.slotmachine
 
         private Slotmachine _slotmachine = new Slotmachine();
 
-        public Slotmachine Slotmachine
+        public SlotmachineHendel Slotmachine
         {
             get { return _slotmachine; }
             set { _slotmachine = value; OnPropertyChanged(); }
+        }
+
+
+
+
+
+
+
+        private double _angle = 0;
+
+        public double Angle
+        {
+            get { return _angle; }
+            set { _angle = value; }
+        }
+
+        private double _angle2 = 0;
+
+        public double Angle2
+        {
+            get { return _angle2; }
+            set { _angle2 = value; }
+        }
+
+        DispatcherTimer _timerbet = new DispatcherTimer();
+
+        bool _pressed = false;
+
+
+        private void BtnStart_Click(object sender, RoutedEventArgs e)
+        {
+            if (_pressed == false)
+            {
+                _timerbet.Start();
+                _pressed = true;
+                Angle = 0;
+                Storyboard storyboard = new Storyboard();
+                storyboard.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+                storyboard.Completed += Storyboard_Completed;
+                double angle = 70;
+                DoubleAnimation rotateAnimation = new DoubleAnimation()
+                {
+                    From = Angle,
+                    To = angle,
+                    Duration = storyboard.Duration,
+                    AccelerationRatio = 0.5,
+                    DecelerationRatio = 0.5
+                };
+                Angle += angle;
+                Angle = Angle % 360;
+                Storyboard.SetTarget(rotateAnimation, imgLever);
+                Storyboard.SetTargetProperty(rotateAnimation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
+
+                storyboard.Children.Add(rotateAnimation);
+                storyboard.Begin();
+            }
+        }
+
+        private void Storyboard_Completed(object sender, EventArgs e)
+        {
+
+            _timerbet.Start();
+            Angle2 = 70;
+            Storyboard storyboard2 = new Storyboard();
+            storyboard2.Completed += Storyboard2_Completed;
+            storyboard2.Duration = new Duration(TimeSpan.FromSeconds(1.0));
+
+            double angle2 = 0;
+            DoubleAnimation rotateAnimation = new DoubleAnimation()
+            {
+                From = Angle2,
+                To = angle2,
+                Duration = storyboard2.Duration,
+                AccelerationRatio = 0.5,
+                DecelerationRatio = 0.5
+            };
+            Angle += angle2;
+            Angle = Angle % 360;
+            Storyboard.SetTarget(rotateAnimation, imgLever);
+            Storyboard.SetTargetProperty(rotateAnimation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
+
+
+            storyboard2.Children.Add(rotateAnimation);
+            storyboard2.Begin();
+
+            //--------------------------------------
+        }
+        private void Storyboard2_Completed(object sender, EventArgs e)
+        {
+            _pressed = false;
         }
     }
 }
