@@ -84,7 +84,7 @@
     <Compile Include="classes\blackjack\Computers.cs" />
     <Compile Include="classes\Main\CardBlackjack.cs" />
     <Compile Include="classes\Main\CardDeck.cs" />
-    <Compile Include="classes\Main\PropertyChange.cs" />
+    <Compile Include="classes\blackjack\PropertyChange.cs" />
     <Compile Include="classes\blackjack\BlackJack.cs" />
     <Compile Include="classes\Main\Card.cs" />
     <Compile Include="classes\Main\CardDeckBlack.cs" />

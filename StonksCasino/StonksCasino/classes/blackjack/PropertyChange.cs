@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StonksCasino.classes.Main
+namespace StonksCasino.classes.blackjack
 {
     public class PropertyChange : INotifyPropertyChanged
     {
