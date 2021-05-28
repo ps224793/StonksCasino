@@ -175,7 +175,7 @@ namespace StonksCasino.Views.slotmachine
             Check();
         }
 
-        private Slotmachine _slotmachine;
+        private Slotmachine _slotmachine = new Slotmachine();
 
         public Slotmachine Slotmachine
         {

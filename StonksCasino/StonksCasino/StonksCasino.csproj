@@ -84,7 +84,7 @@
     <Compile Include="classes\blackjack\Computers.cs" />
     <Compile Include="classes\Main\CardBlackjack.cs" />
     <Compile Include="classes\Main\CardDeck.cs" />
-    <Compile Include="classes\blackjack\PropertyChange.cs" />
+    <Compile Include="classes\Main\PropertyChange.cs" />
     <Compile Include="classes\blackjack\BlackJack.cs" />
     <Compile Include="classes\Main\Card.cs" />
     <Compile Include="classes\Main\CardDeckBlack.cs" />
@@ -98,7 +98,9 @@
     <Compile Include="classes\poker\PokerPlayer.cs" />
     <Compile Include="classes\Roulette\Bet.cs" />
     <Compile Include="classes\Roulette\Bettingtable.cs" />
+    <Compile Include="classes\Slotmachine\Slot.cs" />
     <Compile Include="classes\Slotmachine\Slotmachine.cs" />
+    <Compile Include="classes\Slotmachine\SlotRow.cs" />
     <Compile Include="enums\card\BlackcardValue.cs" />
     <Compile Include="enums\card\CardBackColor.cs" />
     <Compile Include="enums\card\CardType.cs" />
