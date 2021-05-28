@@ -198,7 +198,6 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="{Binding CardWidth, Mode=OneWay}"></TextBlock>
                     <Image x:Name="player1_Left" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,0,0,-10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[1].Hand[0].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.LayoutTransform>
                             <TransformGroup>
@@ -375,14 +374,10 @@
             </Grid>
             <Button Content="turn"        HorizontalAlignment="Left" Margin="494,409,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
             <Button Content="river"       HorizontalAlignment="Left" Margin="494,429,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-            <Button Content="Wegschuiven" HorizontalAlignment="Left" Margin="494,469,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_3"/>
-            <Button Content="Uitdelen"    HorizontalAlignment="Left" Margin="494,349,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2"/>
-            <Button Content="TableIn"     HorizontalAlignment="Left" Margin="494,369,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_4"/>
-            <Button Content="TableOut"    HorizontalAlignment="Left" Margin="494,489,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_5"/>
             <Button Content="TurnPCcards" HorizontalAlignment="Left" Margin="494,449,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_6"/>
             <Button Content="Flop"        HorizontalAlignment="Left" Margin="494,389,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_7"/>
-            <Button Content="CalculateHand"        HorizontalAlignment="Left" Margin="494,330,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_8"/>
-            <Button Content="Eerste inzetronde" HorizontalAlignment="Left" Margin="494,311,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_9"/>
+            <Button Content="CalculateHand"        HorizontalAlignment="Left" Margin="494,370,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_8"/>
+            <Button Content="Eerste inzetronde" HorizontalAlignment="Left" Margin="494,351,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_9"/>
         </Grid>
     </Grid>
 

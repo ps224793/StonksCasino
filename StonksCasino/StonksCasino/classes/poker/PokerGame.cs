@@ -7,8 +7,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Animation;
 using StonksCasino.classes.Main;
 using StonksCasino.enums.poker;
+using StonksCasino.Views.poker;
 
 namespace StonksCasino.classes.poker
 {
@@ -51,7 +53,7 @@ namespace StonksCasino.classes.poker
                 }
                 else
                 {
-                    return SidePot;
+                    return SidePot1;
                 }
             }
             set
@@ -62,7 +64,7 @@ namespace StonksCasino.classes.poker
                 }
                 else
                 {
-                    SidePot = value;
+                    SidePot1 = value;
                 }
             }
         }
@@ -75,12 +77,20 @@ namespace StonksCasino.classes.poker
             set { _mainPot = value; }
         }
 
-        private int _sidePot = 0;
+        private int _sidePot1 = 0;
 
-        public int SidePot
+        public int SidePot1
         {
-            get { return _mainPot; }
-            set { _mainPot = value; }
+            get { return _sidePot1; }
+            set { _sidePot1 = value; }
+        }
+
+        private int _sidePot2 = 0;
+
+        public int SidePot2
+        {
+            get { return _sidePot2; }
+            set { _sidePot2 = value; }
         }
 
         private int _topBet = 0;
@@ -142,6 +152,15 @@ namespace StonksCasino.classes.poker
             set { _table = value; OnPropertyChanged(); }
         }
 
+        private Storyboard _boardOut;
+
+        public Storyboard BoardOut
+        {
+            get { return _boardOut; }
+            set { _boardOut = value; }
+        }
+
+
         public PokerGame(User user)
         {
             Players = new List<PokerPlayer>();
@@ -173,10 +192,6 @@ namespace StonksCasino.classes.poker
             Players[1].Button = PokerButton.SmallBlind;
             Players[2].Button = PokerButton.BigBlind;
             Players[3].Button = PokerButton.None;
-            foreach (Card card in Players[0].Hand)
-            {
-                card.Turned = false;
-            }
             SetTable();
             //PokerHandCalculator.GetHandValue(_players[0].Hand.ToList(), _table.ToList());
         }
@@ -204,7 +219,10 @@ namespace StonksCasino.classes.poker
             cards.Add(deck.DrawCard());
             foreach (Card card in cards)
             {
-                card.Turned = true;
+                if (player.PlayerID != 0)
+                {
+                    card.Turned = true;
+                }
             }
             player.SetHand(cards);
         }
@@ -285,6 +303,120 @@ namespace StonksCasino.classes.poker
                         break;
                 }
             }
+            DealCards();
+        }
+
+        public void DealCards()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(PokerWindow))
+                {
+                    Storyboard player0 = (Storyboard)(window as PokerWindow).FindResource("sbPlayer0_In");
+                    player0.Begin();
+                    Storyboard player1 = (Storyboard)(window as PokerWindow).FindResource("sbPlayer1_In");
+                    player1.Begin();
+                    Storyboard player2 = (Storyboard)(window as PokerWindow).FindResource("sbPlayer2_In");
+                    player2.Begin();
+                    Storyboard player3 = (Storyboard)(window as PokerWindow).FindResource("sbPlayer3_In");
+                    player3.Begin();
+                    Storyboard board = (Storyboard)(window as PokerWindow).FindResource("sbTableIn");
+                    board.Begin();
+                }
+            }
+        }
+
+        public async void TableFlop()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(PokerWindow))
+                {
+                    Storyboard board = (Storyboard)(window as PokerWindow).FindResource("sbFlop");
+                    board.Begin();
+
+                    await Task.Delay(300);
+                    MyTable[0].Turned = false;
+                    await Task.Delay(500);
+                    MyTable[1].Turned = false;
+                    await Task.Delay(500);
+                    MyTable[2].Turned = false;
+
+                }
+            }
+        }
+
+        public async void TableTurn()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(PokerWindow))
+                {
+                    Storyboard board = (Storyboard)(window as PokerWindow).FindResource("sbTurn");
+                    board.Begin();
+
+                    await Task.Delay(300);
+                    MyTable[3].Turned = false;
+                }
+            }
+        }
+
+        public async void TableRiver()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(PokerWindow))
+                {
+                    Storyboard board = (Storyboard)(window as PokerWindow).FindResource("sbRiver");
+                    board.Begin();
+
+                    await Task.Delay(300);
+                    MyTable[4].Turned = false;
+                }
+            }
+        }
+
+        public void ClearTable()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(PokerWindow))
+                {
+                    Storyboard player0_out = (Storyboard)(window as PokerWindow).FindResource("sbPlayer0_Out");
+                    player0_out.Begin();
+                    Storyboard player1_out = (Storyboard)(window as PokerWindow).FindResource("sbPlayer1_Out");
+                    player1_out.Begin();
+                    Storyboard player2_out = (Storyboard)(window as PokerWindow).FindResource("sbPlayer2_Out");
+                    player2_out.Begin();
+                    Storyboard player3_out = (Storyboard)(window as PokerWindow).FindResource("sbPlayer3_Out");
+                    player3_out.Begin();
+                    BoardOut.Begin();
+                }
+            }
+        }
+
+        public void resetCards()
+        {
+            deck = new PokerDeck();
+            MyTable.Clear();
+            SetTable();
+            foreach (PokerPlayer player in Players)
+            {
+                player.Hand.Clear();
+                SetPlayerHand(player);
+            }
+        }
+
+        public void sbSetup()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(PokerWindow))
+                {
+                    BoardOut = (Storyboard)(window as PokerWindow).FindResource("sbTableOut");
+                    BoardOut.Completed += (s, e) => resetCards();
+                }
+            }
         }
 
         public void showdown(List<PokerPlayer> Players)
@@ -345,6 +477,27 @@ namespace StonksCasino.classes.poker
                 }
                 if (highestHands.Count > 1)
                 {
+                    for (int winningHand = 0; winningHand < highestHands.Count; winningHand++)
+                    {
+                        foreach (PokerPlayer player in Players)
+                        {
+                            if (player.PlayerID == highestHands[winningHand].PlayerID)
+                            {
+                                player.Balance += CurrentPot / highestHands.Count;
+                            }
+                        }
+                    }
+                    for (int player = 0; player < Players.Count; player++)
+                    {
+                        if (Players[player].Button == PokerButton.SmallBlind)
+                        {
+                            Players[player].Balance += CurrentPot % highestHands.Count;
+                        }
+                    }
+                    foreach (PokerPlayer player in Players)
+                    {
+                        player.Bet = 0;
+                    }
                     MessageBox.Show("Gelijkspel");
                 }
                 else
@@ -355,6 +508,34 @@ namespace StonksCasino.classes.poker
             else
             {
                 EndGame(highestHands[0]);
+            }
+            ClearTable();
+            switch (Players[0].Button)
+            {
+                case PokerButton.Dealer:
+                    Players[0].Button = PokerButton.None;
+                    Players[1].Button = PokerButton.Dealer;
+                    Players[2].Button = PokerButton.SmallBlind;
+                    Players[3].Button = PokerButton.BigBlind;
+                    break;
+                case PokerButton.SmallBlind:
+                    Players[0].Button = PokerButton.Dealer;
+                    Players[1].Button = PokerButton.SmallBlind;
+                    Players[2].Button = PokerButton.BigBlind;
+                    Players[3].Button = PokerButton.None;
+                    break;
+                case PokerButton.BigBlind:
+                    Players[0].Button = PokerButton.SmallBlind;
+                    Players[1].Button = PokerButton.BigBlind;
+                    Players[2].Button = PokerButton.None;
+                    Players[3].Button = PokerButton.Dealer;
+                    break;
+                case PokerButton.None:
+                    Players[0].Button = PokerButton.BigBlind;
+                    Players[1].Button = PokerButton.None;
+                    Players[2].Button = PokerButton.Dealer;
+                    Players[3].Button = PokerButton.SmallBlind;
+                    break;
             }
         }
 
