@@ -70,12 +70,37 @@ namespace StonksCasino.Views.slotmachine
             set { _beurt = value; OnPropertyChanged(); }
         }
 
+        private bool _allowedToPull = true;
+
+        public bool AllowedToPull
+        {
+            get { return _allowedToPull; }
+            set { _allowedToPull = value; OnPropertyChanged(); }
+        }
+
+        private bool _allowedtoclickVH;
+
+        public bool AllowedToClickVH
+        {
+            get { return _allowedtoclickVH; }
+            set { _allowedtoclickVH = value; OnPropertyChanged(); }
+        }
+
+        private bool _allowedtoclickVL;
+
+        public bool AllowedToClickVL
+        {
+            get { return _allowedtoclickVL; }
+            set { _allowedtoclickVL = value; OnPropertyChanged(); }
+        }
+
 
         public SlotmachineWindow(User user)
         {
+            DataContext = this;
             InitializeComponent();
             this.user = user;
-            DataContext = this;
+           
             Account();
 
             computertimer.Interval = TimeSpan.FromMilliseconds(1);
@@ -145,19 +170,21 @@ namespace StonksCasino.Views.slotmachine
         {
             if (_Tokens < 100 || Beurt >= 10)
             {
-                btVerhogen.IsEnabled = false;
+                AllowedToClickVH = false;
             }
             else
             {
-                btVerhogen.IsEnabled = true;
+                AllowedToClickVH = true;
             }
             if (Beurt <= 0)
             {
-                btVerlagen.IsEnabled = false;
+                AllowedToClickVL = false;
+                AllowedToPull = false;
             }
             else
             {
-                btVerlagen.IsEnabled = true;
+                AllowedToClickVL = true;
+                AllowedToPull = true;
             }
         }
 
@@ -176,9 +203,9 @@ namespace StonksCasino.Views.slotmachine
             Check();
         }
 
-        private SlotmachineHendel _slotmachine;
+        private Slotmachine _slotmachine = new Slotmachine();
 
-        public SlotmachineHendel Slotmachine
+        public Slotmachine Slotmachine
         {
             get { return _slotmachine; }
             set { _slotmachine = value; OnPropertyChanged(); }
@@ -208,36 +235,50 @@ namespace StonksCasino.Views.slotmachine
 
         DispatcherTimer _timerbet = new DispatcherTimer();
 
-        bool _pressed = false;
-
-
-        private void BtnStart_Click(object sender, RoutedEventArgs e)
+        private void DisableButtons()
         {
-            if (_pressed == false)
-            {
-                _timerbet.Start();
-                _pressed = true;
-                Angle = 0;
-                Storyboard storyboard = new Storyboard();
-                storyboard.Duration = new Duration(TimeSpan.FromSeconds(0.3));
-                storyboard.Completed += Storyboard_Completed;
-                double angle = 70;
-                DoubleAnimation rotateAnimation = new DoubleAnimation()
-                {
-                    From = Angle,
-                    To = angle,
-                    Duration = storyboard.Duration,
-                    AccelerationRatio = 0.5,
-                    DecelerationRatio = 0.5
-                };
-                Angle += angle;
-                Angle = Angle % 360;
-                Storyboard.SetTarget(rotateAnimation, imgLever);
-                Storyboard.SetTargetProperty(rotateAnimation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
+            AllowedToPull = false;
+            AllowedToClickVH = false;
+            AllowedToClickVL = false;
+        }
 
-                storyboard.Children.Add(rotateAnimation);
-                storyboard.Begin();
+
+        private async void BtnStart_Click(object sender, RoutedEventArgs e)
+        {
+            DisableButtons();
+            _timerbet.Start();
+            Beurt--;
+
+           
+
+            Angle = 0;
+            Storyboard storyboard = new Storyboard();
+            storyboard.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+            storyboard.Completed += Storyboard_Completed;
+            double angle = 70;
+            DoubleAnimation rotateAnimation = new DoubleAnimation()
+            {
+                From = Angle,
+                To = angle,
+                Duration = storyboard.Duration,
+                AccelerationRatio = 0.5,
+                DecelerationRatio = 0.5
+            };
+            Angle += angle;
+            Angle = Angle % 360;
+            Storyboard.SetTarget(rotateAnimation, imgLever);
+            Storyboard.SetTargetProperty(rotateAnimation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
+
+            storyboard.Children.Add(rotateAnimation);
+            storyboard.Begin();
+            await Slotmachine.Activate();
+
+            int winnings = Slotmachine.CheckWin();
+            if (winnings>0)
+            {
+                MessageBox.Show($"u heeft {winnings} gewonnen");
             }
+            Check();
         }
 
         private void Storyboard_Completed(object sender, EventArgs e)
@@ -271,7 +312,7 @@ namespace StonksCasino.Views.slotmachine
         }
         private void Storyboard2_Completed(object sender, EventArgs e)
         {
-            _pressed = false;
+
         }
     }
 }

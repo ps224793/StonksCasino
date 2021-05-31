@@ -71,9 +71,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="XamlAnimatedGif, Version=2.0.0.0, Culture=neutral, PublicKeyToken=20a987d8023d9690, processorArchitecture=MSIL">
-      <HintPath>..\packages\XamlAnimatedGif.2.0.0\lib\net45\XamlAnimatedGif.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -85,10 +82,9 @@
     <Compile Include="classes\blackjack\BlackjackDeckComputer.cs" />
     <Compile Include="classes\blackjack\BlackjackPlayer.cs" />
     <Compile Include="classes\blackjack\Computers.cs" />
-    <Compile Include="classes\HorseRace\HorseGame.cs" />
     <Compile Include="classes\Main\CardBlackjack.cs" />
     <Compile Include="classes\Main\CardDeck.cs" />
-    <Compile Include="classes\Main\PropertyChange.cs" />
+    <Compile Include="classes\blackjack\PropertyChange.cs" />
     <Compile Include="classes\blackjack\BlackJack.cs" />
     <Compile Include="classes\Main\Card.cs" />
     <Compile Include="classes\Main\CardDeckBlack.cs" />
@@ -102,10 +98,13 @@
     <Compile Include="classes\poker\PokerPlayer.cs" />
     <Compile Include="classes\Roulette\Bet.cs" />
     <Compile Include="classes\Roulette\Bettingtable.cs" />
+<<<<<<< HEAD
     <Compile Include="classes\Slotmachine\Slot.cs" />
     <Compile Include="classes\Slotmachine\Slotmachine.cs" />
     <Compile Include="classes\Slotmachine\SlotRow.cs" />
+=======
     <Compile Include="classes\Slotmachine\SlotmachineHendel.cs" />
+>>>>>>> 844badcc36491db97b8670d5ab77fd6a6c2e09b7
     <Compile Include="enums\card\BlackcardValue.cs" />
     <Compile Include="enums\card\CardBackColor.cs" />
     <Compile Include="enums\card\CardType.cs" />
@@ -114,12 +113,6 @@
     <Compile Include="enums\poker\PokerHand.cs" />
     <Compile Include="Views\blackjack\BlackjackWindow.xaml.cs">
       <DependentUpon>BlackjackWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\horserace\HorseRace.xaml.cs">
-      <DependentUpon>HorseRace.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\horserace\horseracewindow.xaml.cs">
-      <DependentUpon>horseracewindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\main\LibraryWindow.xaml.cs">
       <DependentUpon>LibraryWindow.xaml</DependentUpon>
@@ -149,14 +142,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\blackjack\BlackjackWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\horserace\HorseRace.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\horserace\horseracewindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -316,9 +301,7 @@
     <Resource Include="Img\PokerButtons\Dealer.png" />
     <Resource Include="Img\PokerButtons\SmallBlind.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Img\HorseRace\Horse.gif" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Img\Slotmachine\Bal.png" />
     <Resource Include="Img\Slotmachine\Bar.png" />
@@ -331,9 +314,6 @@
     <Resource Include="Img\Slotmachine\Orange.png" />
     <Resource Include="Img\Slotmachine\Seven.png" />
     <Resource Include="Img\Slotmachine\Star.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Img\HorseRace\Finishline.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
