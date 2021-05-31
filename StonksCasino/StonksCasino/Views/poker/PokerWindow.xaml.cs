@@ -66,6 +66,7 @@ namespace StonksCasino.Views.poker
             Game = new PokerGame(user);
             DataContext = this;
             InitializeComponent();
+            Game.sbSetup();
         }
 
         private void Account()
@@ -149,56 +150,12 @@ namespace StonksCasino.Views.poker
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            Storyboard board = (Storyboard)this.FindResource("sbTurn");
-            board.Begin();
-
-            await Task.Delay(300);
-            Game.MyTable[3].Turned = false;
+            Game.TableTurn();
         }
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            Storyboard board = (Storyboard)this.FindResource("sbRiver");
-            board.Begin();
-
-            await Task.Delay(300);
-            Game.MyTable[4].Turned = false;
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            Storyboard player0 = (Storyboard)this.FindResource("sbPlayer0_In");
-            player0.Begin();
-            Storyboard player1 = (Storyboard)this.FindResource("sbPlayer1_In");
-            player1.Begin();
-            Storyboard player2 = (Storyboard)this.FindResource("sbPlayer2_In");
-            player2.Begin();
-            Storyboard player3 = (Storyboard)this.FindResource("sbPlayer3_In");
-            player3.Begin();
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            Storyboard player0_out = (Storyboard)this.FindResource("sbPlayer0_Out");
-            player0_out.Begin();
-            Storyboard player1_out = (Storyboard)this.FindResource("sbPlayer1_Out");
-            player1_out.Begin();
-            Storyboard player2_out = (Storyboard)this.FindResource("sbPlayer2_Out");
-            player2_out.Begin();
-            Storyboard player3_out = (Storyboard)this.FindResource("sbPlayer3_Out");
-            player3_out.Begin();
-        }
-
-        private void Button_Click_4(object sender, RoutedEventArgs e)
-        {
-            Storyboard board = (Storyboard)this.FindResource("sbTableIn");
-            board.Begin();
-        }
-
-        private void Button_Click_5(object sender, RoutedEventArgs e)
-        {
-            Storyboard board = (Storyboard)this.FindResource("sbTableOut");
-            board.Begin();
+            Game.TableRiver();
         }
 
         private async void Button_Click_6(object sender, RoutedEventArgs e)
@@ -219,17 +176,9 @@ namespace StonksCasino.Views.poker
             Game.Players[3].Hand[1].Turned = false;
         }
 
-        private async void Button_Click_7(object sender, RoutedEventArgs e)
+        private void Button_Click_7(object sender, RoutedEventArgs e)
         {
-            Storyboard board = (Storyboard)this.FindResource("sbFlop");
-            board.Begin();
-
-            await Task.Delay(300);
-            Game.MyTable[0].Turned = false;
-            await Task.Delay(500);
-            Game.MyTable[1].Turned = false;
-            await Task.Delay(500);
-            Game.MyTable[2].Turned = false;
+            Game.TableFlop();
         }
 
         private void Button_Click_8(object sender, RoutedEventArgs e)

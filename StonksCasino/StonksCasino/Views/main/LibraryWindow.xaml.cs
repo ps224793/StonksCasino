@@ -17,6 +17,7 @@ using StonksCasino.Views.Roulette;
 using StonksCasino.Views.blackjack;
 using StonksCasino.Views.poker;
 using StonksCasino.Views.slotmachine;
+using StonksCasino.Views.horserace;
 
 namespace StonksCasino.Views.main
 {
@@ -26,8 +27,7 @@ namespace StonksCasino.Views.main
     public partial class LibraryWindow : Window
     {
         int _Tokens;
-        public User user { get; set; }
-  
+        public User user { get; set; } 
 
         private Database _database = new Database();
 
@@ -142,6 +142,26 @@ namespace StonksCasino.Views.main
             this.Hide();
             roulette.Show();
         }
+
+
+        private void HorseRace_click(object sender, RoutedEventArgs e)
+        {
+            HorseRacegame();
+        }
+
+        private void ImgHorseRace_Click(object sender, RoutedEventArgs e)
+        {
+            HorseRacegame();
+        }
+
+        private void HorseRacegame()
+        {
+            accountrefresh();
+            horseracewindow horserace = new horseracewindow(user);
+            this.Hide();
+            horserace.Show();
+        }
+
 
 
         private void Window_Closed(object sender, EventArgs e)
