@@ -101,6 +101,9 @@
                     <RowDefinition Height="35*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="5" VerticalAlignment="Center"/>
+
+                <Button Grid.Column="1" Grid.Row="1" Background="White" Content="HorseRace" Click="HorseRace_click" />
+                <Button Grid.Column="1" Grid.Row="2" Background="Black" Click="ImgHorseRace_Click" ></Button>
             </Grid>
         </Grid>
     </Grid>
