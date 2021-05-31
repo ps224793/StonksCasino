@@ -121,7 +121,7 @@ namespace StonksCasino.classes.blackjack
                     Standing = true;
                     Hit = true;
 
-                    MessageBox.Show($"Het aantal ingezette Tokens: { MyAantal }");
+                    //MessageBox.Show($"Het aantal ingezette Tokens: { MyAantal }");
                 }
                 else
                 {

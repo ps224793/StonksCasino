@@ -69,11 +69,13 @@ namespace StonksCasino.classes.blackjack
                     else
                     {
                         score += (int)card.Value;
+                        set = false;
                     }
                 }
                 else
                 {
                     score += (int)card.Value;
+                    set = false;
                 }
             }
             if (score > 21)
@@ -83,6 +85,7 @@ namespace StonksCasino.classes.blackjack
                     if ((int)card.Value == 1 && set == true)
                     {
                         score -= 10;
+                        set = false;
                     }
                 }
             }

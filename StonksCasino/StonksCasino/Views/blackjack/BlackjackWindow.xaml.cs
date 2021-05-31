@@ -33,8 +33,6 @@ namespace StonksCasino.Views.blackjack
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-   
-
         private CardBlackjack _cardturned;
 
         public CardBlackjack Mycardturned
@@ -110,6 +108,8 @@ namespace StonksCasino.Views.blackjack
             user.MyTokens = _Tokens;
 
         }
+
+
         private bool Checkingelogd()
         {
             DataTable dataTable = Database.Accounts();
