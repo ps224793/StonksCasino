@@ -8,11 +8,6 @@ namespace StonksCasino.classes.Slotmachine
 {
     public class SlotmachineHendel
     {
-        public List<SlotRow> SlotRows { get; set; } = new List<SlotRow>();
 
-        public Slotmachine()
-        {
-            SlotRows.Add(new SlotRow() );
-        }
     }
 }
