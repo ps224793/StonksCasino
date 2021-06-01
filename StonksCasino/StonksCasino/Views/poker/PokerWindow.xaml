@@ -372,12 +372,8 @@
                     </Border>
                 </Grid>
             </Grid>
-            <Button Content="turn"        HorizontalAlignment="Left" Margin="494,409,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-            <Button Content="river"       HorizontalAlignment="Left" Margin="494,429,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-            <Button Content="TurnPCcards" HorizontalAlignment="Left" Margin="494,449,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_6"/>
-            <Button Content="Flop"        HorizontalAlignment="Left" Margin="494,389,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_7"/>
-            <Button Content="CalculateHand"        HorizontalAlignment="Left" Margin="494,370,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_8"/>
-            <Button Content="Eerste inzetronde" HorizontalAlignment="Left" Margin="494,351,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_9"/>
+            <Button Content="Start" HorizontalAlignment="Left" Margin="510,400,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+            <Button Content="player in" HorizontalAlignment="Left" Margin="510,419,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
         </Grid>
     </Grid>
 
