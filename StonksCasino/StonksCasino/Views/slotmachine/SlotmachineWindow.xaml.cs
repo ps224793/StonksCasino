@@ -194,6 +194,7 @@ namespace StonksCasino.Views.slotmachine
             accountrefresh();
             Beurt++;
             Check();
+            //100 fishes er bij
         }
         private void Verlagen_Click(object sender, RoutedEventArgs e)
         {
@@ -201,6 +202,7 @@ namespace StonksCasino.Views.slotmachine
             accountrefresh();
             Beurt--;
             Check();
+            //100 fishes er af
         }
 
         private Slotmachine _slotmachine = new Slotmachine();
@@ -277,6 +279,7 @@ namespace StonksCasino.Views.slotmachine
             if (winnings>0)
             {
                 MessageBox.Show($"u heeft {winnings} gewonnen");
+                //Het aantal gewonnen fishes moet worden toegevoegd
             }
             Check();
         }
