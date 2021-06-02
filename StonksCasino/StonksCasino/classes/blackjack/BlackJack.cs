@@ -1,4 +1,5 @@
-﻿using StonksCasino.classes.Main;
+﻿using StonksCasino.classes.Api;
+using StonksCasino.classes.Main;
 using StonksCasino.enums.card;
 using System;
 using System.Collections.Generic;
@@ -112,7 +113,6 @@ namespace StonksCasino.classes.blackjack
             {
                 if (MyAantal > 0)
                 {
-                    DataTable data = Database.Tokensremove(MyAantal);
                     SetPlayerHand(Players[0]);
                     Deals = false;
                     Tokendrop = false;
@@ -146,7 +146,7 @@ namespace StonksCasino.classes.blackjack
 
         public void Dubbelen()
         {
-            DataTable data = Database.Tokensremove(MyAantal);
+            ApiWrapper.UpdateTokens(-MyAantal).Wait();
             Dubbel = false;
             MyAantal = MyAantal * 2;
             MessageBox.Show($"Het aantal Tokens is verdubbeld naar: { MyAantal }");
@@ -177,12 +177,12 @@ namespace StonksCasino.classes.blackjack
 
         public void Gamewin()
         {
-            DataTable data = Database.Tokensadd(MyAantal * 2);
+            ApiWrapper.UpdateTokens(MyAantal * 2).Wait();
         }
 
         public void Gamedraw()
         {
-            DataTable data = Database.Tokensadd(MyAantal);
+            ApiWrapper.UpdateTokens(MyAantal).Wait();
         }
 
         public void Gameclear()

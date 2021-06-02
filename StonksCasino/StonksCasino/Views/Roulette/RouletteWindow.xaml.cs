@@ -16,6 +16,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using StonksCasino.classes.Api;
 using StonksCasino.classes.Main;
 using StonksCasino.classes.Roulette;
 using StonksCasino.Views.main;
@@ -28,14 +29,6 @@ namespace StonksCasino.Views.Roulette
     public partial class RouletteWindow : Window, INotifyPropertyChanged
     {
         private Bettingtable _bettingtable = new Bettingtable();
-
-        private Database _database = new Database();
-
-        public Database MyDatabase
-        {
-            get { return _database; }
-            set { _database = value; }
-        }
 
         int _betAmount;
 
@@ -87,12 +80,10 @@ namespace StonksCasino.Views.Roulette
         bool _display = true;
         DispatcherTimer _timerbet = new DispatcherTimer();
         DispatcherTimer _timerdisplay = new DispatcherTimer();
-        public User user { get; set; }
 
-        public RouletteWindow(User user)
+        public RouletteWindow()
         {
             
-            this.user = user;
             Account();
             DataContext = this;
             configTimer();
@@ -105,40 +96,29 @@ namespace StonksCasino.Views.Roulette
 
         private void Account()
         {
-            DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["token"];
-            user.MyTokens = _Tokens;
  
 
         }
-        private bool Checkingelogd()
+        private async Task<bool> Checkingelogd()
         {
-            DataTable dataTable = Database.Accounts();
-            long Time = (long)dataTable.Rows[0]["timestamp"];
-            if (Time != Properties.Settings.Default.Timestamp)
+            bool result =  await ApiWrapper.CheckLogin();
+            
+            if (!result)
             {
-
-               
-                if (_Spinning == false)
-                {
-                    DataTable data = Database.Tokensadd(MyAmount.MyTotalinzet);
-                }
                 StonksCasino.Properties.Settings.Default.Username = "";
                 StonksCasino.Properties.Settings.Default.Password = "";
                 StonksCasino.Properties.Settings.Default.Save();
                 MyAmount.MyTotalinzet = 0;
-                _database.MyUsername = "";
-                _database.MyPassword = "";
-
+                User.Username = "";
+                User.Tokens = 0;
 
                 MainWindow window = new MainWindow();
-
-                this.Hide();
+                                
                 MessageBox.Show("Er is door iemand anders ingelogd op het account waar u momenteel op speelt. Hierdoor wordt u uitgelogd");
+                this.Close();
                 window.Show();
 
                 return false;
-
             }
             return true;
         }
@@ -175,9 +155,9 @@ namespace StonksCasino.Views.Roulette
             _value++;
         }
 
-        private void BtnPlay_Click(object sender, RoutedEventArgs e)
+        private async void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-            bool ingelogd = Checkingelogd();
+            bool ingelogd = await Checkingelogd();
             if (ingelogd)
             {
                 _timerbet.Start();
@@ -235,14 +215,14 @@ namespace StonksCasino.Views.Roulette
             }
         }
 
-        private void Storyboard2_Completed(object sender, EventArgs e)
+        private async void Storyboard2_Completed(object sender, EventArgs e)
         {
             int totelwin = MyBettingTable.Checkwin(_Finalnumber);
             MyAmount.MyTotalinzet = 0;
             if (totelwin > 0)
             {
                 MessageBox.Show("Gefeliciteerd u hebt € " + totelwin.ToString() + " Gewonnen");
-                DataTable data = Database.Tokensadd(totelwin);
+                await ApiWrapper.UpdateTokens(totelwin);
 
             }
             _display = false;
@@ -252,9 +232,9 @@ namespace StonksCasino.Views.Roulette
             _Spinning = false;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            bool ingelogd = Checkingelogd();
+            bool ingelogd = await Checkingelogd();
             if (ingelogd)
             {
                 if (_display == false)
@@ -276,7 +256,7 @@ namespace StonksCasino.Views.Roulette
                             MyAmount.Addtotal(_betAmount);
                             Button bt = sender as Button;
                             ((Bet)bt.Tag).SetBet(_betAmount);
-                            DataTable data = Database.Tokensremove(_betAmount);
+                            await ApiWrapper.UpdateTokens(_betAmount);
                             Account();
                         }
                         else
@@ -328,9 +308,9 @@ namespace StonksCasino.Views.Roulette
 
 
 
-        private void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private async void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            bool ingelogd = Checkingelogd();
+            bool ingelogd = await Checkingelogd();
             if (ingelogd) {
                 if (_canbet)
                 {
@@ -353,9 +333,9 @@ namespace StonksCasino.Views.Roulette
             }
         }
 
-        private void Fiche_TextChanged(object sender, TextChangedEventArgs e)
+        private async void Fiche_TextChanged(object sender, TextChangedEventArgs e)
         {
-            bool ingelogd = Checkingelogd();
+            bool ingelogd = await Checkingelogd();
             if (ingelogd)
             {
                 TextBox text = sender as TextBox;
@@ -420,18 +400,18 @@ namespace StonksCasino.Views.Roulette
             return input.All(c => Char.IsDigit(c) || Char.IsControl(c));
         }
 
-        private void plus_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private async void plus_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            bool ingelogd = Checkingelogd();
+            bool ingelogd = await Checkingelogd();
             if (ingelogd)
             {
                 MyAmount.Plusinzet();
             }
         }
 
-        private void min_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private async void min_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            bool ingelogd = Checkingelogd();
+            bool ingelogd = await Checkingelogd();
             if (ingelogd)
             {
                 if (_betAmount > 0)
@@ -441,7 +421,7 @@ namespace StonksCasino.Views.Roulette
             }
         }
 
-        private void Window_Closing(object sender, CancelEventArgs e)
+        private async void Window_Closing(object sender, CancelEventArgs e)
         {
             if (_Spinning)
             {
@@ -472,7 +452,7 @@ namespace StonksCasino.Views.Roulette
                     MessageBoxResult Leave = MessageBox.Show("U heeft geld ingezet. Als u nu de applicatie afsluit worden uw fiches wel teruggegeven", "Weet u zeker dat u wil weggaan?", MessageBoxButton.OKCancel);
                     if (Leave == MessageBoxResult.OK)
                     {
-                        DataTable data = Database.Tokensadd(MyAmount.MyTotalinzet);
+                        await ApiWrapper.UpdateTokens(MyAmount.MyTotalinzet);
                     
                         Account();
                

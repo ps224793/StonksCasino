@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using StonksCasino.classes.Api;
 using StonksCasino.classes.blackjack;
 using StonksCasino.classes.Main;
 using StonksCasino.Views.main;
@@ -42,7 +43,6 @@ namespace StonksCasino.Views.blackjack
         }
 
         private BlackjackDeck deck = new BlackjackDeck();
-        public User User { get; set; }
 
         private BlackJack _game;
 
@@ -50,13 +50,6 @@ namespace StonksCasino.Views.blackjack
         {
             get { return _game; }
             set { _game = value; OnPropertyChanged(); }
-        }
-        private Database _database = new Database();
-
-        public Database MyDatabase
-        {
-            get { return _database; }
-            set { _database = value; }
         }
 
         private Computers _player;
@@ -83,56 +76,24 @@ namespace StonksCasino.Views.blackjack
             set { _computer2 = value; OnPropertyChanged(); }
         }
 
-
-        public User user { get; set; }
         int _Tokens;
 
         DispatcherTimer computertimer = new DispatcherTimer();
 
-        public BlackjackWindow(User user)
+        public BlackjackWindow()
         {
             BlackjackWindowRestart();          
-            this.user = user;
             DataContext = this;
-            Account();
+            ApiWrapper.GetUserInfo().Wait();
             InitializeComponent();
 
             computertimer.Interval = TimeSpan.FromMilliseconds(1);
             computertimer.Tick += computertimer_Tick;
         }
 
-        private void Account()
-        {
-            DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["token"];
-            user.MyTokens = _Tokens;
 
-        }
+            
 
-
-        private bool Checkingelogd()
-        {
-            DataTable dataTable = Database.Accounts();
-            long Time = (long)dataTable.Rows[0]["timestamp"];
-            if (Time != Properties.Settings.Default.Timestamp)
-            {
-                MessageBox.Show("Er is door iemand anders ingelogd op het account waar u momenteel op speelt. Hierdoor wordt u uitgelogd");
-                StonksCasino.Properties.Settings.Default.Username = "";
-                StonksCasino.Properties.Settings.Default.Password = "";
-                StonksCasino.Properties.Settings.Default.Save();
-                _database.MyUsername = "";
-                _database.MyPassword = "";
-
-
-                MainWindow window = new MainWindow();
-
-                this.Hide();
-                window.Show();
-                return false;
-
-            }
-            return true;
-        }
 
         private void Bibliotheek_Click(object sender, EventArgs e)
         {
@@ -164,45 +125,50 @@ namespace StonksCasino.Views.blackjack
             set { _computers = value; OnPropertyChanged(); }
         }
 
-        public void Deal_click(object sender, RoutedEventArgs e)
+        public async void Deal_click(object sender, RoutedEventArgs e)
         {
-           bool ingelogd = Checkingelogd();
-            if (ingelogd)
+
+            int MyAantal = Game.MyAantal;
+            if (MyAantal <= _Tokens && MyAantal > 0)
             {
-                int MyAantal = Game.MyAantal;
-                if (MyAantal <= _Tokens)
+                bool result = await ApiWrapper.UpdateTokens(MyAantal * -1);
+                if (result)
                 {
                     Game.Deal();
-                    Account();
+                    ApiWrapper.GetUserInfo().Wait();
                 }
                 else
                 {
-                    MessageBox.Show("U heeft niet genoeg tokens om te kunnen spelen!");
+                    MessageBox.Show("Er is ergens anders met dit account ingelogd. U wordt nu uitgelogd.");
+                    this.Close();
                 }
             }
+            else
+            {
+                MessageBox.Show("U heeft niet genoeg tokens om te kunnen spelen!");
+            }
+
           
         }
 
         private void Hit_Click(object sender, RoutedEventArgs e)
         {
-            bool ingelogd = Checkingelogd();
-            if (ingelogd)
-            {
-                Game.Hits();
-                int Player = Game.Players[0].Score;
 
-                if (Player > 21)
-                {
-                    Game.Stands();
-                    ComputerGame.ComputerDeal(Player);
-                    Endresult();
-                }
+            Game.Hits();
+            int Player = Game.Players[0].Score;
+
+            if (Player > 21)
+            {
+                Game.Stands();
+                ComputerGame.ComputerDeal(Player);
+                Endresult();
             }
+
         }
 
-        private void Dubbelen_Click(object sender, RoutedEventArgs e)
+        private async void Dubbelen_Click(object sender, RoutedEventArgs e)
         {
-            bool ingelogd = Checkingelogd();
+            bool ingelogd = await Checkingelogd();
             if (ingelogd)
             {
                 int MyAantal = Game.MyAantal;
@@ -210,7 +176,7 @@ namespace StonksCasino.Views.blackjack
                 {
                     Game.Dubbelen();
                     Game.Hits();
-                    Account();
+                    ApiWrapper.GetUserInfo().Wait();
                     int Player = Game.Players[0].Score;
                     if (Player > 21)
                     {
@@ -227,19 +193,19 @@ namespace StonksCasino.Views.blackjack
             }
         }
 
-        private void Splitten_Click(object sender, RoutedEventArgs e)
+        private async void Splitten_Click(object sender, RoutedEventArgs e)
         {
-            bool ingelogd = Checkingelogd();
+            bool ingelogd = await Checkingelogd();
             if (ingelogd)
             {
                 Game.Splitte();
-                Account();
+                ApiWrapper.GetUserInfo().Wait();
             }
         }
 
-        private void Stand_Click(object sender, RoutedEventArgs e)
+        private async void Stand_Click(object sender, RoutedEventArgs e)
         {
-            bool ingelogd = Checkingelogd();
+            bool ingelogd = await Checkingelogd();
             if (ingelogd)
             {
                 int Player = Game.Players[0].Score;
@@ -295,7 +261,7 @@ namespace StonksCasino.Views.blackjack
                 }
                 Game.Gameclear();
                 ComputerGame.GameclearComputer();
-                Account();
+                ApiWrapper.GetUserInfo().Wait();
                 BlackjackWindowRestart();
 
             }
@@ -321,6 +287,29 @@ namespace StonksCasino.Views.blackjack
                 }
 
             }
+        }
+
+        private async Task<bool> Checkingelogd()
+        {
+            bool result = await ApiWrapper.CheckLogin();
+
+            if (!result)
+            {
+                StonksCasino.Properties.Settings.Default.Username = "";
+                StonksCasino.Properties.Settings.Default.Password = "";
+                StonksCasino.Properties.Settings.Default.Save();
+                User.Username = "";
+                User.Tokens = 0;
+
+                MainWindow window = new MainWindow();
+
+                MessageBox.Show("Er is door iemand anders ingelogd op het account waar u momenteel op speelt. Hierdoor wordt u uitgelogd");
+                this.Close();
+                window.Show();
+
+                return false;
+            }
+            return true;
         }
     }
 }

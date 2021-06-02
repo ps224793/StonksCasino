@@ -50,30 +50,13 @@ namespace StonksCasino.Views.poker
 
         int _Tokens;
 
-        private Database _database = new Database();
 
-        public Database MyDatabase
+        public PokerWindow()
         {
-            get { return _database; }
-            set { _database = value; }
-        }
-
-        public User user { get; set; }
-
-        public PokerWindow(User user)
-        {
-            this.user = user;
-            Game = new PokerGame(user);
+            Game = new PokerGame();
             DataContext = this;
             InitializeComponent();
             Game.sbSetup();
-        }
-
-        private void Account()
-        {
-            DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["token"];
-            user.MyTokens = _Tokens;
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)

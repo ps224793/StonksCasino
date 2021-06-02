@@ -16,6 +16,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using StonksCasino.classes.Api;
 using StonksCasino.classes.blackjack;
 using StonksCasino.classes.Main;
 using StonksCasino.classes.Roulette;
@@ -35,28 +36,15 @@ namespace StonksCasino.Views.slotmachine
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        private Database _database = new Database();
-
-        public Database MyDatabase
+       
+        private async void accountrefresh()
         {
-            get { return _database; }
-            set { _database = value; }
-        }
-        private void accountrefresh()
-        {
-            DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["Token"];
-            user.MyTokens = _Tokens;
-            long Time = (long)dataTable.Rows[0]["Timestamp"];
-            if (Time != Properties.Settings.Default.Timestamp)
+            bool result =await ApiWrapper.GetUserInfo();
+            if (result)
             {
-                _database.MyLogout = false;
                 Application.Current.Shutdown();
             }
         }
-
-        public User user { get; set; }
-        public User User { get; set; }
 
         int _Tokens;
 
@@ -95,13 +83,13 @@ namespace StonksCasino.Views.slotmachine
         }
 
 
-        public SlotmachineWindow(User user)
+        public SlotmachineWindow()
         {
             DataContext = this;
             InitializeComponent();
-            this.user = user;
-           
-            Account();
+
+
+            accountrefresh();
 
             computertimer.Interval = TimeSpan.FromMilliseconds(1);
             computertimer.Tick += computertimer_Tick;
@@ -112,13 +100,6 @@ namespace StonksCasino.Views.slotmachine
         private void computertimer_Tick(object sender, EventArgs e)
         {
             computertimer.Stop();
-        }
-
-        private void Account()
-        {
-            DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["Token"];
-            user.MyTokens = _Tokens;
         }
 
         private void Bibliotheek_Click(object sender, EventArgs e)
@@ -188,17 +169,17 @@ namespace StonksCasino.Views.slotmachine
             }
         }
 
-        public void Verhogen_Click(object sender, RoutedEventArgs e)
+        public async void Verhogen_Click(object sender, RoutedEventArgs e)
         {
-            DataTable data = Database.Tokensremove(100);
+            await ApiWrapper.UpdateTokens(-100);
             accountrefresh();
             Beurt++;
             Check();
             //100 fishes er bij
         }
-        private void Verlagen_Click(object sender, RoutedEventArgs e)
+        private async void Verlagen_Click(object sender, RoutedEventArgs e)
         {
-            DataTable data = Database.Tokensadd(100);
+            await ApiWrapper.UpdateTokens(100);
             accountrefresh();
             Beurt--;
             Check();

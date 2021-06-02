@@ -1,4 +1,5 @@
-﻿using StonksCasino.classes.HorseRace;
+﻿using StonksCasino.classes.Api;
+using StonksCasino.classes.HorseRace;
 using StonksCasino.classes.Main;
 using StonksCasino.Views.main;
 using System;
@@ -109,14 +110,10 @@ namespace StonksCasino.Views.horserace
 
         int _Tokens;
 
-        public User User { get; set; }
 
-        public User user { get; set; }
-
-        public horseracewindow(User user)
+        public horseracewindow()
         {
             InitializeComponent();
-            this.user = user;
             Game = new HorseGame();
             DataContext = this;
             Account();
@@ -125,11 +122,13 @@ namespace StonksCasino.Views.horserace
             HorseTimers();
         }
 
-        private void Account()
+        private async void Account()
         {
-            DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["token"];
-            user.MyTokens = _Tokens;
+            bool result = await ApiWrapper.GetUserInfo();
+            if (result)
+            {
+                Application.Current.Shutdown();
+            }
         }
 
         private void Bibliotheek_Click(object sender, EventArgs e)
