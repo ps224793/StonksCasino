@@ -98,9 +98,8 @@ namespace StonksCasino
                 if (result == "succes")
                 {
                     LibraryWindow libraryWindow = new LibraryWindow();
-                    this.Hide();
+                    this.Close();
                     libraryWindow.ShowDialog();
-                    this.Show();
                 }
             }
             catch

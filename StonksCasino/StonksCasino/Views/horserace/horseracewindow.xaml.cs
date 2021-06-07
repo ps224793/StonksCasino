@@ -102,6 +102,8 @@ namespace StonksCasino.Views.horserace
             get { return User.Tokens; }
         }
 
+        private bool back2Library = false;
+
         DispatcherTimer HorseTimer = new DispatcherTimer();
 
         Random rndhorsenumber = new Random();
@@ -132,9 +134,9 @@ namespace StonksCasino.Views.horserace
 
         private void Bibliotheek_Click(object sender, EventArgs e)
         {
-            LibraryWindow library = new LibraryWindow();
+            back2Library = true;
             this.Close();
-            library.Show();
+
         }
 
         public void Horse1_Click(object sender, RoutedEventArgs e)
@@ -466,12 +468,12 @@ namespace StonksCasino.Views.horserace
             controller4.Play();
         }
 
-        private void Uitloggen_Click(object sender, RoutedEventArgs e)
+        private async void Uitloggen_Click(object sender, RoutedEventArgs e)
         {
             StonksCasino.Properties.Settings.Default.Username = "";
             StonksCasino.Properties.Settings.Default.Password = "";
             StonksCasino.Properties.Settings.Default.Save();
-            ApiWrapper.Logout();
+            await ApiWrapper.Logout();
             User.Username = "";
             User.Tokens = 0;
 
@@ -490,6 +492,22 @@ namespace StonksCasino.Views.horserace
             if (!result)
             {
                 Application.Current.Shutdown();
+            }
+        }
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (this.IsActive == true && !back2Library)
+            {
+                MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
+                if (leaving == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else if (leaving == MessageBoxResult.Yes)
+                {
+                    Application.Current.Shutdown();
+
+                }
             }
         }
     }

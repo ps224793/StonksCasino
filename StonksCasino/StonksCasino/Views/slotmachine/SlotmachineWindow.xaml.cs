@@ -47,6 +47,7 @@ namespace StonksCasino.Views.slotmachine
             get { return User.Tokens; }
         }
 
+        private bool back2Library = false;
 
         DispatcherTimer computertimer = new DispatcherTimer();
 
@@ -102,15 +103,15 @@ namespace StonksCasino.Views.slotmachine
         private void Bibliotheek_Click(object sender, EventArgs e)
         {
 
-            LibraryWindow library = new LibraryWindow();
-            this.Hide();
-            library.Show();
+            back2Library = true;
+            this.Close();
+
 
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            if (this.IsActive == true)
+            if (this.IsActive == true && !back2Library)
             {
                 MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
                 if (leaving == MessageBoxResult.No)

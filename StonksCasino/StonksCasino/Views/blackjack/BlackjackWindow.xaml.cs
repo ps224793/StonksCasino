@@ -34,6 +34,8 @@ namespace StonksCasino.Views.blackjack
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        private bool back2Library = false;
+
         private CardBlackjack _cardturned;
 
         public CardBlackjack Mycardturned
@@ -115,13 +117,11 @@ namespace StonksCasino.Views.blackjack
                 Application.Current.Shutdown();
             }
         }
+
         private void Bibliotheek_Click(object sender, EventArgs e)
         {
-            
-            LibraryWindow library = new LibraryWindow();
-            this.Hide();
-            library.Show();
-           
+            back2Library = true;
+            this.Close();       
         }
 
         private void BlackjackWindowRestart()
@@ -297,7 +297,7 @@ namespace StonksCasino.Views.blackjack
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            if (this.IsActive == true)
+            if (this.IsActive == true && !back2Library)
             {
                 MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
                 if (leaving == MessageBoxResult.No)
@@ -306,11 +306,9 @@ namespace StonksCasino.Views.blackjack
                 }
                 else if (leaving == MessageBoxResult.Yes)
                 {
-                    ApiWrapper.Logout();
                    Application.Current.Shutdown();
                  
                 }
-
             }
         }
 
@@ -337,20 +335,16 @@ namespace StonksCasino.Views.blackjack
             return true;
         }
 
-        private void Uitloggen_Click(object sender, RoutedEventArgs e)
+        private async void Uitloggen_Click(object sender, RoutedEventArgs e)
         {
             StonksCasino.Properties.Settings.Default.Username = "";
             StonksCasino.Properties.Settings.Default.Password = "";
             StonksCasino.Properties.Settings.Default.Save();
-            ApiWrapper.Logout();
+            await ApiWrapper.Logout();
             User.Username = "";
             User.Tokens = 0;
 
-
-            MainWindow window = new MainWindow();
-
             this.Close();
-            window.Show();
         }
     }
 }

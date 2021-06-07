@@ -457,7 +457,7 @@ namespace StonksCasino.Views.Roulette
                     {
                         if (!_toLibrary)
                         {
-                            ApiWrapper.Logout();
+                            await ApiWrapper.Logout();
                             Application.Current.Shutdown();
                         }
                     }
@@ -476,7 +476,7 @@ namespace StonksCasino.Views.Roulette
 
                         if (!_toLibrary)
                         {
-                            ApiWrapper.Logout();
+                            await ApiWrapper.Logout();
                             Application.Current.Shutdown();
                         }
 
@@ -499,7 +499,7 @@ namespace StonksCasino.Views.Roulette
                         {
                             if (!_toLibrary)
                             {
-                                ApiWrapper.Logout();
+                                await ApiWrapper.Logout();
                                 Application.Current.Shutdown();
                             }
 
@@ -515,17 +515,15 @@ namespace StonksCasino.Views.Roulette
         private void btnBibliotheek_Click(object sender, RoutedEventArgs e)
         {
             _toLibrary = true;
-            LibraryWindow library = new LibraryWindow();
             this.Close();
-            library.Show();
         }
 
-        private void Uitloggen_Click(object sender, RoutedEventArgs e)
+        private async void Uitloggen_Click(object sender, RoutedEventArgs e)
         {
             StonksCasino.Properties.Settings.Default.Username = "";
             StonksCasino.Properties.Settings.Default.Password = "";
             StonksCasino.Properties.Settings.Default.Save();
-            ApiWrapper.Logout();
+            await ApiWrapper.Logout();
             User.Username = "";
             User.Tokens = 0;
 
