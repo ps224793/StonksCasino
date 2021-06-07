@@ -75,8 +75,8 @@ namespace StonksCasino.Views.main
             Account();
             RouletteWindow roulette = new RouletteWindow();
             this.Hide();
-            roulette.Show();
-      
+            roulette.ShowDialog();
+            this.Show();
         }
 
         private void Blackjack_click(object sender, RoutedEventArgs e)
@@ -94,7 +94,8 @@ namespace StonksCasino.Views.main
             Account();
             BlackjackWindow blackjack = new BlackjackWindow();
             this.Hide();
-            blackjack.Show();
+            blackjack.ShowDialog();
+            this.Show();
            
         }
 
@@ -113,8 +114,9 @@ namespace StonksCasino.Views.main
             Account();
             PokerWindow roulette = new PokerWindow();
             this.Hide();
-            roulette.Show();
-           
+            roulette.ShowDialog();
+            this.Show();
+
         }
 
         private void SlotMachine_click(object sender, RoutedEventArgs e)
@@ -132,7 +134,8 @@ namespace StonksCasino.Views.main
             Account();
             SlotmachineWindow roulette = new SlotmachineWindow();
             this.Hide();
-            roulette.Show();
+            roulette.ShowDialog();
+            this.Show();
         }
 
 
@@ -151,28 +154,28 @@ namespace StonksCasino.Views.main
             Account();
             horseracewindow horserace = new horseracewindow();
             this.Hide();
-            horserace.Show();
+            horserace.ShowDialog();
+            this.Show();
         }
 
 
 
-        private void Window_Closed(object sender, EventArgs e)
+        private async void Window_Closed(object sender, EventArgs e)
         {
-            ApiWrapper.Logout();
+
+            await ApiWrapper.Logout();
         }
 
-        private void Uitloggen_Click(object sender, RoutedEventArgs e)
+        private async void Uitloggen_Click(object sender, RoutedEventArgs e)
         {
             StonksCasino.Properties.Settings.Default.Username = "";
             StonksCasino.Properties.Settings.Default.Password = "";
             StonksCasino.Properties.Settings.Default.Save();
-            ApiWrapper.Logout();
+            await ApiWrapper.Logout();
             User.Username = "";
             User.Tokens = 0;
 
-
             MainWindow window = new MainWindow();
-        
             this.Close();
             window.Show();
         }

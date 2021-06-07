@@ -40,7 +40,7 @@ namespace StonksCasino.classes.Api
             return loginResult.Result;
         }
 
-        public static async void Logout()
+        public static async Task<bool> Logout()
         {
             string baseUri = @"https://stonkscasino.nl/api/Logout.php";
             Uri request = new Uri(baseUri);
@@ -51,7 +51,7 @@ namespace StonksCasino.classes.Api
             ApiAccessToken apiToken = new ApiAccessToken();
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(apiToken), Encoding.UTF8, "application/json");
             HttpResponseMessage respons = await client.PostAsync(request, httpContent);
-
+            return true;
         }
 
         public static async Task<bool> GetUserInfo()
@@ -77,7 +77,7 @@ namespace StonksCasino.classes.Api
                 }
                 else
                 {
-                    Logout();
+                    await Logout();
                     return false;
                 }
             }
@@ -109,7 +109,7 @@ namespace StonksCasino.classes.Api
             }
             else
             {
-                Logout();
+                await Logout();
                 return false;
             }
         }
