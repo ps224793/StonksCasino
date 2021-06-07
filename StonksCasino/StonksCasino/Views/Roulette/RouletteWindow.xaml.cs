@@ -28,6 +28,25 @@ namespace StonksCasino.Views.Roulette
     /// </summary>
     public partial class RouletteWindow : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public string Username 
+        {
+            get { return User.Username; }
+        }
+
+        public int Tokens 
+        { 
+            get { return User.Tokens; }
+        }
+
+        private bool _toLibrary = false;
+
         private Bettingtable _bettingtable = new Bettingtable();
 
         int _betAmount;
@@ -50,12 +69,7 @@ namespace StonksCasino.Views.Roulette
 
         bool _Spinning = false;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
+        
 
         private double _angle = 0;
 
@@ -74,7 +88,7 @@ namespace StonksCasino.Views.Roulette
         }
         int _value = 0;
         int _Finalnumber;
-        int _Tokens;
+        
         int _valuedisplay;
         bool _canbet = true;
         bool _display = true;
@@ -94,10 +108,15 @@ namespace StonksCasino.Views.Roulette
         }
 
 
-        private void Account()
+        private async void Account()
         {
- 
-
+            bool result = await ApiWrapper.GetUserInfo();
+            OnPropertyChanged("Username");
+            OnPropertyChanged("Tokens");
+            if (!result)
+            {
+                Application.Current.Shutdown();
+            }
         }
         private async Task<bool> Checkingelogd()
         {
@@ -251,12 +270,12 @@ namespace StonksCasino.Views.Roulette
                     if (_betAmount > 0)
                     {
 
-                        if (_Tokens >= _betAmount)
+                        if (User.Tokens >= _betAmount)
                         {
                             MyAmount.Addtotal(_betAmount);
                             Button bt = sender as Button;
                             ((Bet)bt.Tag).SetBet(_betAmount);
-                            await ApiWrapper.UpdateTokens(_betAmount);
+                            await ApiWrapper.UpdateTokens(-_betAmount);
                             Account();
                         }
                         else
@@ -426,8 +445,9 @@ namespace StonksCasino.Views.Roulette
             if (_Spinning)
             {
                
-                if (MyAmount.MyTotalinzet > 0)
+                if (MyAmount.MyTotalinzet > 0 )
                 {
+                    
                     MessageBoxResult spinning = MessageBox.Show("De roulette tafel is aan het draaien. Als u nu de applicatie afsluit dan bent u uw ingezetten fiches kwijt", "Weet u zeker dat u wil weggaan?", MessageBoxButton.OKCancel);
                     if (spinning == MessageBoxResult.Cancel)
                     {
@@ -435,14 +455,12 @@ namespace StonksCasino.Views.Roulette
                     }
                     else if (spinning == MessageBoxResult.OK)
                     {
-                        Application.Current.Shutdown();
-                       
-
+                        if (!_toLibrary)
+                        {
+                            ApiWrapper.Logout();
+                            Application.Current.Shutdown();
+                        }
                     }
-
-
-
-
                 }
             }
         
@@ -455,21 +473,22 @@ namespace StonksCasino.Views.Roulette
                         await ApiWrapper.UpdateTokens(MyAmount.MyTotalinzet);
                     
                         Account();
-               
-                        Application.Current.Shutdown();
-                       
+
+                        if (!_toLibrary)
+                        {
+                            ApiWrapper.Logout();
+                            Application.Current.Shutdown();
+                        }
+
                     }
                     else
                     {
                         e.Cancel = true;
                     }
-
-
-
                 }
                 else
                 {
-                    if (this.IsActive == true)
+                    if (this.IsActive == true && ! _toLibrary)
                     {
                         MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
                         if (leaving == MessageBoxResult.No)
@@ -478,8 +497,12 @@ namespace StonksCasino.Views.Roulette
                         }
                         else if (leaving == MessageBoxResult.Yes)
                         {
-                            Application.Current.Shutdown();
-                          
+                            if (!_toLibrary)
+                            {
+                                ApiWrapper.Logout();
+                                Application.Current.Shutdown();
+                            }
+
                         }
                         
                     }
@@ -491,9 +514,26 @@ namespace StonksCasino.Views.Roulette
 
         private void btnBibliotheek_Click(object sender, RoutedEventArgs e)
         {
+            _toLibrary = true;
             LibraryWindow library = new LibraryWindow();
-            this.Hide();
+            this.Close();
             library.Show();
+        }
+
+        private void Uitloggen_Click(object sender, RoutedEventArgs e)
+        {
+            StonksCasino.Properties.Settings.Default.Username = "";
+            StonksCasino.Properties.Settings.Default.Password = "";
+            StonksCasino.Properties.Settings.Default.Save();
+            ApiWrapper.Logout();
+            User.Username = "";
+            User.Tokens = 0;
+
+
+            MainWindow window = new MainWindow();
+
+            this.Close();
+            window.Show();
         }
     }
     }

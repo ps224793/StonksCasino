@@ -19,15 +19,29 @@ using StonksCasino.Views.poker;
 using StonksCasino.Views.slotmachine;
 using StonksCasino.Views.horserace;
 using StonksCasino.classes.Api;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace StonksCasino.Views.main
 {
-    /// <summary>
-    /// Interaction logic for LibraryWindow.xaml
-    /// </summary>
-    public partial class LibraryWindow : Window
+    public partial class LibraryWindow : Window, INotifyPropertyChanged
     {
-        int _Tokens;
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public string Username 
+        {
+            get { return User.Username; }
+        }
+
+        public int Tokens 
+        {
+            get { return User.Tokens; }
+        }
+
 
         public LibraryWindow()
         {
@@ -37,9 +51,10 @@ namespace StonksCasino.Views.main
         }
         private async void Account()
         {
-            bool Apicall = await ApiWrapper.GetUserInfo();
-
-            if(!Apicall)
+            bool result = await ApiWrapper.GetUserInfo();
+            OnPropertyChanged("Username");
+            OnPropertyChanged("Tokens");
+            if(!result)
             {
                 Application.Current.Shutdown();
             }
@@ -146,35 +161,25 @@ namespace StonksCasino.Views.main
             ApiWrapper.Logout();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            
-            if (this.IsActive == true)          
-                {
-                MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
-                if (leaving == MessageBoxResult.No)
-                {
-                    e.Cancel = true;
-                }
-                else if (leaving == MessageBoxResult.Yes)
-                {
-                    
-                    Application.Current.Shutdown();
-                    
-                }
-
-            }
-        }
-
         private void Uitloggen_Click(object sender, RoutedEventArgs e)
         {
+            StonksCasino.Properties.Settings.Default.Username = "";
+            StonksCasino.Properties.Settings.Default.Password = "";
+            StonksCasino.Properties.Settings.Default.Save();
             ApiWrapper.Logout();
             User.Username = "";
             User.Tokens = 0;
+
+
             MainWindow window = new MainWindow();
         
             this.Close();
             window.Show();
+        }
+
+        private void btnBibliotheek_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

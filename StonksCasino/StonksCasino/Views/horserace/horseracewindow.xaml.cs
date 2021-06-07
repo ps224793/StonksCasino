@@ -92,6 +92,16 @@ namespace StonksCasino.Views.horserace
             set { _actiontime = value; OnPropertyChanged(); }
         }
 
+        public string Username
+        {
+            get { return User.Username; }
+        }
+
+        public int Tokens
+        {
+            get { return User.Tokens; }
+        }
+
         DispatcherTimer HorseTimer = new DispatcherTimer();
 
         Random rndhorsenumber = new Random();
@@ -108,8 +118,6 @@ namespace StonksCasino.Views.horserace
 
         int HorseChosen = 0;
 
-        int _Tokens;
-
 
         public horseracewindow()
         {
@@ -122,19 +130,10 @@ namespace StonksCasino.Views.horserace
             HorseTimers();
         }
 
-        private async void Account()
-        {
-            bool result = await ApiWrapper.GetUserInfo();
-            if (result)
-            {
-                Application.Current.Shutdown();
-            }
-        }
-
         private void Bibliotheek_Click(object sender, EventArgs e)
         {
             LibraryWindow library = new LibraryWindow();
-            this.Hide();
+            this.Close();
             library.Show();
         }
 
@@ -465,6 +464,33 @@ namespace StonksCasino.Views.horserace
 
             Animator controller4 = AnimationBehavior.GetAnimator(horseGif4);
             controller4.Play();
+        }
+
+        private void Uitloggen_Click(object sender, RoutedEventArgs e)
+        {
+            StonksCasino.Properties.Settings.Default.Username = "";
+            StonksCasino.Properties.Settings.Default.Password = "";
+            StonksCasino.Properties.Settings.Default.Save();
+            ApiWrapper.Logout();
+            User.Username = "";
+            User.Tokens = 0;
+
+
+            MainWindow window = new MainWindow();
+
+            this.Close();
+            window.Show();
+        }
+
+        private async void Account()
+        {
+            bool result = await ApiWrapper.GetUserInfo();
+            OnPropertyChanged("Username");
+            OnPropertyChanged("Tokens");
+            if (!result)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }

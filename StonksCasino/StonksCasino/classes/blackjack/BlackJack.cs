@@ -144,9 +144,9 @@ namespace StonksCasino.classes.blackjack
         }
 
 
-        public void Dubbelen()
+        public async void Dubbelen()
         {
-            ApiWrapper.UpdateTokens(-MyAantal).Wait();
+            await ApiWrapper.UpdateTokens(-MyAantal);
             Dubbel = false;
             MyAantal = MyAantal * 2;
             MessageBox.Show($"Het aantal Tokens is verdubbeld naar: { MyAantal }");
@@ -175,14 +175,14 @@ namespace StonksCasino.classes.blackjack
             Tokendrop = true;
         }
 
-        public void Gamewin()
+        public async void Gamewin()
         {
-            ApiWrapper.UpdateTokens(MyAantal * 2).Wait();
+            await ApiWrapper.UpdateTokens(MyAantal * 2);
         }
 
-        public void Gamedraw()
+        public async void Gamedraw()
         {
-            ApiWrapper.UpdateTokens(MyAantal).Wait();
+            await ApiWrapper.UpdateTokens(MyAantal);
         }
 
         public void Gameclear()

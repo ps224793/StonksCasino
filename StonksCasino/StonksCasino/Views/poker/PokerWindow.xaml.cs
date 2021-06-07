@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Animation;
 using System.Data;
+using StonksCasino.classes.Api;
 
 namespace StonksCasino.Views.poker
 {
@@ -48,7 +49,15 @@ namespace StonksCasino.Views.poker
             set { _cardWidth = value; OnPropertyChanged(); }
         }
 
-        int _Tokens;
+        public string Username
+        {
+            get { return User.Username; }
+        }
+
+        public int Tokens
+        {
+            get { return User.Tokens; }
+        }
 
 
         public PokerWindow()
@@ -173,6 +182,22 @@ namespace StonksCasino.Views.poker
         private void Button_Click_9(object sender, RoutedEventArgs e)
         {
             Game.firstBettingRound();
+        }
+
+        private void Uitloggen_Click(object sender, RoutedEventArgs e)
+        {
+            StonksCasino.Properties.Settings.Default.Username = "";
+            StonksCasino.Properties.Settings.Default.Password = "";
+            StonksCasino.Properties.Settings.Default.Save();
+            ApiWrapper.Logout();
+            User.Username = "";
+            User.Tokens = 0;
+
+
+            MainWindow window = new MainWindow();
+
+            this.Close();
+            window.Show();
         }
     }
 }

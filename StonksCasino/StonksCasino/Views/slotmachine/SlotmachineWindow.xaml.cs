@@ -36,17 +36,17 @@ namespace StonksCasino.Views.slotmachine
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-       
-        private async void accountrefresh()
+
+        public string Username
         {
-            bool result =await ApiWrapper.GetUserInfo();
-            if (result)
-            {
-                Application.Current.Shutdown();
-            }
+            get { return User.Username; }
         }
 
-        int _Tokens;
+        public int Tokens
+        {
+            get { return User.Tokens; }
+        }
+
 
         DispatcherTimer computertimer = new DispatcherTimer();
 
@@ -87,14 +87,11 @@ namespace StonksCasino.Views.slotmachine
         {
             DataContext = this;
             InitializeComponent();
-
-
-            accountrefresh();
-
             computertimer.Interval = TimeSpan.FromMilliseconds(1);
             computertimer.Tick += computertimer_Tick;
 
             Check();
+            Account();
         }
 
         private void computertimer_Tick(object sender, EventArgs e)
@@ -149,7 +146,7 @@ namespace StonksCasino.Views.slotmachine
 
         public void Check()
         {
-            if (_Tokens < 100 || Beurt >= 10)
+            if (User.Tokens < 100 || Beurt >= 10)
             {
                 AllowedToClickVH = false;
             }
@@ -172,18 +169,16 @@ namespace StonksCasino.Views.slotmachine
         public async void Verhogen_Click(object sender, RoutedEventArgs e)
         {
             await ApiWrapper.UpdateTokens(-100);
-            accountrefresh();
+            Account();
             Beurt++;
             Check();
-            //100 fishes er bij
         }
         private async void Verlagen_Click(object sender, RoutedEventArgs e)
         {
             await ApiWrapper.UpdateTokens(100);
-            accountrefresh();
+            Account();
             Beurt--;
             Check();
-            //100 fishes er af
         }
 
         private Slotmachine _slotmachine = new Slotmachine();
@@ -297,6 +292,16 @@ namespace StonksCasino.Views.slotmachine
         private void Storyboard2_Completed(object sender, EventArgs e)
         {
 
+        }
+        private async void Account()
+        {
+            bool result = await ApiWrapper.GetUserInfo();
+            OnPropertyChanged("Username");
+            OnPropertyChanged("Tokens");
+            if (!result)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }

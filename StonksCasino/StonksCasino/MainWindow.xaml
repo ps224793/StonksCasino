@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StonksCasino"
         mc:Ignorable="d"
-        Title="MainWindow" Height="850" Width="1600" WindowState="Maximized" Closing="Window_Closed" Loaded="Window_Loaded">
+        Title="MainWindow" Height="850" Width="1600" WindowState="Maximized" Loaded="Window_Loaded">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Img/Main/background.png" />

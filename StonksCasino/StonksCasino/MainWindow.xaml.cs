@@ -56,9 +56,8 @@ namespace StonksCasino
                     RememberMe();
                 }
                 LibraryWindow libraryWindow = new LibraryWindow();
-                this.Hide();
+                this.Close();
                 libraryWindow.Show();
-                this.Show();
             }
             else if (result == "active")
             {
@@ -72,9 +71,8 @@ namespace StonksCasino
                         RememberMe();
                     }
                     LibraryWindow libraryWindow = new LibraryWindow();
-                    this.Hide();
+                    this.Close();
                     libraryWindow.ShowDialog();
-                    this.Show();
                 }
             }
             else
@@ -110,22 +108,6 @@ namespace StonksCasino
 
             }
            
-        }
-
-        private void Window_Closed(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (this.IsActive == true)
-            {
-                MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
-                if (leaving == MessageBoxResult.No)
-                {
-                    e.Cancel = true;
-                }
-                else if (leaving == MessageBoxResult.Yes)
-                {
-                    Application.Current.Shutdown();
-                }
-            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -91,7 +91,7 @@ namespace StonksCasino.classes.Api
 
         public static async Task<bool> UpdateTokens(int tokens)
         {
-            string baseUri = @"https://stonkscasino.nl/api/Logout.php";
+            string baseUri = @"https://stonkscasino.nl/api/UpdateUserTokens.php";
             Uri request = new Uri(baseUri);
 
             HttpClient client = new HttpClient();
