@@ -41,6 +41,9 @@
     <Reference Include="MoreLinq, Version=3.3.2.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
       <HintPath>..\packages\morelinq.3.3.2\lib\net451\MoreLinq.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -80,6 +83,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\Api\ApiWrapper.cs" />
+    <Compile Include="classes\Api\GlobalApiToken.cs" />
+    <Compile Include="classes\Api\IdatabaseConnection.cs" />
+    <Compile Include="classes\Api\Models\ApiAccessToken.cs" />
+    <Compile Include="classes\Api\Models\ApiResult.cs" />
+    <Compile Include="classes\Api\Models\LoginCredentials.cs" />
+    <Compile Include="classes\Api\Models\LoginResult.cs" />
+    <Compile Include="classes\Api\Models\TokenUpdate.cs" />
+    <Compile Include="classes\Api\Models\UserInfoResult.cs" />
     <Compile Include="classes\blackjack\BlackjackComputer.cs" />
     <Compile Include="classes\blackjack\BlackjackDeck.cs" />
     <Compile Include="classes\blackjack\BlackjackDeckComputer.cs" />
@@ -92,7 +104,6 @@
     <Compile Include="classes\blackjack\BlackJack.cs" />
     <Compile Include="classes\Main\Card.cs" />
     <Compile Include="classes\Main\CardDeckBlack.cs" />
-    <Compile Include="classes\Main\Database.cs" />
     <Compile Include="classes\Main\User.cs" />
     <Compile Include="classes\poker\CardPair.cs" />
     <Compile Include="classes\poker\PokerDeck.cs" />
@@ -335,5 +346,6 @@
   <ItemGroup>
     <Resource Include="Img\HorseRace\Finishline.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

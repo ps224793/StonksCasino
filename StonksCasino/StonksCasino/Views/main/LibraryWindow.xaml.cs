@@ -18,52 +18,44 @@ using StonksCasino.Views.blackjack;
 using StonksCasino.Views.poker;
 using StonksCasino.Views.slotmachine;
 using StonksCasino.Views.horserace;
+using StonksCasino.classes.Api;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace StonksCasino.Views.main
 {
-    /// <summary>
-    /// Interaction logic for LibraryWindow.xaml
-    /// </summary>
-    public partial class LibraryWindow : Window
+    public partial class LibraryWindow : Window, INotifyPropertyChanged
     {
-        int _Tokens;
-        public User user { get; set; } 
-
-        private Database _database = new Database();
-
-        public Database MyDatabase
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
-            get { return _database; }
-            set { _database = value; }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+        public string Username 
+        {
+            get { return User.Username; }
+        }
+
+        public int Tokens 
+        {
+            get { return User.Tokens; }
+        }
+
+
         public LibraryWindow()
         {
             Account();
             DataContext = this;
             InitializeComponent();
         }
-        private void Account()
+        private async void Account()
         {
-            DataTable dataTable = Database.Accounts();
-            string Name = dataTable.Rows[0]["username"].ToString();
-            int Tokens = (int)dataTable.Rows[0]["token"];
-            user = new User(Name, Tokens);
-            long Time = (long)dataTable.Rows[0]["timestamp"];
-            if (Time != Properties.Settings.Default.Timestamp)
+            bool result = await ApiWrapper.GetUserInfo();
+            OnPropertyChanged("Username");
+            OnPropertyChanged("Tokens");
+            if(!result)
             {
-                _database.MyLogout = false;
-                Application.Current.Shutdown();
-            }
-        }
-        private void accountrefresh()
-        {
-            DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["token"];
-            user.MyTokens = _Tokens;
-            long Time = (long)dataTable.Rows[0]["timestamp"];
-            if (Time != Properties.Settings.Default.Timestamp)
-            {
-               _database.MyLogout = false;
                 Application.Current.Shutdown();
             }
         }
@@ -80,8 +72,8 @@ namespace StonksCasino.Views.main
 
         private void Roulettegame()
         {
-            accountrefresh();
-            RouletteWindow roulette = new RouletteWindow(user);
+            Account();
+            RouletteWindow roulette = new RouletteWindow();
             this.Hide();
             roulette.Show();
       
@@ -99,10 +91,10 @@ namespace StonksCasino.Views.main
 
         private void Blackjackgame()
         {
-            accountrefresh();
-            BlackjackWindow roulette = new BlackjackWindow(user);
+            Account();
+            BlackjackWindow blackjack = new BlackjackWindow();
             this.Hide();
-            roulette.Show();
+            blackjack.Show();
            
         }
 
@@ -118,8 +110,8 @@ namespace StonksCasino.Views.main
 
         private void Pokergame()
         {
-            accountrefresh();
-            PokerWindow roulette = new PokerWindow(user);
+            Account();
+            PokerWindow roulette = new PokerWindow();
             this.Hide();
             roulette.Show();
            
@@ -137,8 +129,8 @@ namespace StonksCasino.Views.main
 
         private void SlotMachinegame()
         {
-            accountrefresh();
-            SlotmachineWindow roulette = new SlotmachineWindow(user);
+            Account();
+            SlotmachineWindow roulette = new SlotmachineWindow();
             this.Hide();
             roulette.Show();
         }
@@ -156,8 +148,8 @@ namespace StonksCasino.Views.main
 
         private void HorseRacegame()
         {
-            accountrefresh();
-            horseracewindow horserace = new horseracewindow(user);
+            Account();
+            horseracewindow horserace = new horseracewindow();
             this.Hide();
             horserace.Show();
         }
@@ -166,42 +158,28 @@ namespace StonksCasino.Views.main
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            MyDatabase.Logout();
-          
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            
-            if (this.IsActive == true)          
-                {
-                MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
-                if (leaving == MessageBoxResult.No)
-                {
-                    e.Cancel = true;
-                }
-                else if (leaving == MessageBoxResult.Yes)
-                {
-                    
-                    Application.Current.Shutdown();
-                    
-                }
-
-            }
+            ApiWrapper.Logout();
         }
 
         private void Uitloggen_Click(object sender, RoutedEventArgs e)
         {
-            MyDatabase.Logout();
             StonksCasino.Properties.Settings.Default.Username = "";
             StonksCasino.Properties.Settings.Default.Password = "";
             StonksCasino.Properties.Settings.Default.Save();
-            _database.MyUsername = "";
-            _database.MyPassword = "";
+            ApiWrapper.Logout();
+            User.Username = "";
+            User.Tokens = 0;
+
+
             MainWindow window = new MainWindow();
         
-            this.Hide();
+            this.Close();
             window.Show();
+        }
+
+        private void btnBibliotheek_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

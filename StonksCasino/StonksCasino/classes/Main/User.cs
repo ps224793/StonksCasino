@@ -1,41 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace StonksCasino.classes.Main
 {
-    public class User : INotifyPropertyChanged
+    public static class User
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-        private string _name;
+        private static string _userName;
 
-        public string MyName
+        public static string Username
         {
-            get { return _name; }
-            set { _name = value; OnPropertyChanged(); }
+            get { return _userName; }
+            set { _userName = value; }
         }
 
-        private int _tokens;
+        private static int _tokens;
 
-        public int MyTokens
+        public static int Tokens
         {
             get { return _tokens; }
-            set { _tokens = value; OnPropertyChanged(); }
+            set { _tokens = value; }
         }
-        public User(string Name, int Tokens)
-        {
-            MyName = Name;
-            MyTokens = Tokens;
-        }
-
-          
     }
 }

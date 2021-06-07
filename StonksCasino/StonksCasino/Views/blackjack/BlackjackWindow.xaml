@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StonksCasino.Views.blackjack"
         mc:Ignorable="d"
-        Title="BlackjackWindow" Height="450" Width="800" WindowState="Maximized" Closing="Window_Closing">
+        Title="BlackjackWindow" Height="450" Width="800" WindowState="Maximized" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -13,16 +13,18 @@
         </Grid.RowDefinitions>
         <Grid Background="#262626" Grid.Row="0" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
+                
                 <Button Click="Bibliotheek_Click" x:Name="btnBibliotheek" Content="Bibliotheek" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
                 <Button x:Name="btnWinkel" Content="Winkel" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
                 <Button x:Name="BtnGeldStorten" Content="Geld storten" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="Uitloggen" Content="Uitloggen" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" Click="Uitloggen_Click" />
                 <Image Source="/Img/Main/Account.png" Margin="5,0" Height="40"></Image>
-                <TextBlock Text="{Binding user.MyName, Mode=OneWay}" FontSize="20" Foreground="White" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Username, Mode=OneWay}" FontSize="20" Foreground="White" VerticalAlignment="Center"/>
                 <Image Source="/Img/Main/streep.png"></Image>
                 <Image Source="/Img/Main/Token.png" Height="40"></Image>
-                <TextBlock Text="{Binding user.MyTokens, Mode=OneWay}" Padding="10" Foreground="White" FontSize="20" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Tokens, Mode=OneWay}" Padding="10" Foreground="White" FontSize="20" VerticalAlignment="Center" />
 
             </StackPanel>
         </Grid>
