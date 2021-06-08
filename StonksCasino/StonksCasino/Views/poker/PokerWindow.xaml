@@ -21,12 +21,11 @@
                 <Button x:Name="BtnGeldStorten" Content="Geld storten" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="Uitloggen" Content="Uitloggen" FontSize="20" HorizontalAlignment="Left" Background="Transparent" Height="50" Padding="10" VerticalAlignment="Center" Foreground="White" Click="Uitloggen_Click" />
                 <Image Source="/Img/Main/Account.png" Margin="5,0" Height="40"></Image>
-                <TextBlock Text="{Binding Username, Mode=OneWay}" FontSize="20" Foreground="White" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding user.MyName, Mode=OneWay}" FontSize="20" Foreground="White" VerticalAlignment="Center"/>
                 <Image Source="/Img/Main/streep.png"></Image>
                 <Image Source="/Img/Main/Token.png" Height="40"></Image>
-                <TextBlock Text="{Binding Tokens, Mode=OneWay}" Padding="10" Foreground="White" FontSize="20" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding user.MyTokens, Mode=OneWay}" Padding="10" Foreground="White" FontSize="20" VerticalAlignment="Center" />
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
@@ -112,14 +111,14 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="player0_Left" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,0,10,0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Source="{Binding Game.Players[0].Hand[0].ActiveURL}">
+                    <Image x:Name="player0_Left" Visibility="{Binding Game.Player0_CardVisibility, Mode=OneWay}" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,0,10,0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Source="{Binding Game.Players[0].Hand[0].ActiveURL}" Opacity="{Binding Game.PlayerCardOpacity}">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <TranslateTransform Y="1000"/>
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
-                    <Image x:Name="player0_Right" Width="{Binding CardWidth, Mode=OneWay}" Margin="10,0,0,0" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Source="{Binding Game.Players[0].Hand[1].ActiveURL}">
+                    <Image x:Name="player0_Right" Visibility="{Binding Game.Player0_CardVisibility, Mode=OneWay}" Width="{Binding CardWidth, Mode=OneWay}" Margin="10,0,0,0" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Source="{Binding Game.Players[0].Hand[1].ActiveURL}" Opacity="{Binding Game.PlayerCardOpacity}">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <TranslateTransform Y="1000"/>
@@ -152,7 +151,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1.5*"/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="player2_Left" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,0,10,0" Grid.Column="1" HorizontalAlignment="Right" Source="{Binding Game.Players[2].Hand[1].ActiveURL}" RenderTransformOrigin="0.5,0.5">
+                    <Image x:Name="player2_Left" Visibility="{Binding Game.Player2_CardVisibility, Mode=OneWay}" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,0,10,0" Grid.Column="1" HorizontalAlignment="Right" Source="{Binding Game.Players[2].Hand[1].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform ScaleY="1"/>
@@ -160,7 +159,7 @@
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
-                    <Image x:Name="player2_Right" Width="{Binding CardWidth, Mode=OneWay}" Margin="10,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Source="{Binding Game.Players[2].Hand[0].ActiveURL}" RenderTransformOrigin="0.5,0.5">
+                    <Image x:Name="player2_Right" Visibility="{Binding Game.Player2_CardVisibility, Mode=OneWay}" Width="{Binding CardWidth, Mode=OneWay}" Margin="10,0,0,0" Grid.Column="2" HorizontalAlignment="Left" Source="{Binding Game.Players[2].Hand[0].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform ScaleY="1"/>
@@ -199,7 +198,7 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="player1_Left" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,0,0,-10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[1].Hand[0].ActiveURL}" RenderTransformOrigin="0.5,0.5">
+                    <Image x:Name="player1_Left" Visibility="{Binding Game.Player1_CardVisibility, Mode=OneWay}" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,0,0,-10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[1].Hand[0].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.LayoutTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -215,7 +214,7 @@
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
-                    <Image x:Name="player1_Right" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,-10,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[1].Hand[1].ActiveURL}" RenderTransformOrigin="0.5,0.5">
+                    <Image x:Name="player1_Right" Visibility="{Binding Game.Player1_CardVisibility, Mode=OneWay}" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,-10,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[1].Hand[1].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.LayoutTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -264,7 +263,7 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="player3_Right" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,0,0,-10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[3].Hand[1].ActiveURL}" RenderTransformOrigin="0.5,0.5">
+                    <Image x:Name="player3_Right" Visibility="{Binding Game.Player3_CardVisibility, Mode=OneWay}" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,0,0,-10" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[3].Hand[1].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.LayoutTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -280,7 +279,7 @@
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
-                    <Image x:Name="player3_Left" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,-10,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[3].Hand[0].ActiveURL}" RenderTransformOrigin="0.5,0.5">
+                    <Image x:Name="player3_Left" Visibility="{Binding Game.Player3_CardVisibility, Mode=OneWay}" Width="{Binding CardWidth, Mode=OneWay}" Margin="0,-10,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Source="{Binding Game.Players[3].Hand[0].ActiveURL}" RenderTransformOrigin="0.5,0.5">
                         <Image.LayoutTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -304,7 +303,11 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Image Grid.Row="1" Margin="0,0,10,0" Source="/Img/Main/Token.png" />
-                        <Image Grid.Row="0" Margin="0,0,10,0" VerticalAlignment="Bottom" Source="{Binding Game.Players[3].ButtonImageURL}" />
+                        <Image Grid.Row="0" Margin="0,0,10,0" VerticalAlignment="Bottom" Source="{Binding Game.Players[3].ButtonImageURL}">
+                            <Image.LayoutTransform>
+                                <RotateTransform Angle="180"/>
+                            </Image.LayoutTransform>
+                        </Image>
                         <TextBlock Margin="0,0,10,0" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Game.Players[3].Bet}" TextAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.5,0.5">
                             <TextBlock.RenderTransform>
                                 <RotateTransform Angle="180"/>
@@ -348,7 +351,7 @@
                                 </Grid.RowDefinitions>
 
                                 <StackPanel Grid.Row="0">
-                                    <Button x:Name="btnRaise" Content="{Binding Game.RaiseOrAllIn, Mode=OneWay}" Click="Raise_Bet"></Button>
+                                    <Button x:Name="btnRaise" Content="{Binding Game.RaiseOrAllIn, Mode=OneWay}" Click="Raise_Bet" IsEnabled="{Binding Game.EnablePlayerInput, Mode=OneWay}"></Button>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
@@ -363,8 +366,8 @@
                                     </Grid>
                                 </StackPanel>
 
-                                <Button x:Name="btnFold" Grid.Row="1" Content="Fold" Click="btnFold_Click"></Button>
-                                <Button Grid.Row="2" Content="{Binding Game.CallOrCheck, Mode=OneWay}" Click="Call_Click"></Button>
+                                <Button x:Name="btnFold" Grid.Row="1" Content="Fold" Click="btnFold_Click" IsEnabled="{Binding Game.EnablePlayerInput, Mode=OneWay}"></Button>
+                                <Button Grid.Row="2" Content="{Binding Game.CallOrCheck, Mode=OneWay}" Click="Call_Click" IsEnabled="{Binding Game.EnablePlayerInput, Mode=OneWay}"></Button>
                             </Grid>
 
                             <Image Grid.Column="0" Source="/Img/Main/Token.png" Grid.RowSpan="2"></Image>
@@ -373,12 +376,7 @@
                     </Border>
                 </Grid>
             </Grid>
-            <Button Content="turn"        HorizontalAlignment="Left" Margin="494,409,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-            <Button Content="river"       HorizontalAlignment="Left" Margin="494,429,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-            <Button Content="TurnPCcards" HorizontalAlignment="Left" Margin="494,449,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_6"/>
-            <Button Content="Flop"        HorizontalAlignment="Left" Margin="494,389,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_7"/>
-            <Button Content="CalculateHand"        HorizontalAlignment="Left" Margin="494,370,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_8"/>
-            <Button Content="Eerste inzetronde" HorizontalAlignment="Left" Margin="494,351,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_9"/>
+            <Button Content="Start" HorizontalAlignment="Left" Margin="510,400,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         </Grid>
     </Grid>
 
