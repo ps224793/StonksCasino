@@ -68,23 +68,19 @@ namespace StonksCasino.Views.poker
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-
         {
-            CardWidth = (int)one.ActualWidth;
+            SetCardWidth();
         }
 
-        public async void SetCardWidth()
+        public void SetCardWidth()
         {
-            CardWidth = (int)one.Source.Width;
-
-            await Task.Delay(500);
-
             CardWidth = (int)one.ActualWidth;
         }
 
         private void Raise_Bet(object sender, RoutedEventArgs e)
         {
             Game.Raise(Game.Players[0]);
+            Game.DisablePlayerInput();
         }
 
         private void Higher_Raise(object sender, RoutedEventArgs e)
@@ -107,6 +103,7 @@ namespace StonksCasino.Views.poker
         {
             Game.Fold(Game.Players[0]);
             Game.WagerRound(Game.Players[0]);
+            Game.DisablePlayerInput();
         }
 
         private void Call_Click(object sender, RoutedEventArgs e)
@@ -124,6 +121,7 @@ namespace StonksCasino.Views.poker
             {
                 Game.Check(Game.Players[0]);
             }
+            Game.DisablePlayerInput();
             Game.WagerRound(Game.Players[0]);
         }
 
@@ -151,9 +149,18 @@ namespace StonksCasino.Views.poker
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             Game.StartGame();
+            await Task.Delay(1);
+            SetCardWidth();
+            await Task.Delay(800);
+            Storyboard board = (Storyboard)FindResource("sbTableIn");
+            board.Begin();
+
+            await Task.Delay(3000);
+
+            Game.StartGame2();
         }
 
         private async void Uitloggen_Click(object sender, RoutedEventArgs e)
