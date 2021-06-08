@@ -171,7 +171,7 @@ namespace StonksCasino.classes.poker
         }
 
 
-        public PokerGame(User user)
+        public PokerGame()
         {
             Players = new List<PokerPlayer>();
             for (int i = 0; i < 4; i++)
@@ -184,7 +184,7 @@ namespace StonksCasino.classes.poker
                 switch (i)
                 {
                     case 0:
-                        Players[i].PokerName = $"{user.MyName}";
+                        Players[i].PokerName = $"{User.Username}";
                         break;
                     case 1:
                         Players[i].PokerName = "Gambletron 2000";

@@ -1,4 +1,5 @@
-﻿using StonksCasino.classes.HorseRace;
+﻿using StonksCasino.classes.Api;
+using StonksCasino.classes.HorseRace;
 using StonksCasino.classes.Main;
 using StonksCasino.Views.main;
 using System;
@@ -91,6 +92,18 @@ namespace StonksCasino.Views.horserace
             set { _actiontime = value; OnPropertyChanged(); }
         }
 
+        public string Username
+        {
+            get { return User.Username; }
+        }
+
+        public int Tokens
+        {
+            get { return User.Tokens; }
+        }
+
+        private bool back2Library = false;
+
         DispatcherTimer HorseTimer = new DispatcherTimer();
 
         Random rndhorsenumber = new Random();
@@ -107,16 +120,10 @@ namespace StonksCasino.Views.horserace
 
         int HorseChosen = 0;
 
-        int _Tokens;
 
-        public User User { get; set; }
-
-        public User user { get; set; }
-
-        public horseracewindow(User user)
+        public horseracewindow()
         {
             InitializeComponent();
-            this.user = user;
             Game = new HorseGame();
             DataContext = this;
             Account();
@@ -125,18 +132,11 @@ namespace StonksCasino.Views.horserace
             HorseTimers();
         }
 
-        private void Account()
-        {
-            DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["token"];
-            user.MyTokens = _Tokens;
-        }
-
         private void Bibliotheek_Click(object sender, EventArgs e)
         {
-            LibraryWindow library = new LibraryWindow();
-            this.Hide();
-            library.Show();
+            back2Library = true;
+            this.Close();
+
         }
 
         public void Horse1_Click(object sender, RoutedEventArgs e)
@@ -466,6 +466,49 @@ namespace StonksCasino.Views.horserace
 
             Animator controller4 = AnimationBehavior.GetAnimator(horseGif4);
             controller4.Play();
+        }
+
+        private async void Uitloggen_Click(object sender, RoutedEventArgs e)
+        {
+            StonksCasino.Properties.Settings.Default.Username = "";
+            StonksCasino.Properties.Settings.Default.Password = "";
+            StonksCasino.Properties.Settings.Default.Save();
+            await ApiWrapper.Logout();
+            User.Username = "";
+            User.Tokens = 0;
+
+
+            MainWindow window = new MainWindow();
+
+            this.Close();
+            window.Show();
+        }
+
+        private async void Account()
+        {
+            bool result = await ApiWrapper.GetUserInfo();
+            OnPropertyChanged("Username");
+            OnPropertyChanged("Tokens");
+            if (!result)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (this.IsActive == true && !back2Library)
+            {
+                MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
+                if (leaving == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else if (leaving == MessageBoxResult.Yes)
+                {
+                    Application.Current.Shutdown();
+
+                }
+            }
         }
     }
 }

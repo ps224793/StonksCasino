@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using StonksCasino.classes.Api;
 using StonksCasino.classes.Main;
 
 namespace StonksCasino.classes.Roulette
@@ -229,12 +230,12 @@ namespace StonksCasino.classes.Roulette
           
 
         }
-        public void DeleteBet()
+        public async void DeleteBet()
         {
             if (Set == true)
             {
                 int amount = int.Parse(AmountLabel);
-                DataTable data = Database.Tokensadd( amount);
+                await ApiWrapper.UpdateTokens(amount);
                 ImageUrl = "/Img/Roulette/transparant.png";
                 AmountLabel = "";
                 Amount = 0;
