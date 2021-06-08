@@ -339,7 +339,7 @@ namespace StonksCasino.Views.Roulette
                     {
                         int amount = ((Bet)bt.Tag).Amount;
                         ((Bet)bt.Tag).DeleteBet();
-
+                        await ApiWrapper.UpdateTokens(amount);
                         MyAmount.RemoveTotal(amount);
                         Account();
                     }

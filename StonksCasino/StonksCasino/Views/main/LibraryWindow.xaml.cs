@@ -21,6 +21,7 @@ using StonksCasino.Views.horserace;
 using StonksCasino.classes.Api;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace StonksCasino.Views.main
 {
@@ -183,6 +184,11 @@ namespace StonksCasino.Views.main
         private void btnBibliotheek_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void BtnGeldStorten_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://stonkscasino.nl/public/account-info");
         }
     }
 }
