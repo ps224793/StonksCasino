@@ -65,11 +65,20 @@ namespace StonksCasino.Views.poker
             Game = new PokerGame();
             DataContext = this;
             InitializeComponent();
-            Game.sbSetup();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+
         {
+            CardWidth = (int)one.ActualWidth;
+        }
+
+        public async void SetCardWidth()
+        {
+            CardWidth = (int)one.Source.Width;
+
+            await Task.Delay(500);
+
             CardWidth = (int)one.ActualWidth;
         }
 
@@ -97,6 +106,7 @@ namespace StonksCasino.Views.poker
         private void btnFold_Click(object sender, RoutedEventArgs e)
         {
             Game.Fold(Game.Players[0]);
+            Game.WagerRound(Game.Players[0]);
         }
 
         private void Call_Click(object sender, RoutedEventArgs e)
@@ -114,6 +124,7 @@ namespace StonksCasino.Views.poker
             {
                 Game.Check(Game.Players[0]);
             }
+            Game.WagerRound(Game.Players[0]);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -140,48 +151,14 @@ namespace StonksCasino.Views.poker
 
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Game.TableTurn();
+            Game.StartGame();
         }
 
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            Game.TableRiver();
-        }
-
-        private async void Button_Click_6(object sender, RoutedEventArgs e)
-        {
-            Storyboard playerleft = (Storyboard)this.FindResource("sbPlayer1");
-            playerleft.Begin();
-            Storyboard playertop = (Storyboard)this.FindResource("sbPlayer2");
-            playertop.Begin();
-            Storyboard playerright = (Storyboard)this.FindResource("sbPlayer3");
-            playerright.Begin();
-
-            await Task.Delay(300);
-            Game.Players[1].Hand[0].Turned = false;
-            Game.Players[1].Hand[1].Turned = false;
-            Game.Players[2].Hand[0].Turned = false;
-            Game.Players[2].Hand[1].Turned = false;
-            Game.Players[3].Hand[0].Turned = false;
-            Game.Players[3].Hand[1].Turned = false;
-        }
-
-        private void Button_Click_7(object sender, RoutedEventArgs e)
-        {
-            Game.TableFlop();
-        }
-
-        private void Button_Click_8(object sender, RoutedEventArgs e)
-        {
-            // Game.CalcHand();
-            Game.showdown(Game.Players);
-        }
-
-        private void Button_Click_9(object sender, RoutedEventArgs e)
-        {
-            Game.firstBettingRound();
+            Database.Tokensadd(798795);
         }
 
         private async void Uitloggen_Click(object sender, RoutedEventArgs e)
