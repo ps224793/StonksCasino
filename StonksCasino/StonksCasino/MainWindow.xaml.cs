@@ -14,83 +14,104 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using StonksCasino.Views.main;
 using StonksCasino.classes.Main;
+using StonksCasino.classes.Api;
+using StonksCasino.classes.Api.Models;
+
 
 namespace StonksCasino
 {
-
-
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        
-        private Database _database = new Database();
+        private string _email;
 
-        public Database MyDatabase
+        public string MyEmail
         {
-            get { return _database; }
-            set { _database = value; }
+            get { return _email; }
+            set { _email = value; }
         }
+        private bool _remember = false;
 
-
+        public bool Remember
+        {
+            get { return _remember; }
+            set { _remember = value; }
+        }
 
         public MainWindow()
         {
-            
             DataContext = this;
-            chekremember();
             InitializeComponent();
+
         }
 
-        private void Library_Click(object sender, RoutedEventArgs e)
+        private async void Login_Click(object sender, RoutedEventArgs e)
         {
-          bool window =  MyDatabase.Login(Password.Password);
-            if (window)
+            LoginCredentials credentials = new LoginCredentials() {Email = MyEmail, Password = tbPassword.Password, Overwride = false};
+            string result = await ApiWrapper.Login(credentials);
+  
+            if (result == "succes")
             {
-                this.Hide();
-            }
-        }
-
-        
-        public void chekremember()
-        {
-            bool window = MyDatabase.Checkremember();
-            if (window)
-            {
-                this.Hide();
-            }
-        }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            _database.MyRemember = true;
-        }
-
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            _database.MyRemember = false;
-        }
-
-        private void Window_Closed(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (this.IsActive == true)
-            {
-                MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
-                if (leaving == MessageBoxResult.No)
+                if (Remember)
                 {
-                    e.Cancel = true;
+                    RememberMe();
                 }
-                else if (leaving == MessageBoxResult.Yes)
+                LibraryWindow libraryWindow = new LibraryWindow();
+                this.Close();
+                libraryWindow.Show();
+            }
+            else if (result == "active")
+            {
+                MessageBoxResult mes = MessageBox.Show("Er is al iemand anders ingelogd op dit account! Als u toch wilt inloggen wordt de ander van uw account afgezet. Let op! Dit kan nadelige gevolgen hebben voor uw account als de persoon die ingelogd is momenteel bezig is met een spel heb je het risico om je inzit kwijt te raken. Wilt u toch inloggen?", "Inloggen", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (mes == MessageBoxResult.Yes)
                 {
-
-                    Application.Current.Shutdown();
-
+                    credentials = new LoginCredentials() { Email = MyEmail, Password = tbPassword.Password, Overwride = true };
+                    result = await ApiWrapper.Login(credentials);
+                    if (Remember)
+                    {
+                        RememberMe();
+                    }
+                    LibraryWindow libraryWindow = new LibraryWindow();
+                    this.Close();
+                    libraryWindow.ShowDialog();
                 }
-
+            }
+            else
+            {
+                MessageBox.Show("Gebruikersnaam of wachtwoord is incorrect.");
             }
         }
 
- 
+        private void RememberMe()
+        {
+            Properties.Settings.Default.Username = MyEmail;
+            Properties.Settings.Default.Password = tbPassword.Password;
+            Properties.Settings.Default.Save();
+        }
+
+        private async void LoginRemember()
+        {
+            try
+            {
+                LoginCredentials credentials = new LoginCredentials() { Email = Properties.Settings.Default.Username, Password = Properties.Settings.Default.Password, Overwride = false };
+                string result = await ApiWrapper.Login(credentials);
+                
+                if (result == "succes")
+                {
+                    LibraryWindow libraryWindow = new LibraryWindow();
+                    this.Close();
+                    libraryWindow.ShowDialog();
+                }
+            }
+            catch
+            {
+
+            }
+           
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoginRemember();
+        }
     }
 }

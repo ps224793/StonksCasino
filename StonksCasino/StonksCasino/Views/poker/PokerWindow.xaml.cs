@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Animation;
 using System.Data;
+using StonksCasino.classes.Api;
 
 namespace StonksCasino.Views.poker
 {
@@ -48,32 +49,23 @@ namespace StonksCasino.Views.poker
             set { _cardWidth = value; OnPropertyChanged(); }
         }
 
-        int _Tokens;
-
-        private Database _database = new Database();
-
-        public Database MyDatabase
+        public string Username
         {
-            get { return _database; }
-            set { _database = value; }
+            get { return User.Username; }
         }
 
-        public User user { get; set; }
-
-        public PokerWindow(User user)
+        public int Tokens
         {
-            this.user = user;
-            Game = new PokerGame(user);
+            get { return User.Tokens; }
+        }
+
+        private bool back2Library = false;
+        public PokerWindow()
+        {
+            Game = new PokerGame();
             DataContext = this;
             InitializeComponent();
             Game.sbSetup();
-        }
-
-        private void Account()
-        {
-            DataTable dataTable = Database.Accounts();
-            _Tokens = (int)dataTable.Rows[0]["token"];
-            user.MyTokens = _Tokens;
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -126,7 +118,7 @@ namespace StonksCasino.Views.poker
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (this.IsActive == true)
+            if (this.IsActive == true && !back2Library)
             {
                 MessageBoxResult leaving = MessageBox.Show("Weet u zeker dat u de applicatie wil afsluiten", "Afsluiten", MessageBoxButton.YesNo);
                 if (leaving == MessageBoxResult.No)
@@ -136,16 +128,16 @@ namespace StonksCasino.Views.poker
                 else if (leaving == MessageBoxResult.Yes)
                 {
                     Application.Current.Shutdown();
-                }
 
+                }
             }
         }
 
         private void btnBibliotheek_Click(object sender, RoutedEventArgs e)
         {
-            LibraryWindow library = new LibraryWindow();
-            this.Hide();
-            library.Show();
+            back2Library = true;
+            this.Close();
+
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -190,6 +182,22 @@ namespace StonksCasino.Views.poker
         private void Button_Click_9(object sender, RoutedEventArgs e)
         {
             Game.firstBettingRound();
+        }
+
+        private async void Uitloggen_Click(object sender, RoutedEventArgs e)
+        {
+            StonksCasino.Properties.Settings.Default.Username = "";
+            StonksCasino.Properties.Settings.Default.Password = "";
+            StonksCasino.Properties.Settings.Default.Save();
+            await ApiWrapper.Logout();
+            User.Username = "";
+            User.Tokens = 0;
+
+
+            MainWindow window = new MainWindow();
+
+            this.Close();
+            window.Show();
         }
     }
 }

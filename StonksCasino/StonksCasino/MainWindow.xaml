@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StonksCasino"
         mc:Ignorable="d"
-        Title="MainWindow" Height="850" Width="1600" WindowState="Maximized" Closing="Window_Closed" >
+        Title="MainWindow" Height="850" Width="1600" WindowState="Maximized" Loaded="Window_Loaded">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Img/Main/background.png" />
@@ -44,25 +44,25 @@
             <Label Grid.RowSpan="8" Grid.ColumnSpan="3" Background="Black" Opacity="0.6"></Label>
         
             <StackPanel Grid.Row="2" Grid.Column="1">
-                <TextBlock   Text="Gebruikersnaam" Margin="0,10" Foreground="White" FontSize="30"></TextBlock>
-                <TextBox Text="{Binding MyDatabase.MyUsername, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="30" Foreground="Black" Background="White"></TextBox>
+                <TextBlock   Text="E-mail" Margin="0,10" Foreground="White" FontSize="30"></TextBlock>
+                <TextBox Text="{Binding MyEmail, Mode=OneWayToSource}" FontSize="30" Foreground="Black" Background="White"></TextBox>
             </StackPanel>
             <StackPanel Grid.Row="3" Grid.Column="1">
             <TextBlock Text="Wachtwoord" Foreground="White" Margin="0,10" FontSize="30"></TextBlock>
-                <PasswordBox x:Name="Password" PasswordChar="*" FontSize="30" Foreground="Black" Background="White"  />
+                <PasswordBox x:Name="tbPassword" PasswordChar="*" FontSize="30" Foreground="Black" Background="White"  />
             </StackPanel>
             <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal"  VerticalAlignment="Center">
                 <TextBlock Margin="0,0,15,0" TextDecorations="Underline" Foreground="White" FontSize="22" Text="Account registreren"/>
                 <TextBlock Text="|" Foreground="White" FontSize="22"/>
                 <TextBlock Margin="15,0" TextDecorations="Underline" Foreground="White" FontSize="22" Text="Wachtwoord vergeten?"/>
             </StackPanel>
-            <CheckBox Grid.Row="5" Grid.Column="1" Foreground="White" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" FontSize="11" Height="25" VerticalAlignment="Top"  Content="Onthoud mij">
+            <CheckBox Grid.Row="5" Grid.Column="1" Foreground="White" IsChecked="{Binding Remember,Mode=OneWayToSource}"  FontSize="11" Height="25" VerticalAlignment="Top"  Content="Onthoud mij">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="2" ScaleY="2" />
                 </CheckBox.LayoutTransform>
             </CheckBox>
             <Border Grid.Row="5" Grid.Column="1" CornerRadius="7" Height="80" Width="230" BorderBrush="#282929" Background="#282929" BorderThickness="10">
-                <Button Foreground="White" Content="Inloggen" Grid.Column="1" Grid.Row="5" Background="{x:Null}" BorderBrush="{x:Null}" Style="{DynamicResource Buttonstyleinzet}"  FontSize="40px" Click="Library_Click"/>
+                <Button Foreground="White" Content="Inloggen" Grid.Column="1" Grid.Row="5" Background="{x:Null}" BorderBrush="{x:Null}" Style="{DynamicResource Buttonstyleinzet}"  FontSize="40px" Click="Login_Click"/>
             </Border>
              
 
