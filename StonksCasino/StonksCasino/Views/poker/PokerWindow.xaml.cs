@@ -156,11 +156,6 @@ namespace StonksCasino.Views.poker
             Game.StartGame();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            Database.Tokensadd(798795);
-        }
-
         private async void Uitloggen_Click(object sender, RoutedEventArgs e)
         {
             StonksCasino.Properties.Settings.Default.Username = "";
